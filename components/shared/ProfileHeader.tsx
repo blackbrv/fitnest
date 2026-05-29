@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Edit2, Flame, Activity, Users } from 'lucide-react'
 import { cn, getInitials, formatDate } from '@/lib/utils'
 
@@ -17,14 +18,12 @@ interface ProfileHeaderProps {
     currentStreak: number
   }
   familyName: string | null
-  onEditClick?: () => void
 }
 
 export function ProfileHeader({
   user,
   stats,
   familyName,
-  onEditClick,
 }: ProfileHeaderProps) {
   const [avatarError, setAvatarError] = useState(false)
   const initials = getInitials(user.name)
@@ -83,9 +82,8 @@ export function ProfileHeader({
             </span>
           </div>
 
-          <button
-            type="button"
-            onClick={onEditClick}
+          <Link
+            href="/settings"
             className={cn(
               'flex items-center gap-2 rounded-xl border border-white/8',
               'bg-[#1c2433] px-3 py-2 text-sm font-medium text-[#f5f7fa]',
@@ -94,7 +92,7 @@ export function ProfileHeader({
           >
             <Edit2 size={14} className="text-[#8b95a5]" />
             Edit Profile
-          </button>
+          </Link>
         </div>
 
         {/* User info */}
