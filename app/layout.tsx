@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
+import { ToastProvider } from "@/components/ui/Toast"
 
 export const metadata: Metadata = {
   title: "FitNest — Stronger Together",
@@ -15,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   )
 }
