@@ -129,7 +129,11 @@ export async function requestPasswordReset(formData: {
   const { email } = parsed.data
 
   // Check if user exists (don't reveal whether email is registered for security)
-  await db.user.findUnique({ where: { email } })
+  try {
+    await db.user.findUnique({ where: { email } })
+  } catch {
+    // Silently ignore DB errors to prevent email enumeration
+  }
 
   // Always return success to prevent email enumeration
   return {
