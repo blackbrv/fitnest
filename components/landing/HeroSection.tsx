@@ -55,12 +55,15 @@ export default function HeroSection() {
                 Start Free
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <button className="group flex items-center gap-3 text-[#F5F7FA] border border-white/[0.12] hover:border-white/25 rounded-full px-6 py-3.5 text-base transition-all duration-200 hover:bg-white/[0.04]">
+              <a
+                href="#features"
+                className="group flex items-center gap-3 text-[#F5F7FA] border border-white/[0.12] hover:border-white/25 rounded-full px-6 py-3.5 text-base transition-all duration-200 hover:bg-white/[0.04]"
+              >
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/10 group-hover:bg-white/15 transition-colors">
                   <Play className="w-3 h-3 fill-[#F5F7FA]" />
                 </span>
-                Watch Demo
-              </button>
+                See Features
+              </a>
             </div>
 
             {/* Social proof */}
