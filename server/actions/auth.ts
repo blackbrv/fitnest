@@ -42,25 +42,33 @@ export async function registerUser(formData: {
 
   const { name, email, password } = parsed.data
 
-  const existing = await db.user.findUnique({ where: { email } })
-  if (existing) {
+  try {
+    const existing = await db.user.findUnique({ where: { email } })
+    if (existing) {
+      return {
+        success: false,
+        error: 'An account with this email already exists',
+      }
+    }
+
+    const hashedPassword = await hash(password, 12)
+
+    const user = await db.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    })
+
+    await createSession({ userId: user.id, email: user.email, name: user.name })
+  } catch (err) {
+    console.error('Register error:', err)
     return {
       success: false,
-      error: 'An account with this email already exists',
+      error: 'Unable to connect to the database. Make sure DATABASE_URL is set and migrations have been run.',
     }
   }
-
-  const hashedPassword = await hash(password, 12)
-
-  const user = await db.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
-  })
-
-  await createSession({ userId: user.id, email: user.email, name: user.name })
 
   redirect('/dashboard')
 }
@@ -79,23 +87,25 @@ export async function loginUser(formData: {
 
   const { email, password } = parsed.data
 
-  const user = await db.user.findUnique({ where: { email } })
-  if (!user) {
+  try {
+    const user = await db.user.findUnique({ where: { email } })
+    if (!user) {
+      return { success: false, error: 'Invalid email or password' }
+    }
+
+    const passwordMatch = await compare(password, user.password)
+    if (!passwordMatch) {
+      return { success: false, error: 'Invalid email or password' }
+    }
+
+    await createSession({ userId: user.id, email: user.email, name: user.name })
+  } catch (err) {
+    console.error('Login error:', err)
     return {
       success: false,
-      error: 'Invalid email or password',
+      error: 'Unable to connect to the database. Make sure DATABASE_URL is set and migrations have been run.',
     }
   }
-
-  const passwordMatch = await compare(password, user.password)
-  if (!passwordMatch) {
-    return {
-      success: false,
-      error: 'Invalid email or password',
-    }
-  }
-
-  await createSession({ userId: user.id, email: user.email, name: user.name })
 
   redirect('/dashboard')
 }
