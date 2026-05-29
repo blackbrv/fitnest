@@ -109,6 +109,7 @@ export async function POST(request: NextRequest) {
         data: {
           familyId: membership.familyId,
           ...planData,
+          scheduledDays: JSON.stringify(planData.scheduledDays),
           isActive: true,
         },
       })

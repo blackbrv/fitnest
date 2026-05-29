@@ -123,9 +123,9 @@ export function WorkoutPlanCard({ plan, currentUserId }: WorkoutPlanCardProps) {
         )}
 
         {/* Scheduled days */}
-        {parseScheduledDays(plan.scheduledDays as string).length > 0 && (
+        {parseScheduledDays(plan.scheduledDays as unknown as string).length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
-            {parseScheduledDays(plan.scheduledDays as string).map((day) => (
+            {parseScheduledDays(plan.scheduledDays as unknown as string).map((day) => (
               <span
                 key={day}
                 className="bg-[#a3ff3f]/15 text-[#a3ff3f] text-xs px-2 py-0.5 rounded-md font-medium"
