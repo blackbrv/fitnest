@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
+import { calculateStreak } from '@/lib/utils'
 import { Header } from '@/components/shared/Header'
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats'
 import { FamilyOverview } from '@/components/dashboard/FamilyOverview'
@@ -93,10 +94,7 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
   try {
     const familyMember = await db.familyMember.findFirst({
       where: { userId },
-      include: {
-        family: true,
-        user: true,
-      },
+      include: { family: true, user: true },
     })
 
     if (!familyMember) return MOCK_DATA
@@ -114,53 +112,81 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
     const weekStart = new Date(today)
     weekStart.setDate(weekStart.getDate() - 6)
 
-    const memberDataPromises = allMembers.map(async (m: (typeof allMembers)[number]) => {
-      const todayLog = await db.workoutLog.findFirst({
-        where: {
-          userId: m.userId,
-          createdAt: { gte: today, lte: todayEnd },
-        },
+    const thirtyDaysAgo = new Date(today)
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
+    const memberUserIds = allMembers.map((m: (typeof allMembers)[number]) => m.userId)
+
+    // Batch fetch all logs for the family
+    const [allWeekLogs, allStreakLogs, allTodayLogs] = await Promise.all([
+      db.workoutLog.findMany({
+        where: { userId: { in: memberUserIds }, createdAt: { gte: weekStart } },
+      }),
+      db.workoutLog.findMany({
+        where: { userId: { in: memberUserIds }, status: 'COMPLETED', createdAt: { gte: thirtyDaysAgo } },
+        select: { userId: true, createdAt: true },
+      }),
+      db.workoutLog.findMany({
+        where: { userId: { in: memberUserIds }, createdAt: { gte: today, lte: todayEnd } },
         orderBy: { createdAt: 'desc' },
-      })
+      }),
+    ])
 
-      const weekLogs = await db.workoutLog.findMany({
-        where: {
-          userId: m.userId,
-          createdAt: { gte: weekStart },
-        },
-      })
+    // Group logs by userId
+    type WeekLog = (typeof allWeekLogs)[number]
+    type TodayLog = (typeof allTodayLogs)[number]
 
-      const completedWeek = weekLogs.filter(
-        (l: { status: string }) => l.status === 'COMPLETED',
-      ).length
+    const weekLogsByUser = new Map<string, WeekLog[]>()
+    const streakDatesByUser = new Map<string, Date[]>()
+    const todayLogByUser = new Map<string, TodayLog>()
+
+    for (const log of allWeekLogs) {
+      if (!weekLogsByUser.has(log.userId)) weekLogsByUser.set(log.userId, [])
+      weekLogsByUser.get(log.userId)!.push(log)
+    }
+    for (const log of allStreakLogs) {
+      if (!streakDatesByUser.has(log.userId)) streakDatesByUser.set(log.userId, [])
+      streakDatesByUser.get(log.userId)!.push(new Date(log.createdAt))
+    }
+    for (const log of allTodayLogs) {
+      if (!todayLogByUser.has(log.userId)) todayLogByUser.set(log.userId, log)
+    }
+
+    // Fetch workout plan titles for today's logs
+    const workoutPlanIds = [
+      ...new Set(allTodayLogs.filter((l) => l.workoutPlanId).map((l) => l.workoutPlanId!)),
+    ]
+    const workoutPlans =
+      workoutPlanIds.length > 0
+        ? await db.workoutPlan.findMany({ where: { id: { in: workoutPlanIds } } })
+        : []
+    const workoutPlanTitles = new Map(workoutPlans.map((p: { id: string; title: string }) => [p.id, p.title]))
+
+    const members: MemberDashboardData[] = allMembers.map((m: (typeof allMembers)[number]) => {
+      const weekLogs = weekLogsByUser.get(m.userId) ?? []
+      const completedWeek = weekLogs.filter((l: WeekLog) => l.status === 'COMPLETED').length
       const completionRate =
-        weekLogs.length > 0
-          ? Math.round((completedWeek / weekLogs.length) * 100)
-          : 0
-
-      let assignedWorkout = null
-      if (todayLog?.workoutPlanId) {
-        assignedWorkout = await db.workoutPlan.findUnique({
-          where: { id: todayLog.workoutPlanId },
-        })
-      }
+        weekLogs.length > 0 ? Math.round((completedWeek / weekLogs.length) * 100) : 0
+      const streak = calculateStreak(streakDatesByUser.get(m.userId) ?? [])
+      const todayLog = todayLogByUser.get(m.userId)
+      const workoutName = todayLog?.workoutPlanId
+        ? workoutPlanTitles.get(todayLog.workoutPlanId) ?? null
+        : null
 
       return {
         id: m.userId,
         name: m.user?.name ?? 'Unknown',
         role: m.role as UserRole,
-        streak: 0,
+        streak,
         completionRate,
         todayStatus: (todayLog?.status ?? null) as WorkoutStatus | null,
-        workoutName: assignedWorkout?.title ?? null,
+        workoutName,
       }
     })
 
-    const members = await Promise.all(memberDataPromises)
-
-    const completedToday = members.filter(
-      (m: MemberDashboardData) => m.todayStatus === 'COMPLETED',
-    ).length
+    const completedToday = members.filter((m) => m.todayStatus === 'COMPLETED').length
+    const totalWorkoutsWeek = allWeekLogs.filter((l: WeekLog) => l.status === 'COMPLETED').length
+    const activeStreak = members.find((m) => m.id === userId)?.streak ?? 0
 
     return {
       familyName: familyMember.family.familyName,
@@ -168,11 +194,12 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
       totalMembers: allMembers.length,
       completedToday,
       totalToday: allMembers.length,
-      weeklyConsistency: Math.round(
-        members.reduce((sum: number, m: MemberDashboardData) => sum + m.completionRate, 0) / members.length,
-      ),
-      totalWorkoutsWeek: 0,
-      activeStreak: 0,
+      weeklyConsistency:
+        members.length > 0
+          ? Math.round(members.reduce((sum, m) => sum + m.completionRate, 0) / members.length)
+          : 0,
+      totalWorkoutsWeek,
+      activeStreak,
       members,
     }
   } catch {
