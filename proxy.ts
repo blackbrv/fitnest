@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { jwtVerify } from "jose"
 
-const PUBLIC_ROUTES = ["/", "/login", "/register", "/forgot-password", "/privacy", "/terms"]
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password"]
 const PROTECTED_PREFIX = ["/dashboard", "/family-management", "/workout-plans", "/statistics", "/notifications", "/settings", "/profile"]
 
@@ -10,7 +9,7 @@ function getSecret(): Uint8Array {
   return new TextEncoder().encode(secret)
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get("fitnest_session")?.value
 
