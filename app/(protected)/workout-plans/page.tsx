@@ -6,6 +6,7 @@ import { WorkoutPlan, WorkoutStatus } from '@/types'
 import { WorkoutPlanCard } from '@/components/workout/WorkoutPlanCard'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Button } from '@/components/ui/Button'
+import { StaggerContainer, StaggerItem } from '@/components/ui/Motion'
 import { Dumbbell, Plus } from 'lucide-react'
 import { FilterTabs } from './FilterTabs'
 
@@ -226,12 +227,14 @@ export default async function WorkoutPlansPage({
           className="mt-4"
         />
       ) : (
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+        <StaggerContainer className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {filteredPlans.map((plan: any) => (
-            <WorkoutPlanCard key={plan.id} plan={plan} currentUserId={userId} />
+            <StaggerItem key={plan.id}>
+              <WorkoutPlanCard plan={plan} currentUserId={userId} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       )}
     </div>
   )

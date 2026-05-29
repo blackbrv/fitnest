@@ -1,5 +1,10 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import { Dumbbell, Flame, TrendingUp, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+const ease = [0.21, 0.47, 0.32, 0.98] as const
 
 interface StatCard {
   icon: React.ReactNode
@@ -49,10 +54,27 @@ export function WeeklyStats({
   ]
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <motion.div
+      className="grid grid-cols-2 lg:grid-cols-4 gap-3"
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.08 } },
+      }}
+      initial="hidden"
+      animate="visible"
+    >
       {stats.map((stat, i) => (
-        <div
+        <motion.div
           key={i}
+          variants={{
+            hidden: { opacity: 0, y: 20, scale: 0.97 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              transition: { duration: 0.45, ease },
+            },
+          }}
           className={cn(
             'rounded-2xl border border-white/8 bg-[#151922]',
             'p-4 flex flex-col gap-3',
@@ -74,8 +96,8 @@ export function WeeklyStats({
             </p>
             <p className="text-xs text-[#8b95a5] font-medium">{stat.label}</p>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   )
 }

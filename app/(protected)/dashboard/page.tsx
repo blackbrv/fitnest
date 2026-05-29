@@ -8,6 +8,7 @@ import { FamilyOverview } from '@/components/dashboard/FamilyOverview'
 import { MemberCard } from '@/components/dashboard/MemberCard'
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
 import { ProgressChart } from '@/components/dashboard/ProgressChart'
+import { StaggerContainer, StaggerItem } from '@/components/ui/Motion'
 import type { WorkoutStatus, UserRole } from '@/types'
 
 interface MemberDashboardData {
@@ -263,19 +264,20 @@ export default async function DashboardPage() {
               <h2 className="text-sm font-semibold text-[#8b95a5] uppercase tracking-wider mb-3">
                 Family Members
               </h2>
-              <div className="space-y-3">
+              <StaggerContainer className="space-y-3">
                 {data.members.map((member) => (
-                  <MemberCard
-                    key={member.id}
-                    name={member.name}
-                    role={member.role}
-                    todayStatus={member.todayStatus}
-                    streak={member.streak}
-                    completionRate={member.completionRate}
-                    workoutName={member.workoutName}
-                  />
+                  <StaggerItem key={member.id}>
+                    <MemberCard
+                      name={member.name}
+                      role={member.role}
+                      todayStatus={member.todayStatus}
+                      streak={member.streak}
+                      completionRate={member.completionRate}
+                      workoutName={member.workoutName}
+                    />
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerContainer>
             </div>
           </div>
 

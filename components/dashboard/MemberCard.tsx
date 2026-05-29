@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { Flame, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { getInitials } from '@/lib/utils'
@@ -55,10 +56,11 @@ export function MemberCard({
   const isCompleted = todayStatus === 'COMPLETED'
 
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -2, transition: { duration: 0.15 } }}
       className={cn(
         'rounded-2xl border bg-[#151922] p-4',
-        'transition-all duration-200',
+        'transition-colors duration-200',
         isCompleted ? 'border-[#a3ff3f]/20' : 'border-white/8',
       )}
     >
@@ -136,6 +138,6 @@ export function MemberCard({
           <p className="text-xs text-[#8b95a5] text-center">No workout assigned</p>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }

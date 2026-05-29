@@ -3,6 +3,7 @@ import { getSession } from '@/lib/auth'
 import { ROUTES } from '@/constants'
 import { Sidebar } from '@/components/shared/Sidebar'
 import { MobileNav } from '@/components/shared/MobileNav'
+import { PageTransition } from '@/components/ui/Motion'
 
 export default async function ProtectedLayout({
   children,
@@ -23,7 +24,7 @@ export default async function ProtectedLayout({
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0 md:ml-[240px]">
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
-          {children}
+          <PageTransition>{children}</PageTransition>
         </main>
       </div>
 

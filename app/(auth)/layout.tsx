@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ScaleIn } from '@/components/ui/Motion'
 
 export const metadata: Metadata = {
   title: 'FitNest — Get Started',
@@ -42,7 +43,7 @@ export default function AuthLayout({
           </p>
         </div>
 
-        {children}
+        <ScaleIn>{children}</ScaleIn>
       </div>
     </div>
   )

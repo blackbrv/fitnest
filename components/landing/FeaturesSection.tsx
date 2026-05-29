@@ -1,4 +1,10 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import { LayoutDashboard, Dumbbell, TrendingUp, BarChart3, Bell } from 'lucide-react'
+import { FadeInView } from '@/components/ui/Motion'
+
+const ease = [0.21, 0.47, 0.32, 0.98] as const
 
 const features = [
   {
@@ -41,7 +47,7 @@ export default function FeaturesSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 lg:mb-20">
+        <FadeInView className="text-center mb-16 lg:mb-20">
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#A3FF3F] mb-4">
             Platform Features
           </p>
@@ -51,18 +57,34 @@ export default function FeaturesSection() {
           <p className="mt-4 text-[#8b95a5] text-lg max-w-xl mx-auto leading-relaxed">
             Designed to keep every household member motivated and accountable — from beginners to athletes.
           </p>
-        </div>
+        </FadeInView>
 
         {/* Feature cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+        >
           {features.map((feature, i) => {
             const Icon = feature.icon
             const isLast = i === features.length - 1
-            const isSecondToLast = i === features.length - 2
 
             return (
-              <div
+              <motion.div
                 key={feature.title}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.5, ease },
+                  },
+                }}
                 className={`group relative bg-[#151922] border border-white/[0.07] rounded-3xl p-7 hover:border-[#A3FF3F]/20 transition-all duration-300 hover:bg-[#171e28] ${
                   isLast && features.length % 3 !== 0
                     ? 'sm:col-span-2 lg:col-span-1'
@@ -84,15 +106,15 @@ export default function FeaturesSection() {
                     background: 'radial-gradient(circle at top left, rgba(163,255,63,0.04) 0%, transparent 60%)',
                   }}
                 />
-              </div>
+              </motion.div>
             )
           })}
 
           {/* 5 features → put last two in wider cards on medium screens */}
-        </div>
+        </motion.div>
 
         {/* Bottom stat strip */}
-        <div className="mt-16 grid grid-cols-3 gap-px bg-white/[0.06] rounded-3xl overflow-hidden">
+        <FadeInView delay={0.1} className="mt-16 grid grid-cols-3 gap-px bg-white/[0.06] rounded-3xl overflow-hidden">
           {[
             { value: '50+', label: 'Workout types' },
             { value: '99.9%', label: 'Uptime SLA' },
@@ -103,7 +125,7 @@ export default function FeaturesSection() {
               <p className="text-xs text-[#8b95a5] mt-1">{label}</p>
             </div>
           ))}
-        </div>
+        </FadeInView>
       </div>
     </section>
   )

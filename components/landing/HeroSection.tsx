@@ -1,5 +1,25 @@
+'use client'
+
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { Play, ArrowRight, Flame, Trophy, Users } from 'lucide-react'
+
+const ease = [0.21, 0.47, 0.32, 0.98] as const
+
+const headlineWords = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+}
+
+const wordAnim = {
+  hidden: { opacity: 0, y: 32, skewY: 2 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    skewY: 0,
+    transition: { duration: 0.6, ease },
+  },
+}
 
 export default function HeroSection() {
   return (
@@ -22,32 +42,62 @@ export default function HeroSection() {
           {/* Left: Copy */}
           <div className="flex flex-col gap-6">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#A3FF3F]/10 border border-[#A3FF3F]/20 rounded-full px-4 py-1.5 w-fit">
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05, ease }}
+              className="inline-flex items-center gap-2 bg-[#A3FF3F]/10 border border-[#A3FF3F]/20 rounded-full px-4 py-1.5 w-fit"
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-[#A3FF3F] animate-pulse" />
               <span className="text-xs font-semibold text-[#A3FF3F] tracking-wide uppercase">
                 Family Fitness Platform
               </span>
-            </div>
+            </motion.div>
 
             {/* Headline */}
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#F5F7FA] leading-[1.05] tracking-tight">
-              Build Stronger{' '}
+            <motion.h1
+              className="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#F5F7FA] leading-[1.05] tracking-tight"
+              variants={headlineWords}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.span variants={wordAnim} style={{ display: 'inline-block' }}>
+                Build Stronger
+              </motion.span>
+              {' '}
               <span className="relative inline-block">
-                <span className="text-[#A3FF3F] drop-shadow-[0_0_30px_rgba(163,255,63,0.4)]">
+                <motion.span
+                  variants={wordAnim}
+                  style={{ display: 'inline-block' }}
+                  className="text-[#A3FF3F] drop-shadow-[0_0_30px_rgba(163,255,63,0.4)]"
+                >
                   Habits
-                </span>
-              </span>{' '}
-              Together
-            </h1>
+                </motion.span>
+              </span>
+              {' '}
+              <motion.span variants={wordAnim} style={{ display: 'inline-block' }}>
+                Together
+              </motion.span>
+            </motion.h1>
 
             {/* Subheadline */}
-            <p className="text-[#8b95a5] text-lg lg:text-xl leading-relaxed max-w-xl">
+            <motion.p
+              className="text-[#8b95a5] text-lg lg:text-xl leading-relaxed max-w-xl"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4, ease }}
+            >
               FitNest helps families stay active through shared workout planning,
               progress tracking, and accountability. One app, every milestone.
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 mt-2">
+            <motion.div
+              className="flex flex-wrap items-center gap-4 mt-2"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5, ease }}
+            >
               <Link
                 href="/register"
                 className="group flex items-center gap-2.5 bg-[#A3FF3F] text-[#0F1115] font-bold px-7 py-3.5 rounded-full text-base hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_24px_rgba(163,255,63,0.35)] hover:shadow-[0_0_36px_rgba(163,255,63,0.55)]"
@@ -64,10 +114,15 @@ export default function HeroSection() {
                 </span>
                 See Features
               </a>
-            </div>
+            </motion.div>
 
             {/* Social proof */}
-            <div className="flex items-center gap-6 pt-2">
+            <motion.div
+              className="flex items-center gap-6 pt-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.65, ease }}
+            >
               <div className="flex -space-x-2">
                 {['TJ', 'SM', 'MG', 'RL'].map((initials, i) => (
                   <div
@@ -81,11 +136,16 @@ export default function HeroSection() {
               <p className="text-sm text-[#8b95a5]">
                 <span className="text-[#F5F7FA] font-semibold">2,400+</span> families already active
               </p>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right: Dashboard mockup */}
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, x: 30, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.2, ease }}
+          >
             {/* Main card */}
             <div className="relative bg-[#151922] border border-white/[0.08] rounded-3xl p-5 shadow-2xl">
               {/* Top bar */}
@@ -151,7 +211,12 @@ export default function HeroSection() {
             </div>
 
             {/* Floating badge - streak */}
-            <div className="absolute -top-4 -right-4 bg-[#1c2433] border border-white/[0.1] rounded-2xl px-4 py-2.5 shadow-xl">
+            <motion.div
+              className="absolute -top-4 -right-4 bg-[#1c2433] border border-white/[0.1] rounded-2xl px-4 py-2.5 shadow-xl"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.7, ease }}
+            >
               <div className="flex items-center gap-2">
                 <Flame className="w-4 h-4 text-orange-400" />
                 <div>
@@ -159,14 +224,19 @@ export default function HeroSection() {
                   <p className="text-sm font-bold text-[#F5F7FA]">12 Days</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Floating badge - new workout */}
-            <div className="absolute -bottom-4 -left-4 bg-[#A3FF3F] rounded-2xl px-4 py-2.5 shadow-[0_0_20px_rgba(163,255,63,0.4)]">
+            <motion.div
+              className="absolute -bottom-4 -left-4 bg-[#A3FF3F] rounded-2xl px-4 py-2.5 shadow-[0_0_20px_rgba(163,255,63,0.4)]"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.8, ease }}
+            >
               <p className="text-xs font-bold text-[#0F1115]">+1 Workout</p>
               <p className="text-[10px] text-[#0F1115]/70">Jamie just logged</p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
