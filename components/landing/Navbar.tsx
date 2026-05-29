@@ -21,7 +21,7 @@ export default function Navbar({ session }: NavbarProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-300 ${
         scrolled
           ? 'backdrop-blur-xl bg-[#0F1115]/80 border-b border-white/[0.06]'
           : 'bg-transparent'
@@ -128,13 +128,13 @@ export default function Navbar({ session }: NavbarProps) {
             <div className="flex flex-col gap-2 pt-2 border-t border-white/[0.06]">
               {session ? (
                 <>
-                  <div className="flex items-center gap-2.5 py-2">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#1c2433] text-xs font-bold text-[#a3ff3f] ring-1 ring-[#a3ff3f]/20">
+                  <div className="flex items-center gap-2.5 py-2 min-w-0">
+                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1c2433] text-xs font-bold text-[#a3ff3f] ring-1 ring-[#a3ff3f]/20">
                       {getInitials(session.name)}
                     </span>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-[#F5F7FA]">{session.name}</span>
-                      <span className="text-xs text-[#8b95a5]">{session.email}</span>
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-sm font-medium text-[#F5F7FA] truncate">{session.name}</span>
+                      <span className="text-xs text-[#8b95a5] truncate">{session.email}</span>
                     </div>
                   </div>
                   <Link

@@ -14,7 +14,7 @@ export default async function Home() {
   const session = await getSession()
 
   return (
-    <div className="bg-[#0F1115] min-h-screen">
+    <div className="bg-[#0F1115] min-h-screen w-full overflow-x-hidden">
       <Navbar session={session ? { name: session.name, email: session.email } : null} />
       <main>
         <HeroSection />
