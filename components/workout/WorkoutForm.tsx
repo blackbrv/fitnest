@@ -67,7 +67,7 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
       difficulty: plan?.difficulty ?? 'BEGINNER',
       category: plan?.category ?? 'STRENGTH',
       scheduledDays: plan?.scheduledDays ?? [],
-      assignedTo: plan?.assignedTo ?? '',
+      assignedTo: plan?.assignedTo ?? 'none',
       notes: plan?.notes ?? '',
       exercises: plan?.exercises
         ? plan.exercises.map((ex) => ({
@@ -127,7 +127,7 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
         exercises: validValues.exercises.map(
           (ex: FormValues['exercises'][number], i: number) => ({ ...ex, order: i }),
         ),
-        assignedTo: validValues.assignedTo || undefined,
+        assignedTo: (validValues.assignedTo && validValues.assignedTo !== 'none') ? validValues.assignedTo : undefined,
         description: validValues.description || undefined,
         notes: validValues.notes || undefined,
       }
@@ -147,7 +147,7 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
   }
 
   const memberOptions = [
-    { value: '', label: 'No one (family-wide)' },
+    { value: 'none', label: 'No one (family-wide)' },
     ...familyMembers.map((m) => ({ value: m.user.id, label: m.user.name })),
   ]
 
@@ -219,7 +219,7 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
               <Select
                 label="Assign to Member"
                 options={memberOptions}
-                value={field.value ?? ''}
+                value={field.value ?? 'none'}
                 onValueChange={field.onChange}
                 error={errors.assignedTo?.message}
               />
