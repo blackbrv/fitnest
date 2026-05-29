@@ -3,117 +3,118 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id              String          @id @default(cuid())
-  name            String
-  email           String          @unique
-  password        String
-  avatar          String?
-  emailVerified   Boolean         @default(false)
-  createdAt       DateTime        @default(now()) @map("created_at")
-  updatedAt       DateTime        @updatedAt @map("updated_at")
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  avatar        String?        @db.Text
+  emailVerified Boolean        @default(false) @map("email_verified")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
 
-  ownedFamilies   Family[]        @relation("FamilyOwner")
-  familyMembers   FamilyMember[]
-  workoutLogs     WorkoutLog[]
-  notifications   Notification[]
+  ownedFamilies  Family[]       @relation("FamilyOwner")
+  familyMembers  FamilyMember[]
+  workoutLogs    WorkoutLog[]
+  notifications  Notification[]
 
   @@map("users")
 }
 
 model Family {
-  id            String          @id @default(cuid())
-  familyName    String          @map("family_name")
-  inviteCode    String          @unique @map("invite_code")
-  ownerId       String          @map("owner_id")
-  createdAt     DateTime        @default(now()) @map("created_at")
-  updatedAt     DateTime        @updatedAt @map("updated_at")
+  id           String         @id @default(cuid())
+  familyName   String         @map("family_name")
+  inviteCode   String         @unique @map("invite_code")
+  ownerId      String         @map("owner_id")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
 
-  owner         User            @relation("FamilyOwner", fields: [ownerId], references: [id], onDelete: Cascade)
-  members       FamilyMember[]
-  workoutPlans  WorkoutPlan[]
+  owner        User           @relation("FamilyOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members      FamilyMember[]
+  workoutPlans WorkoutPlan[]
 
   @@map("families")
 }
 
 model FamilyMember {
-  id        String      @id @default(cuid())
-  familyId  String      @map("family_id")
-  userId    String      @map("user_id")
-  role      MemberRole  @default(MEMBER)
-  joinedAt  DateTime    @default(now()) @map("joined_at")
+  id       String     @id @default(cuid())
+  familyId String     @map("family_id")
+  userId   String     @map("user_id")
+  role     MemberRole @default(MEMBER)
+  joinedAt DateTime   @default(now()) @map("joined_at")
 
-  family    Family      @relation(fields: [familyId], references: [id], onDelete: Cascade)
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  family   Family     @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([familyId, userId])
   @@map("family_members")
 }
 
 model WorkoutPlan {
-  id              String            @id @default(cuid())
-  familyId        String            @map("family_id")
-  assignedTo      String?           @map("assigned_to")
-  title           String
-  description     String?
-  difficulty      WorkoutDifficulty @default(BEGINNER)
-  category        WorkoutCategory   @default(STRENGTH)
-  scheduledDays   String[]          @map("scheduled_days")
-  notes           String?
-  isActive        Boolean           @default(true) @map("is_active")
-  createdAt       DateTime          @default(now()) @map("created_at")
-  updatedAt       DateTime          @updatedAt @map("updated_at")
+  id            String            @id @default(cuid())
+  familyId      String            @map("family_id")
+  assignedTo    String?           @map("assigned_to")
+  title         String
+  description   String?           @db.Text
+  difficulty    WorkoutDifficulty @default(BEGINNER)
+  category      WorkoutCategory   @default(STRENGTH)
+  scheduledDays String            @map("scheduled_days") @db.Text
+  notes         String?           @db.Text
+  isActive      Boolean           @default(true) @map("is_active")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
 
-  family          Family            @relation(fields: [familyId], references: [id], onDelete: Cascade)
-  exercises       WorkoutExercise[]
-  workoutLogs     WorkoutLog[]
+  family        Family            @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  exercises     WorkoutExercise[]
+  workoutLogs   WorkoutLog[]
 
   @@map("workout_plans")
 }
 
 model WorkoutExercise {
-  id              String      @id @default(cuid())
-  workoutPlanId   String      @map("workout_plan_id")
-  exerciseName    String      @map("exercise_name")
-  sets            Int
-  reps            Int?
-  duration        Int?
-  restSeconds     Int?        @map("rest_seconds")
-  order           Int         @default(0)
+  id            String      @id @default(cuid())
+  workoutPlanId String      @map("workout_plan_id")
+  exerciseName  String      @map("exercise_name")
+  sets          Int
+  reps          Int?
+  duration      Int?
+  restSeconds   Int?        @map("rest_seconds")
+  order         Int         @default(0)
 
-  workoutPlan     WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  workoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
   @@map("workout_exercises")
 }
 
 model WorkoutLog {
-  id            String          @id @default(cuid())
-  userId        String          @map("user_id")
-  workoutPlanId String          @map("workout_plan_id")
-  status        WorkoutStatus   @default(PENDING)
-  completedAt   DateTime?       @map("completed_at")
-  notes         String?
-  createdAt     DateTime        @default(now()) @map("created_at")
+  id            String        @id @default(cuid())
+  userId        String        @map("user_id")
+  workoutPlanId String        @map("workout_plan_id")
+  status        WorkoutStatus @default(PENDING)
+  completedAt   DateTime?     @map("completed_at")
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now()) @map("created_at")
 
-  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workoutPlan   WorkoutPlan     @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workoutPlan   WorkoutPlan   @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
   @@map("workout_logs")
 }
 
 model Notification {
-  id        String            @id @default(cuid())
-  userId    String            @map("user_id")
+  id        String           @id @default(cuid())
+  userId    String           @map("user_id")
   type      NotificationType
   title     String
-  message   String
-  isRead    Boolean           @default(false) @map("is_read")
-  createdAt DateTime          @default(now()) @map("created_at")
+  message   String           @db.Text
+  isRead    Boolean          @default(false) @map("is_read")
+  createdAt DateTime         @default(now()) @map("created_at")
 
-  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("notifications")
 }

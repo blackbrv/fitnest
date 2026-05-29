@@ -74,3 +74,13 @@ export function calculateCompletionRate(
   if (total === 0) return 0
   return Math.round((completed / total) * 100)
 }
+
+export function parseScheduledDays(days: string | string[]): string[] {
+  if (Array.isArray(days)) return days
+  try {
+    const parsed = JSON.parse(days)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
