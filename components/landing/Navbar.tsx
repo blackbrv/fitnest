@@ -61,7 +61,7 @@ export default function Navbar() {
               Login
             </Link>
             <Link
-              href="/signup"
+              href="/register"
               className="text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2 rounded-full hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_16px_rgba(163,255,63,0.3)] hover:shadow-[0_0_24px_rgba(163,255,63,0.5)]"
             >
               Start Free
@@ -107,7 +107,7 @@ export default function Navbar() {
                 Login
               </Link>
               <Link
-                href="/signup"
+                href="/register"
                 className="text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2.5 rounded-full text-center hover:bg-[#b8ff5e] transition-all duration-200"
                 onClick={() => setMenuOpen(false)}
               >

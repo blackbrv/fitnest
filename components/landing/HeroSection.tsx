@@ -49,7 +49,7 @@ export default function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4 mt-2">
               <Link
-                href="/signup"
+                href="/register"
                 className="group flex items-center gap-2.5 bg-[#A3FF3F] text-[#0F1115] font-bold px-7 py-3.5 rounded-full text-base hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_24px_rgba(163,255,63,0.35)] hover:shadow-[0_0_36px_rgba(163,255,63,0.55)]"
               >
                 Start Free

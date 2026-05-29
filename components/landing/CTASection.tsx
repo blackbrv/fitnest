@@ -47,7 +47,7 @@ export default function CTASection() {
 
         {/* CTA Button */}
         <Link
-          href="/signup"
+          href="/register"
           className="group inline-flex items-center gap-3 bg-[#A3FF3F] text-[#0F1115] font-bold text-lg px-10 py-4 rounded-full hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_30px_rgba(163,255,63,0.4)] hover:shadow-[0_0_50px_rgba(163,255,63,0.6)]"
         >
           Start Free Today

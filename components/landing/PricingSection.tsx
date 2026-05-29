@@ -17,7 +17,7 @@ const plans = [
       'Community workouts',
     ],
     cta: 'Get Started Free',
-    ctaHref: '/signup',
+    ctaHref: '/register',
   },
   {
     name: 'Family',
@@ -37,7 +37,7 @@ const plans = [
       'Priority support',
     ],
     cta: 'Start Free Trial',
-    ctaHref: '/signup?plan=family',
+    ctaHref: '/register',
   },
   {
     name: 'Pro',
