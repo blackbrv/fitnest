@@ -1,3 +1,4 @@
+import { getSession } from '@/lib/auth'
 import Navbar from '@/components/landing/Navbar'
 import HeroSection from '@/components/landing/HeroSection'
 import FeaturesSection from '@/components/landing/FeaturesSection'
@@ -9,10 +10,12 @@ import FAQSection from '@/components/landing/FAQSection'
 import CTASection from '@/components/landing/CTASection'
 import Footer from '@/components/landing/Footer'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getSession()
+
   return (
     <div className="bg-[#0F1115] min-h-screen">
-      <Navbar />
+      <Navbar session={session ? { name: session.name, email: session.email } : null} />
       <main>
         <HeroSection />
         <FeaturesSection />

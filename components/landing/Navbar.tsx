@@ -2,9 +2,14 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X, Zap, LayoutDashboard } from 'lucide-react'
+import { getInitials } from '@/lib/utils'
 
-export default function Navbar() {
+interface NavbarProps {
+  session?: { name: string; email: string } | null
+}
+
+export default function Navbar({ session }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -54,18 +59,40 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors duration-200 px-4 py-2"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2 rounded-full hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_16px_rgba(163,255,63,0.3)] hover:shadow-[0_0_24px_rgba(163,255,63,0.5)]"
-            >
-              Start Free
-            </Link>
+            {session ? (
+              <>
+                <div className="flex items-center gap-2.5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#1c2433] text-xs font-bold text-[#a3ff3f] ring-1 ring-[#a3ff3f]/20">
+                    {getInitials(session.name)}
+                  </span>
+                  <span className="text-sm text-[#F5F7FA] font-medium max-w-[120px] truncate">
+                    {session.name.split(' ')[0]}
+                  </span>
+                </div>
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-2 text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2 rounded-full hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_16px_rgba(163,255,63,0.3)] hover:shadow-[0_0_24px_rgba(163,255,63,0.5)]"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Dashboard
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors duration-200 px-4 py-2"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2 rounded-full hover:bg-[#b8ff5e] transition-all duration-200 shadow-[0_0_16px_rgba(163,255,63,0.3)] hover:shadow-[0_0_24px_rgba(163,255,63,0.5)]"
+                >
+                  Start Free
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger */}
@@ -99,20 +126,44 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="flex flex-col gap-2 pt-2 border-t border-white/[0.06]">
-              <Link
-                href="/login"
-                className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors py-2"
-                onClick={() => setMenuOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2.5 rounded-full text-center hover:bg-[#b8ff5e] transition-all duration-200"
-                onClick={() => setMenuOpen(false)}
-              >
-                Start Free
-              </Link>
+              {session ? (
+                <>
+                  <div className="flex items-center gap-2.5 py-2">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#1c2433] text-xs font-bold text-[#a3ff3f] ring-1 ring-[#a3ff3f]/20">
+                      {getInitials(session.name)}
+                    </span>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-[#F5F7FA]">{session.name}</span>
+                      <span className="text-xs text-[#8b95a5]">{session.email}</span>
+                    </div>
+                  </div>
+                  <Link
+                    href="/dashboard"
+                    className="inline-flex items-center justify-center gap-2 text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2.5 rounded-full text-center hover:bg-[#b8ff5e] transition-all duration-200"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    Go to Dashboard
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors py-2"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="text-sm font-semibold bg-[#A3FF3F] text-[#0F1115] px-5 py-2.5 rounded-full text-center hover:bg-[#b8ff5e] transition-all duration-200"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Start Free
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
