@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
+import { parseScheduledDays } from '@/lib/utils'
 import { WorkoutPlan, WorkoutStatus, WorkoutExercise } from '@/types'
 import { ExerciseList } from '@/components/workout/ExerciseList'
 import { CompletionButton } from '@/components/workout/CompletionButton'
@@ -201,7 +202,7 @@ export default async function WorkoutPlanDetailPage({
         <div className="flex items-start gap-3 mb-4">
           <Calendar size={15} className="text-[#8b95a5] mt-0.5 shrink-0" />
           <div className="flex flex-wrap gap-1.5">
-            {(plan.scheduledDays as string[]).map((day: string) => (
+            {parseScheduledDays(plan.scheduledDays as string).map((day: string) => (
               <span
                 key={day}
                 className="bg-[#a3ff3f]/15 text-[#a3ff3f] text-xs px-2 py-0.5 rounded-md font-medium"

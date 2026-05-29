@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { WorkoutPlan, WorkoutStatus } from '@/types'
-import { cn } from '@/lib/utils'
+import { cn, parseScheduledDays } from '@/lib/utils'
 import { CategoryBadge } from './CategoryBadge'
 import { Avatar } from '@/components/ui/Avatar'
 import { CheckCircle2, Clock3, Dumbbell, SkipForward } from 'lucide-react'
@@ -123,9 +123,9 @@ export function WorkoutPlanCard({ plan, currentUserId }: WorkoutPlanCardProps) {
         )}
 
         {/* Scheduled days */}
-        {plan.scheduledDays.length > 0 && (
+        {parseScheduledDays(plan.scheduledDays as string).length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
-            {plan.scheduledDays.map((day) => (
+            {parseScheduledDays(plan.scheduledDays as string).map((day) => (
               <span
                 key={day}
                 className="bg-[#a3ff3f]/15 text-[#a3ff3f] text-xs px-2 py-0.5 rounded-md font-medium"
