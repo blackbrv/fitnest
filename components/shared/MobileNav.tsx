@@ -29,7 +29,7 @@ export function MobileNav() {
       className={cn(
         'md:hidden fixed bottom-0 left-0 right-0 z-50',
         'bg-[#151922] border-t border-white/8',
-        'safe-area-pb',
+        'pb-2',
       )}
       aria-label="Mobile navigation"
     >
@@ -45,7 +45,7 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex-1 flex flex-col items-center justify-center gap-1 px-1',
+                'relative flex-1 flex flex-col items-center justify-center gap-1 px-1',
                 'transition-colors duration-150',
                 isActive ? 'text-[#a3ff3f]' : 'text-[#8b95a5]',
               )}
