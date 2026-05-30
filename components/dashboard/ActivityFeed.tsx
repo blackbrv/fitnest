@@ -3,7 +3,7 @@
 import { cn, getInitials } from '@/lib/utils'
 import { CheckCircle2, Flame, Trophy, UserPlus, Dumbbell } from 'lucide-react'
 
-interface ActivityItem {
+export interface ActivityItem {
   id: string
   memberName: string
   action: string

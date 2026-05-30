@@ -1,15 +1,18 @@
 import { Suspense } from 'react'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { calculateStreak } from '@/lib/utils'
+import { calculateStreak, parseScheduledDays, formatRelativeTime } from '@/lib/utils'
 import { Header } from '@/components/shared/Header'
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats'
 import { FamilyOverview } from '@/components/dashboard/FamilyOverview'
 import { MemberCard } from '@/components/dashboard/MemberCard'
-import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
+import { ActivityFeed, type ActivityItem } from '@/components/dashboard/ActivityFeed'
 import { ProgressChart } from '@/components/dashboard/ProgressChart'
 import { StaggerContainer, StaggerItem } from '@/components/ui/Motion'
 import type { WorkoutStatus, UserRole } from '@/types'
+
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const
+const DAY_KEYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as const
 
 interface MemberDashboardData {
   id: string
@@ -19,6 +22,12 @@ interface MemberDashboardData {
   completionRate: number
   todayStatus: WorkoutStatus | null
   workoutName: string | null
+}
+
+interface ChartDay {
+  day: string
+  completed: number
+  total: number
 }
 
 interface DashboardData {
@@ -31,6 +40,8 @@ interface DashboardData {
   totalWorkoutsWeek: number
   activeStreak: number
   members: MemberDashboardData[]
+  weeklyChartData: ChartDay[]
+  recentActivity: ActivityItem[]
 }
 
 const MOCK_DATA: DashboardData = {
@@ -43,52 +54,22 @@ const MOCK_DATA: DashboardData = {
   totalWorkoutsWeek: 19,
   activeStreak: 12,
   members: [
-    {
-      id: '1',
-      name: 'Sarah Johnson',
-      role: 'OWNER',
-      streak: 12,
-      completionRate: 87,
-      todayStatus: 'COMPLETED',
-      workoutName: 'Full Body Strength',
-    },
-    {
-      id: '2',
-      name: 'Marcus Johnson',
-      role: 'MEMBER',
-      streak: 7,
-      completionRate: 74,
-      todayStatus: 'COMPLETED',
-      workoutName: 'HIIT Cardio Blast',
-    },
-    {
-      id: '3',
-      name: 'Emma Johnson',
-      role: 'MEMBER',
-      streak: 5,
-      completionRate: 68,
-      todayStatus: 'IN_PROGRESS',
-      workoutName: 'Yoga & Mobility',
-    },
-    {
-      id: '4',
-      name: 'Liam Johnson',
-      role: 'MEMBER',
-      streak: 3,
-      completionRate: 60,
-      todayStatus: 'COMPLETED',
-      workoutName: 'Kids Cardio Fun',
-    },
-    {
-      id: '5',
-      name: 'Olivia Johnson',
-      role: 'MEMBER',
-      streak: 0,
-      completionRate: 40,
-      todayStatus: 'PENDING',
-      workoutName: 'Beginner Stretching',
-    },
+    { id: '1', name: 'Sarah Johnson', role: 'OWNER', streak: 12, completionRate: 87, todayStatus: 'COMPLETED', workoutName: 'Full Body Strength' },
+    { id: '2', name: 'Marcus Johnson', role: 'MEMBER', streak: 7, completionRate: 74, todayStatus: 'COMPLETED', workoutName: 'HIIT Cardio Blast' },
+    { id: '3', name: 'Emma Johnson', role: 'MEMBER', streak: 5, completionRate: 68, todayStatus: 'IN_PROGRESS', workoutName: 'Yoga & Mobility' },
+    { id: '4', name: 'Liam Johnson', role: 'MEMBER', streak: 3, completionRate: 60, todayStatus: 'COMPLETED', workoutName: 'Kids Cardio Fun' },
+    { id: '5', name: 'Olivia Johnson', role: 'MEMBER', streak: 0, completionRate: 40, todayStatus: 'PENDING', workoutName: 'Beginner Stretching' },
   ],
+  weeklyChartData: [
+    { day: 'Mon', completed: 4, total: 5 },
+    { day: 'Tue', completed: 3, total: 5 },
+    { day: 'Wed', completed: 5, total: 5 },
+    { day: 'Thu', completed: 2, total: 5 },
+    { day: 'Fri', completed: 4, total: 5 },
+    { day: 'Sat', completed: 3, total: 5 },
+    { day: 'Sun', completed: 1, total: 5 },
+  ],
+  recentActivity: [],
 }
 
 async function getDashboardData(userId: string): Promise<DashboardData> {
@@ -119,7 +100,7 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
     const memberUserIds = allMembers.map((m: (typeof allMembers)[number]) => m.userId)
 
     // Batch fetch all logs for the family
-    const [allWeekLogs, allStreakLogs, allTodayLogs] = await Promise.all([
+    const [allWeekLogs, allStreakLogs, allTodayLogs, recentCompletedLogs, activePlans] = await Promise.all([
       db.workoutLog.findMany({
         where: { userId: { in: memberUserIds }, createdAt: { gte: weekStart } },
       }),
@@ -130,6 +111,16 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
       db.workoutLog.findMany({
         where: { userId: { in: memberUserIds }, createdAt: { gte: today, lte: todayEnd } },
         orderBy: { createdAt: 'desc' },
+      }),
+      db.workoutLog.findMany({
+        where: { userId: { in: memberUserIds }, status: 'COMPLETED', createdAt: { gte: weekStart } },
+        orderBy: { createdAt: 'desc' },
+        take: 15,
+        include: { workoutPlan: { select: { title: true } } },
+      }),
+      db.workoutPlan.findMany({
+        where: { familyId: familyMember.familyId, isActive: true },
+        select: { assignedTo: true, scheduledDays: true },
       }),
     ])
 
@@ -189,6 +180,59 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
     const totalWorkoutsWeek = allWeekLogs.filter((l: WeekLog) => l.status === 'COMPLETED').length
     const activeStreak = members.find((m) => m.id === userId)?.streak ?? 0
 
+    // ── Weekly chart (last 7 days) ──────────────────────────────────────────
+    const memberNameMap = new Map(allMembers.map((m: (typeof allMembers)[number]) => [m.userId, m.user?.name ?? 'Unknown']))
+
+    const weeklyChartData: ChartDay[] = []
+    for (let i = 6; i >= 0; i--) {
+      const day = new Date(today)
+      day.setDate(today.getDate() - i)
+      const dayStart = new Date(day)
+      const dayEnd = new Date(day)
+      dayEnd.setHours(23, 59, 59, 999)
+      const dowIndex = day.getDay() // 0=Sun
+      const dayKey = DAY_KEYS[dowIndex]
+
+      const completedOnDay = (allWeekLogs as WeekLog[]).filter(
+        (l) =>
+          l.status === 'COMPLETED' &&
+          new Date(l.createdAt) >= dayStart &&
+          new Date(l.createdAt) <= dayEnd,
+      ).length
+
+      // Count members who have a plan scheduled on this day
+      const scheduledMembers = new Set<string>()
+      for (const plan of activePlans as { assignedTo: string | null; scheduledDays: string }[]) {
+        const days = parseScheduledDays(plan.scheduledDays)
+        if (days.includes(dayKey)) {
+          if (plan.assignedTo) {
+            scheduledMembers.add(plan.assignedTo)
+          } else {
+            memberUserIds.forEach((id) => scheduledMembers.add(id))
+          }
+        }
+      }
+
+      weeklyChartData.push({
+        day: DAY_NAMES[dowIndex],
+        completed: completedOnDay,
+        total: scheduledMembers.size || memberUserIds.length,
+      })
+    }
+
+    // ── Recent activity feed ────────────────────────────────────────────────
+    const recentActivity: ActivityItem[] = (
+      recentCompletedLogs as (typeof recentCompletedLogs[number])[]
+    ).map((log) => ({
+      id: log.id,
+      memberName: memberNameMap.get(log.userId) ?? 'Someone',
+      action: 'completed',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      detail: (log as any).workoutPlan?.title ?? 'a workout',
+      timeAgo: formatRelativeTime(log.completedAt ?? log.createdAt),
+      type: 'workout' as const,
+    }))
+
     return {
       familyName: familyMember.family.familyName,
       inviteCode: familyMember.family.inviteCode,
@@ -202,6 +246,8 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
       totalWorkoutsWeek,
       activeStreak,
       members,
+      weeklyChartData,
+      recentActivity,
     }
   } catch {
     return MOCK_DATA
@@ -284,10 +330,10 @@ export default async function DashboardPage() {
           {/* Right column */}
           <div className="space-y-5">
             {/* Progress chart */}
-            <ProgressChart />
+            <ProgressChart data={data.weeklyChartData} />
 
             {/* Activity feed */}
-            <ActivityFeed />
+            <ActivityFeed activities={data.recentActivity.length > 0 ? data.recentActivity : undefined} />
           </div>
         </div>
       </div>
