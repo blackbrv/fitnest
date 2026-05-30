@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 import { CheckCircle2, AlertCircle } from 'lucide-react'
 
-const MAX_AVATAR_SIZE = 60_000
+const MAX_AVATAR_SIZE = 2_097_152 // 2MB
 
 const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(80, 'Name is too long'),
@@ -66,7 +66,7 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
     reader.onload = (event) => {
       const dataUrl = event.target?.result as string
       if (dataUrl.length > MAX_AVATAR_SIZE) {
-        setAvatarSizeError('Image is too large (max ~45KB). Please compress or crop the image.')
+        setAvatarSizeError('Image is too large (max 2MB). Please choose a smaller image.')
         return
       }
       setAvatarPreview(dataUrl)
@@ -160,7 +160,7 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
             {avatarSizeError && (
               <p className="text-xs text-red-400">{avatarSizeError}</p>
             )}
-            <p className="text-xs text-muted">JPG, PNG or WebP. Will be compressed to under 45KB.</p>
+            <p className="text-xs text-muted">JPG, PNG or WebP. Max 2MB.</p>
           </div>
 
           <Input

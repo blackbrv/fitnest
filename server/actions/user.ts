@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { ActionResult } from '@/types'
 
-const MAX_AVATAR_SIZE = 60_000 // ~60KB base64 limit (fits in MySQL TEXT)
+const MAX_AVATAR_SIZE = 2_097_152 // 2MB base64 limit
 
 const updateProfileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(80, 'Name is too long'),
@@ -19,7 +19,7 @@ const updateProfileSchema = z.object({
     )
     .refine(
       (v) => !v || v.length <= MAX_AVATAR_SIZE,
-      'Image is too large (max ~45KB after compression)',
+      'Image is too large (max 2MB)',
     )
     .optional(),
 })
