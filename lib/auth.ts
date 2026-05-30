@@ -13,7 +13,7 @@ function getSecret(): Uint8Array {
   return new TextEncoder().encode(secret)
 }
 
-export async function createSession(payload: SessionPayload): Promise<void> {
+export async function createSession(payload: SessionPayload): Promise<string> {
   const expiresAt = new Date(Date.now() + SESSION_DURATION)
   const token = await new SignJWT(payload as unknown as Record<string, unknown>)
     .setProtectedHeader({ alg: "HS256" })
@@ -21,6 +21,24 @@ export async function createSession(payload: SessionPayload): Promise<void> {
     .setExpirationTime(expiresAt)
     .sign(getSecret())
 
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    expires: expiresAt,
+    path: "/",
+  })
+  return token
+}
+
+export async function getSessionToken(): Promise<string | null> {
+  const cookieStore = await cookies()
+  return cookieStore.get(SESSION_COOKIE)?.value ?? null
+}
+
+export async function setSessionToken(token: string): Promise<void> {
+  const expiresAt = new Date(Date.now() + SESSION_DURATION)
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE, token, {
     httpOnly: true,

@@ -5,6 +5,8 @@ import { ROUTES } from '@/constants'
 import { Sidebar } from '@/components/shared/Sidebar'
 import { MobileNav } from '@/components/shared/MobileNav'
 import { Header } from '@/components/shared/Header'
+import { getAccountStore, isTokenValid, removeStoredAccount } from '@/lib/multi-auth'
+import type { AccountSwitcherItem } from '@/components/shared/AccountSwitcher'
 
 export default async function ProtectedLayout({
   children,
@@ -28,10 +30,34 @@ export default async function ProtectedLayout({
     // ignore
   }
 
+  // Build accounts list for switcher — validate tokens and prune expired ones
+  let accounts: AccountSwitcherItem[] = []
+  try {
+    const store = await getAccountStore()
+    const validated: AccountSwitcherItem[] = []
+    for (const account of store.accounts) {
+      const valid = await isTokenValid(account.token)
+      if (valid) {
+        validated.push({
+          userId: account.userId,
+          name: account.name,
+          email: account.email,
+          isActive: account.userId === session.userId,
+        })
+      } else {
+        // Silently prune expired accounts
+        await removeStoredAccount(account.userId)
+      }
+    }
+    accounts = validated
+  } catch {
+    // ignore — accounts switcher is non-critical
+  }
+
   return (
     <div className="flex min-h-screen bg-background">
       {/* Desktop sidebar */}
-      <Sidebar session={session} avatar={userAvatar} />
+      <Sidebar session={session} avatar={userAvatar} accounts={accounts} />
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0 md:ml-[240px]">

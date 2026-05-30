@@ -1,13 +1,14 @@
 'use server'
 
 import { db } from '@/lib/db'
-import { createSession, deleteSession } from '@/lib/auth'
+import { createSession, deleteSession, getSession, getSessionToken } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { hash, compare } from 'bcryptjs'
 import { randomBytes } from 'crypto'
 import { z } from 'zod'
 import { ActionResult } from '@/types'
 import { sendVerificationEmail, sendPasswordResetEmail } from '@/lib/email'
+import { addOrUpdateStoredAccount, getAccountStore } from '@/lib/multi-auth'
 
 // ── Schemas ───────────────────────────────────────────────────────────────
 
@@ -118,7 +119,33 @@ export async function loginUser(formData: {
       return { success: false, error: `UNVERIFIED:${email}` }
     }
 
-    await createSession({ userId: user.id, email: user.email, name: user.name })
+    // Save current session to accounts store before switching (preserves the previous account)
+    const existingToken = await getSessionToken()
+    if (existingToken) {
+      const existingSession = await getSession()
+      if (existingSession && existingSession.userId !== user.id) {
+        const store = await getAccountStore()
+        const alreadyStored = store.accounts.some((a) => a.userId === existingSession.userId)
+        if (!alreadyStored) {
+          await addOrUpdateStoredAccount({
+            userId: existingSession.userId,
+            name: existingSession.name,
+            email: existingSession.email,
+            token: existingToken,
+            addedAt: new Date().toISOString(),
+          })
+        }
+      }
+    }
+
+    const newToken = await createSession({ userId: user.id, email: user.email, name: user.name })
+    await addOrUpdateStoredAccount({
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+      token: newToken,
+      addedAt: new Date().toISOString(),
+    })
   } catch (err) {
     console.error('Login error:', err)
     return {
@@ -132,6 +159,8 @@ export async function loginUser(formData: {
 
 export async function logoutUser(): Promise<void> {
   await deleteSession()
+  const { clearAccountStore } = await import('@/lib/multi-auth')
+  await clearAccountStore()
   redirect('/login')
 }
 

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { jwtVerify } from "jose"
 
+// These redirect logged-in users to /dashboard. /add-account is intentionally excluded
+// so authenticated users can add a second account without being redirected.
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password"]
 const PUBLIC_ROUTES = ["/verify-email", "/reset-password"] // accessible without login, no dashboard redirect
 const PROTECTED_PREFIX = ["/dashboard", "/family-management", "/workout-plans", "/statistics", "/notifications", "/settings", "/profile", "/activity"]

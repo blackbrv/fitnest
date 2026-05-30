@@ -14,10 +14,10 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { getInitials } from '@/lib/utils'
 import { NAV_ITEMS } from '@/constants'
 import { SessionPayload } from '@/types'
 import { deleteSession } from '@/lib/auth'
+import { AccountSwitcher, type AccountSwitcherItem } from '@/components/shared/AccountSwitcher'
 
 const ICON_MAP: Record<string, LucideIcon> = {
   LayoutDashboard,
@@ -31,9 +31,10 @@ const ICON_MAP: Record<string, LucideIcon> = {
 interface SidebarProps {
   session: SessionPayload
   avatar?: string | null
+  accounts?: AccountSwitcherItem[]
 }
 
-export function Sidebar({ session, avatar }: SidebarProps) {
+export function Sidebar({ session, avatar, accounts = [] }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -42,8 +43,6 @@ export function Sidebar({ session, avatar }: SidebarProps) {
     router.push('/login')
     router.refresh()
   }
-
-  const initials = getInitials(session.name)
 
   return (
     <aside
@@ -113,61 +112,36 @@ export function Sidebar({ session, avatar }: SidebarProps) {
         })}
       </nav>
 
-      {/* User profile */}
-      <div className="border-t border-border p-3">
-        <div className="flex items-center gap-3 px-2 py-2 rounded-xl">
-          {avatar ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={avatar}
-              alt={session.name}
-              className="flex-shrink-0 w-9 h-9 rounded-full object-cover ring-1 ring-border"
-            />
-          ) : (
-            <span
-              className={cn(
-                'flex-shrink-0 w-9 h-9 rounded-full',
-                'flex items-center justify-center',
-                'bg-surface-2 text-primary text-sm font-semibold',
-                'ring-1 ring-border',
-              )}
-              aria-label={session.name}
-            >
-              {initials}
-            </span>
-          )}
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-foreground truncate">
-              {session.name}
-            </p>
-            <p className="text-xs text-muted truncate">{session.email}</p>
-          </div>
+      {/* User profile + account switcher */}
+      <div className="border-t border-border p-3 space-y-1">
+        <AccountSwitcher accounts={accounts} avatar={avatar} />
+
+        <div className="flex items-center gap-1">
           <Link
             href="/settings"
             className={cn(
-              'flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-xl',
-              'text-muted hover:text-foreground hover:bg-surface-3',
+              'flex-1 flex items-center gap-2 px-3 py-2 rounded-xl',
+              'text-xs font-medium text-muted',
+              'hover:text-foreground hover:bg-surface-2/60',
               'transition-colors duration-150',
             )}
-            aria-label="Profile settings"
-            title="Settings"
           >
-            <Settings size={15} />
+            <Settings size={14} className="flex-shrink-0" />
+            Settings
           </Link>
+          <button
+            onClick={handleLogout}
+            className={cn(
+              'flex-1 flex items-center gap-2 px-3 py-2 rounded-xl',
+              'text-xs font-medium text-muted',
+              'hover:text-red-400 hover:bg-red-500/10',
+              'transition-colors duration-150',
+            )}
+          >
+            <LogOut size={14} className="flex-shrink-0" />
+            Sign out
+          </button>
         </div>
-
-        <button
-          onClick={handleLogout}
-          className={cn(
-            'mt-1 w-full flex items-center gap-3 px-3 py-2.5 rounded-xl',
-            'text-sm font-medium text-muted',
-            'hover:text-red-400 hover:bg-red-500/10',
-            'transition-all duration-150',
-          )}
-        >
-          <LogOut size={16} className="flex-shrink-0" />
-          Sign out
-        </button>
       </div>
     </aside>
   )
