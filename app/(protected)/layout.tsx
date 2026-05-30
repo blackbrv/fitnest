@@ -4,6 +4,7 @@ import { db } from '@/lib/db'
 import { ROUTES } from '@/constants'
 import { Sidebar } from '@/components/shared/Sidebar'
 import { MobileNav } from '@/components/shared/MobileNav'
+import { Header } from '@/components/shared/Header'
 
 export default async function ProtectedLayout({
   children,
@@ -34,6 +35,11 @@ export default async function ProtectedLayout({
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0 md:ml-[240px]">
+        <Header
+          userName={session.name}
+          userEmail={session.email}
+          userAvatar={userAvatar}
+        />
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
           {children}
         </main>

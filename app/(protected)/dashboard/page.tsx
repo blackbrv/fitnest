@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { calculateStreak, parseScheduledDays, formatRelativeTime } from '@/lib/utils'
-import { Header } from '@/components/shared/Header'
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats'
 import { FamilyOverview } from '@/components/dashboard/FamilyOverview'
 import { MemberCard } from '@/components/dashboard/MemberCard'
@@ -262,12 +261,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col min-h-full">
-      {/* Header */}
-      <Header
-        userName={session?.name ?? 'User'}
-        userEmail={session?.email ?? ''}
-      />
-
       {/* Dashboard body */}
       <div className="flex-1 px-4 md:px-6 py-5 space-y-5">
         {/* Weekly stats row */}

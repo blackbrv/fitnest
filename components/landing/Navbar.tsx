@@ -7,12 +7,13 @@ import { getInitials } from '@/lib/utils'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 interface NavbarProps {
-  session?: { name: string; email: string } | null
+  session?: { name: string; email: string; avatar?: string | null } | null
 }
 
 export default function Navbar({ session }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [avatarError, setAvatarError] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -64,8 +65,20 @@ export default function Navbar({ session }: NavbarProps) {
             {session ? (
               <>
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-xs font-bold text-primary ring-1 ring-[#a3ff3f]/20">
-                    {getInitials(session.name)}
+                  <span className="inline-flex h-8 w-8 rounded-full overflow-hidden bg-surface-2 text-xs font-bold text-primary ring-1 ring-[#a3ff3f]/20 shrink-0">
+                    {session.avatar && !avatarError ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={session.avatar}
+                        alt={session.name}
+                        className="w-full h-full object-cover"
+                        onError={() => setAvatarError(true)}
+                      />
+                    ) : (
+                      <span className="flex h-full w-full items-center justify-center">
+                        {getInitials(session.name)}
+                      </span>
+                    )}
                   </span>
                   <span className="text-sm text-foreground font-medium max-w-[120px] truncate">
                     {session.name.split(' ')[0]}
@@ -135,8 +148,20 @@ export default function Navbar({ session }: NavbarProps) {
               {session ? (
                 <>
                   <div className="flex items-center gap-2.5 py-2 min-w-0">
-                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-bold text-primary ring-1 ring-[#a3ff3f]/20">
-                      {getInitials(session.name)}
+                    <span className="inline-flex h-8 w-8 shrink-0 rounded-full overflow-hidden bg-surface-2 text-xs font-bold text-primary ring-1 ring-[#a3ff3f]/20">
+                      {session.avatar && !avatarError ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={session.avatar}
+                          alt={session.name}
+                          className="w-full h-full object-cover"
+                          onError={() => setAvatarError(true)}
+                        />
+                      ) : (
+                        <span className="flex h-full w-full items-center justify-center">
+                          {getInitials(session.name)}
+                        </span>
+                      )}
                     </span>
                     <div className="flex flex-col min-w-0">
                       <span className="text-sm font-medium text-foreground truncate">{session.name}</span>

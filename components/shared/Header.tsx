@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Bell } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -12,6 +13,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 interface HeaderProps {
   userName: string
   userEmail: string
+  userAvatar?: string | null
 }
 
 function getPageTitle(pathname: string): string {
@@ -28,11 +30,12 @@ function getPageTitle(pathname: string): string {
   return 'FitNest'
 }
 
-export function Header({ userName, userEmail }: HeaderProps) {
+export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
   const pathname = usePathname()
   const unreadCount = useAppStore((s) => s.unreadCount)
   const pageTitle = getPageTitle(pathname)
   const initials = getInitials(userName)
+  const [avatarError, setAvatarError] = useState(false)
 
   return (
     <header
@@ -92,7 +95,7 @@ export function Header({ userName, userEmail }: HeaderProps) {
         <Link
           href={ROUTES.PROFILE}
           className={cn(
-            'flex-shrink-0 w-9 h-9 rounded-full',
+            'flex-shrink-0 w-9 h-9 rounded-full overflow-hidden',
             'flex items-center justify-center',
             'bg-surface-2 text-primary text-sm font-semibold',
             'ring-1 ring-white/10',
@@ -101,7 +104,17 @@ export function Header({ userName, userEmail }: HeaderProps) {
           aria-label={`${userName} — go to profile`}
           title={userEmail}
         >
-          {initials}
+          {userAvatar && !avatarError ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={userAvatar}
+              alt={userName}
+              className="w-full h-full object-cover"
+              onError={() => setAvatarError(true)}
+            />
+          ) : (
+            initials
+          )}
         </Link>
       </div>
     </header>
