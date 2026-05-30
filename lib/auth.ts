@@ -1,21 +1,42 @@
 "use server"
 
+import '@/lib/env'
 import { SignJWT, jwtVerify } from "jose"
 import { cookies } from "next/headers"
 import { SessionPayload } from "@/types"
+import { db } from "@/lib/db"
 
 const SESSION_COOKIE = "fitnest_session"
 const SESSION_DURATION = 7 * 24 * 60 * 60 * 1000 // 7 days
+const MIN_SECRET_BYTES = 32
 
 function getSecret(): Uint8Array {
   const secret = process.env.JWT_SECRET
   if (!secret) throw new Error("JWT_SECRET is not set")
-  return new TextEncoder().encode(secret)
+  const encoded = new TextEncoder().encode(secret)
+  if (encoded.byteLength < MIN_SECRET_BYTES) {
+    throw new Error(
+      `JWT_SECRET is too short (${encoded.byteLength} bytes). Minimum: ${MIN_SECRET_BYTES} bytes. ` +
+      "Generate one with: openssl rand -hex 32",
+    )
+  }
+  return encoded
 }
 
-export async function createSession(payload: SessionPayload): Promise<string> {
+export async function createSession(
+  payload: Omit<SessionPayload, "sessionVersion">,
+): Promise<string> {
+  // Fetch current sessionVersion so forged tokens with a stale version are rejected
+  const user = await db.user.findUnique({
+    where: { id: payload.userId },
+    select: { sessionVersion: true },
+  })
+  const sessionVersion = user?.sessionVersion ?? 0
+
+  const fullPayload: SessionPayload = { ...payload, sessionVersion }
   const expiresAt = new Date(Date.now() + SESSION_DURATION)
-  const token = await new SignJWT(payload as unknown as Record<string, unknown>)
+
+  const token = await new SignJWT(fullPayload as unknown as Record<string, unknown>)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(expiresAt)
@@ -56,7 +77,17 @@ export async function getSession(): Promise<SessionPayload | null> {
     if (!token) return null
 
     const { payload } = await jwtVerify(token, getSecret())
-    return payload as unknown as SessionPayload
+    const session = payload as unknown as SessionPayload
+
+    // Verify sessionVersion against DB — this is what makes logout and password
+    // reset actually invalidate existing tokens.
+    const user = await db.user.findUnique({
+      where: { id: session.userId },
+      select: { sessionVersion: true },
+    })
+    if (!user || user.sessionVersion !== session.sessionVersion) return null
+
+    return session
   } catch {
     return null
   }
@@ -65,4 +96,11 @@ export async function getSession(): Promise<SessionPayload | null> {
 export async function deleteSession(): Promise<void> {
   const cookieStore = await cookies()
   cookieStore.delete(SESSION_COOKIE)
+}
+
+export async function incrementSessionVersion(userId: string): Promise<void> {
+  await db.user.update({
+    where: { id: userId },
+    data: { sessionVersion: { increment: 1 } },
+  })
 }

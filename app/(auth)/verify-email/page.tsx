@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { Suspense, useEffect, useState, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle2, XCircle, Loader2, Mail, RefreshCw } from 'lucide-react'
 import { verifyEmail, resendVerificationEmail } from '@/server/actions/auth'
 import { cn } from '@/lib/utils'
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token')
 
@@ -122,5 +122,13 @@ export default function VerifyEmailPage() {
         Back to sign in
       </Link>
     </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense>
+      <VerifyEmailContent />
+    </Suspense>
   )
 }

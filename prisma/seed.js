@@ -1,6 +1,11 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 
+if (process.env.NODE_ENV === 'production') {
+  console.error('[seed] Refusing to run seed script in production environment.');
+  process.exit(1);
+}
+
 const prisma = new PrismaClient();
 
 const FAMILY_ID = 'cmpr7qm2f00021k1zcxuge2gl';

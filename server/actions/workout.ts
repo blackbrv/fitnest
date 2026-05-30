@@ -205,6 +205,19 @@ export async function markWorkoutComplete(
   }
 
   try {
+    // Verify the plan belongs to the caller's family (prevents IDOR)
+    const membership = await db.familyMember.findFirst({
+      where: { userId: session.userId },
+    })
+    if (!membership) {
+      return { success: false, error: 'You must be in a family.' }
+    }
+
+    const plan = await db.workoutPlan.findUnique({ where: { id: workoutPlanId } })
+    if (!plan || plan.familyId !== membership.familyId) {
+      return { success: false, error: 'Workout plan not found or access denied.' }
+    }
+
     const today = new Date()
     today.setHours(0, 0, 0, 0)
     const tomorrow = new Date(today.getTime() + 86400000)

@@ -8,7 +8,8 @@ const PUBLIC_ROUTES = ["/verify-email", "/reset-password"] // accessible without
 const PROTECTED_PREFIX = ["/dashboard", "/family-management", "/workout-plans", "/statistics", "/notifications", "/settings", "/profile", "/activity"]
 
 function getSecret(): Uint8Array {
-  const secret = process.env.JWT_SECRET ?? "fallback-secret-key-for-dev-only"
+  const secret = process.env.JWT_SECRET
+  if (!secret) throw new Error('JWT_SECRET is not set')
   return new TextEncoder().encode(secret)
 }
 

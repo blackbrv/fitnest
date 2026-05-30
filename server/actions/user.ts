@@ -7,6 +7,16 @@ import { z } from 'zod'
 import { ActionResult } from '@/types'
 
 const MAX_AVATAR_SIZE = 2_097_152 // 2MB base64 limit
+const ALLOWED_AVATAR_PREFIXES = [
+  'data:image/jpeg;',
+  'data:image/png;',
+  'data:image/webp;',
+  'data:image/gif;',
+]
+
+function isAllowedAvatarFormat(v: string): boolean {
+  return ALLOWED_AVATAR_PREFIXES.some((prefix) => v.startsWith(prefix))
+}
 
 const updateProfileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(80, 'Name is too long'),
@@ -14,8 +24,8 @@ const updateProfileSchema = z.object({
   avatar: z
     .string()
     .refine(
-      (v) => !v || v.startsWith('data:image/') || v.startsWith('/'),
-      'Invalid image format',
+      (v) => !v || isAllowedAvatarFormat(v),
+      'Invalid image format. Allowed: JPEG, PNG, WebP, GIF',
     )
     .refine(
       (v) => !v || v.length <= MAX_AVATAR_SIZE,
@@ -75,8 +85,8 @@ export async function updateAvatar(avatarDataUrl: string | null): Promise<Action
   const session = await getSession()
   if (!session) return { success: false, error: 'Not authenticated' }
 
-  if (avatarDataUrl && !avatarDataUrl.startsWith('data:image/')) {
-    return { success: false, error: 'Invalid image format' }
+  if (avatarDataUrl && !isAllowedAvatarFormat(avatarDataUrl)) {
+    return { success: false, error: 'Invalid image format. Allowed: JPEG, PNG, WebP, GIF' }
   }
   if (avatarDataUrl && avatarDataUrl.length > MAX_AVATAR_SIZE) {
     return { success: false, error: 'Image is too large' }

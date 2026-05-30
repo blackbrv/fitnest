@@ -32,9 +32,9 @@ export default function LoginForm() {
     startTransition(async () => {
       const result = await loginUser(data)
       if (result && !result.success && result.error) {
-        if (result.error.startsWith('UNVERIFIED:')) {
-          const email = result.error.split('UNVERIFIED:')[1]
-          setUnverifiedEmail(email)
+        if (result.error === 'EMAIL_NOT_VERIFIED') {
+          // Use the email the user just typed — never echo server-provided data
+          setUnverifiedEmail(data.email)
           return
         }
         setError('root', { message: result.error })

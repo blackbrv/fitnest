@@ -5,10 +5,19 @@ import { z } from 'zod'
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 
+const workoutStatusEnum = z.enum(['PENDING', 'IN_PROGRESS', 'COMPLETED', 'SKIPPED'])
+
 const createLogSchema = z.object({
   workoutPlanId: z.string().min(1, 'workoutPlanId is required'),
-  status: z.enum(['PENDING', 'IN_PROGRESS', 'COMPLETED', 'SKIPPED']),
+  status: workoutStatusEnum,
   notes: z.string().max(500).optional().nullable(),
+})
+
+const getLogsQuerySchema = z.object({
+  workoutPlanId: z.string().optional(),
+  status: workoutStatusEnum.optional(),
+  from: z.string().datetime({ offset: true }).optional(),
+  to: z.string().datetime({ offset: true }).optional(),
 })
 
 // ─── GET /api/workout-logs ────────────────────────────────────────────────────
@@ -21,16 +30,26 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = request.nextUrl
-    const workoutPlanId = searchParams.get('workoutPlanId')
-    const status = searchParams.get('status')
-    const from = searchParams.get('from')
-    const to = searchParams.get('to')
+    const queryParsed = getLogsQuerySchema.safeParse({
+      workoutPlanId: searchParams.get('workoutPlanId') ?? undefined,
+      status: searchParams.get('status') ?? undefined,
+      from: searchParams.get('from') ?? undefined,
+      to: searchParams.get('to') ?? undefined,
+    })
+    if (!queryParsed.success) {
+      return Response.json(
+        { error: 'Invalid query parameters', details: queryParsed.error.flatten().fieldErrors },
+        { status: 400 },
+      )
+    }
+
+    const { workoutPlanId, status, from, to } = queryParsed.data
 
     const logs = await db.workoutLog.findMany({
       where: {
         userId: session.userId,
         ...(workoutPlanId ? { workoutPlanId } : {}),
-        ...(status ? { status: status as never } : {}),
+        ...(status ? { status } : {}),
         ...(from || to
           ? {
               createdAt: {

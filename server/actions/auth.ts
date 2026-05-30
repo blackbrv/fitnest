@@ -1,10 +1,10 @@
 'use server'
 
 import { db } from '@/lib/db'
-import { createSession, deleteSession, getSession, getSessionToken } from '@/lib/auth'
+import { createSession, deleteSession, getSession, getSessionToken, incrementSessionVersion } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { hash, compare } from 'bcryptjs'
-import { randomBytes } from 'crypto'
+import { randomBytes, createHash } from 'crypto'
 import { z } from 'zod'
 import { ActionResult } from '@/types'
 import { sendVerificationEmail, sendPasswordResetEmail } from '@/lib/email'
@@ -46,6 +46,11 @@ function generateToken(): string {
   return randomBytes(32).toString('hex')
 }
 
+/** Store only the SHA-256 hash of a token so a DB read never yields usable tokens. */
+function hashToken(token: string): string {
+  return createHash('sha256').update(token).digest('hex')
+}
+
 // ── Actions ───────────────────────────────────────────────────────────────
 
 export async function registerUser(formData: {
@@ -76,12 +81,12 @@ export async function registerUser(formData: {
         name,
         email,
         password: hashedPassword,
-        verificationToken: token,
+        verificationToken: hashToken(token), // store hash only
         verificationExpiry: expiry,
       },
     })
 
-    await sendVerificationEmail(email, token)
+    await sendVerificationEmail(email, token) // send raw token in email
   } catch (err) {
     console.error('Register error:', err)
     return {
@@ -116,10 +121,11 @@ export async function loginUser(formData: {
     }
 
     if (!user.emailVerified) {
-      return { success: false, error: `UNVERIFIED:${email}` }
+      // Opaque code — client uses its own form email, not this value
+      return { success: false, error: 'EMAIL_NOT_VERIFIED' }
     }
 
-    // Save current session to accounts store before switching (preserves the previous account)
+    // Save current session to accounts store before switching
     const existingToken = await getSessionToken()
     if (existingToken) {
       const existingSession = await getSession()
@@ -158,6 +164,11 @@ export async function loginUser(formData: {
 }
 
 export async function logoutUser(): Promise<void> {
+  const session = await getSession()
+  if (session) {
+    // Increment sessionVersion to invalidate this session server-side
+    await incrementSessionVersion(session.userId)
+  }
   await deleteSession()
   const { clearAccountStore } = await import('@/lib/multi-auth')
   await clearAccountStore()
@@ -182,10 +193,10 @@ export async function requestPasswordReset(formData: {
 
       await db.user.update({
         where: { id: user.id },
-        data: { resetToken: token, resetExpiry: expiry },
+        data: { resetToken: hashToken(token), resetExpiry: expiry }, // store hash only
       })
 
-      await sendPasswordResetEmail(email, token)
+      await sendPasswordResetEmail(email, token) // send raw token in email
     }
   } catch (err) {
     console.error('Password reset request error:', err)
@@ -199,8 +210,9 @@ export async function verifyEmail(token: string): Promise<ActionResult> {
   if (!token) return { success: false, error: 'Invalid verification link' }
 
   try {
+    const tokenHash = hashToken(token)
     const user = await db.user.findFirst({
-      where: { verificationToken: token },
+      where: { verificationToken: tokenHash },
     })
 
     if (!user) {
@@ -255,10 +267,10 @@ export async function resendVerificationEmail(email: string): Promise<ActionResu
 
     await db.user.update({
       where: { id: user.id },
-      data: { verificationToken: token, verificationExpiry: expiry },
+      data: { verificationToken: hashToken(token), verificationExpiry: expiry }, // store hash only
     })
 
-    await sendVerificationEmail(email, token)
+    await sendVerificationEmail(email, token) // send raw token in email
     return { success: true }
   } catch (err) {
     console.error('Resend verification error:', err)
@@ -279,8 +291,9 @@ export async function resetPassword(formData: {
   const { token, password } = parsed.data
 
   try {
+    const tokenHash = hashToken(token)
     const user = await db.user.findFirst({
-      where: { resetToken: token },
+      where: { resetToken: tokenHash },
     })
 
     if (!user) {
@@ -299,6 +312,8 @@ export async function resetPassword(formData: {
         password: hashedPassword,
         resetToken: null,
         resetExpiry: null,
+        // Increment sessionVersion to invalidate ALL existing sessions for this user
+        sessionVersion: { increment: 1 },
       },
     })
 

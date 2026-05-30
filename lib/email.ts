@@ -1,5 +1,9 @@
 import { Resend } from 'resend'
 
+if (process.env.NODE_ENV === 'production' && !process.env.RESEND_API_KEY) {
+  console.warn('[FitNest] RESEND_API_KEY is not set — email verification and password reset will not work')
+}
+
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const FROM = process.env.EMAIL_FROM ?? 'FitNest <noreply@fitnest.app>'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'

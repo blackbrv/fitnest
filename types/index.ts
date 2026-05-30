@@ -114,6 +114,7 @@ export interface SessionPayload {
   userId: string
   email: string
   name: string
+  sessionVersion: number
 }
 
 export interface ActionResult<T = void> {

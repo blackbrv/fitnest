@@ -3,24 +3,18 @@ import { Zap, Code2 } from 'lucide-react'
 
 const footerLinks = {
   Product: [
-    { label: 'Features', href: '#features' },
-    { label: 'Dashboard', href: '#dashboard' },
-    { label: 'Pricing', href: '#pricing' },
+    { label: 'Features', href: '/#features' },
+    { label: 'Pricing', href: '/#pricing' },
     { label: 'Changelog', href: '/changelog' },
-    { label: 'Roadmap', href: '/roadmap' },
   ],
   Company: [
     { label: 'About', href: '/about' },
     { label: 'Blog', href: '/blog' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'Press', href: '/press' },
     { label: 'Contact', href: '/contact' },
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
-    { label: 'Cookie Policy', href: '/cookies' },
-    { label: 'GDPR', href: '/gdpr' },
   ],
 }
 

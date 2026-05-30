@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { Suspense, useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, CheckCircle2, Loader2, RefreshCw } from 'lucide-react'
 import { resendVerificationEmail } from '@/server/actions/auth'
 import { cn } from '@/lib/utils'
 
-export default function VerifyEmailPendingPage() {
+function VerifyEmailPendingContent() {
   const searchParams = useSearchParams()
   const emailFromParam = searchParams.get('email') ?? ''
 
@@ -112,5 +112,13 @@ export default function VerifyEmailPendingPage() {
         Back to sign in
       </Link>
     </div>
+  )
+}
+
+export default function VerifyEmailPendingPage() {
+  return (
+    <Suspense>
+      <VerifyEmailPendingContent />
+    </Suspense>
   )
 }

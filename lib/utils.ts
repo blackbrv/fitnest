@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { randomBytes } from "crypto"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -7,9 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export function generateInviteCode(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  return Array.from({ length: 8 }, () =>
-    chars.charAt(Math.floor(Math.random() * chars.length))
-  ).join("")
+  const bytes = randomBytes(8)
+  return Array.from(bytes, (b) => chars[b % chars.length]).join("").slice(0, 8)
 }
 
 export function calculateStreak(completedDates: Date[]): number {
@@ -76,10 +76,10 @@ export function calculateCompletionRate(
 }
 
 export function parseScheduledDays(days: string | string[]): string[] {
-  if (Array.isArray(days)) return days
+  if (Array.isArray(days)) return days.filter((d) => typeof d === "string")
   try {
     const parsed = JSON.parse(days)
-    return Array.isArray(parsed) ? parsed : []
+    return Array.isArray(parsed) ? parsed.filter((d: unknown) => typeof d === "string") : []
   } catch {
     return []
   }

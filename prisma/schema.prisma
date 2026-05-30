@@ -19,6 +19,7 @@ model User {
   verificationExpiry  DateTime? @map("verification_expiry")
   resetToken          String?   @db.Text @map("reset_token")
   resetExpiry         DateTime? @map("reset_expiry")
+  sessionVersion      Int       @default(0) @map("session_version")
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   ownedFamilies Family[]       @relation("FamilyOwner")
@@ -157,4 +158,39 @@ enum NotificationType {
   FAMILY_ACTIVITY
   MISSED_WORKOUT
   GENERAL
+}
+
+model BlogPost {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  excerpt     String     @db.Text
+  content     String     @db.LongText
+  authorName  String     @default("FitNest Team") @map("author_name")
+  coverImage  String?    @map("cover_image")
+  publishedAt DateTime?  @map("published_at")
+  status      PostStatus @default(DRAFT)
+  tags        String?    @db.Text
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  @@index([slug])
+  @@index([status])
+  @@map("blog_posts")
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("contact_submissions")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
 }
