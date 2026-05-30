@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { cn, getInitials } from '@/lib/utils'
 import { CheckCircle2, Flame, Trophy, UserPlus, Dumbbell } from 'lucide-react'
 
@@ -100,9 +101,12 @@ export function ActivityFeed({ activities = MOCK_ACTIVITIES }: ActivityFeedProps
 
       {/* Footer */}
       <div className="px-4 py-2.5 border-t border-white/8">
-        <button className="w-full text-[11px] font-medium text-[#8b95a5] hover:text-[#a3ff3f] transition-colors text-center">
+        <Link
+          href="/activity"
+          className="block w-full text-[11px] font-medium text-[#8b95a5] hover:text-[#a3ff3f] transition-colors text-center"
+        >
           View all activity
-        </button>
+        </Link>
       </div>
     </div>
   )
