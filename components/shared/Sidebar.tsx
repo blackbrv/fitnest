@@ -51,28 +51,25 @@ export function Sidebar({ session }: SidebarProps) {
       )}
     >
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-white/8">
-        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[#a3ff3f] flex items-center justify-center">
+      <Link
+        href="/"
+        className="flex items-center gap-3 px-5 py-5 border-b border-white/8 group hover:opacity-90 transition-opacity"
+      >
+        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[#a3ff3f] flex items-center justify-center shadow-[0_0_12px_rgba(163,255,63,0.35)] group-hover:shadow-[0_0_18px_rgba(163,255,63,0.55)] transition-shadow">
           <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
+            width="18"
+            height="18"
+            viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
-            <path
-              d="M3 10h2M15 10h2M5 10a5 5 0 1 0 10 0A5 5 0 0 0 5 10ZM10 5V3M10 17v-2"
-              stroke="#0f1115"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
+            <polygon points="18,4 9,17 16,17 14,28 23,15 16,15" fill="#0f1115" />
           </svg>
         </div>
         <span className="text-lg font-bold text-[#f5f7fa] tracking-tight">
           Fit<span className="text-[#a3ff3f]">Nest</span>
         </span>
-      </div>
+      </Link>
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
