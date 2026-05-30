@@ -8,7 +8,7 @@ import { updateProfile } from '@/server/actions/user'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
-import { CheckCircle2, AlertCircle } from 'lucide-react'
+import { CheckCircle2, AlertCircle, Trash2 } from 'lucide-react'
 
 const MAX_AVATAR_SIZE = 2_097_152 // 2MB
 
@@ -130,7 +130,7 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
                   </span>
                 )}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
                 <label
                   className={cn(
                     'cursor-pointer rounded-xl border border-border bg-surface-2/60 px-3 py-2',
@@ -150,9 +150,15 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
                   <button
                     type="button"
                     onClick={handleRemoveAvatar}
-                    className="text-xs text-muted hover:text-red-400 transition-colors duration-150 text-left"
+                    aria-label="Remove profile picture"
+                    className={cn(
+                      'flex items-center justify-center w-9 h-9 rounded-xl',
+                      'border border-border bg-surface-2/60',
+                      'text-muted hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/8',
+                      'transition-colors duration-150',
+                    )}
                   >
-                    Remove photo
+                    <Trash2 size={15} />
                   </button>
                 )}
               </div>
