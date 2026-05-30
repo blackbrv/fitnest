@@ -44,10 +44,10 @@ export default function Navbar({ session }: NavbarProps) {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {[
-              { label: 'Features', href: '#features' },
-              { label: 'Dashboard', href: '#dashboard' },
-              { label: 'Pricing', href: '#pricing' },
-              { label: 'FAQ', href: '#faq' },
+              { label: 'Features', href: '/#features' },
+              { label: 'Dashboard', href: '/#dashboard' },
+              { label: 'Pricing', href: '/#pricing' },
+              { label: 'FAQ', href: '/#faq' },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -126,10 +126,10 @@ export default function Navbar({ session }: NavbarProps) {
         <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
             {[
-              { label: 'Features', href: '#features' },
-              { label: 'Dashboard', href: '#dashboard' },
-              { label: 'Pricing', href: '#pricing' },
-              { label: 'FAQ', href: '#faq' },
+              { label: 'Features', href: '/#features' },
+              { label: 'Dashboard', href: '/#dashboard' },
+              { label: 'Pricing', href: '/#pricing' },
+              { label: 'FAQ', href: '/#faq' },
             ].map((item) => (
               <Link
                 key={item.href}
