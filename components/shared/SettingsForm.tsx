@@ -155,7 +155,7 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
                       'flex items-center justify-center w-9 h-9 rounded-xl',
                       'border border-border bg-surface-2/60',
                       'text-muted hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/8',
-                      'transition-colors duration-150',
+                      'cursor-pointer transition-colors duration-150',
                     )}
                   >
                     <Trash2 size={15} />
