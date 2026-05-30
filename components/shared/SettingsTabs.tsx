@@ -1,15 +1,21 @@
 'use client'
 
 import { useState } from 'react'
-import { LucideIcon, User, Users, Bell, Shield, LogOut, Trash2 } from 'lucide-react'
+import { type LucideIcon, User, Users, Bell, Shield, LogOut, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SettingsForm } from './SettingsForm'
 import { logoutUser } from '@/server/actions/auth'
 
+const ICON_MAP: Record<string, LucideIcon> = {
+  profile: User,
+  family: Users,
+  notifications: Bell,
+  account: Shield,
+}
+
 interface Tab {
   id: string
   label: string
-  icon: LucideIcon
 }
 
 interface SettingsTabsProps {
@@ -26,7 +32,7 @@ export function SettingsTabs({ tabs, defaultValues, familyName }: SettingsTabsPr
       {/* Tab sidebar */}
       <nav className="flex flex-row gap-1 overflow-x-auto lg:flex-col lg:w-52 shrink-0">
         {tabs.map((tab) => {
-          const Icon = tab.icon
+          const Icon = ICON_MAP[tab.id] ?? User
           const isActive = activeTab === tab.id
           return (
             <button

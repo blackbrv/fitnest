@@ -4,7 +4,6 @@ import { db } from '@/lib/db'
 import { ROUTES } from '@/constants'
 import { SettingsForm } from '@/components/shared/SettingsForm'
 import { SettingsTabs } from '@/components/shared/SettingsTabs'
-import { User, Users, Bell, Shield } from 'lucide-react'
 
 export default async function SettingsPage() {
   const session = await getSession()
@@ -34,10 +33,10 @@ export default async function SettingsPage() {
   }
 
   const tabs = [
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'family', label: 'Family', icon: Users },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'account', label: 'Account', icon: Shield },
+    { id: 'profile', label: 'Profile' },
+    { id: 'family', label: 'Family' },
+    { id: 'notifications', label: 'Notifications' },
+    { id: 'account', label: 'Account' },
   ]
 
   return (
