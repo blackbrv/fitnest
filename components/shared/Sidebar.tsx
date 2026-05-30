@@ -10,6 +10,7 @@ import {
   Bell,
   Activity,
   LogOut,
+  Settings,
   type LucideIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -141,6 +142,18 @@ export function Sidebar({ session, avatar }: SidebarProps) {
             </p>
             <p className="text-xs text-muted truncate">{session.email}</p>
           </div>
+          <Link
+            href="/settings"
+            className={cn(
+              'flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-xl',
+              'text-muted hover:text-foreground hover:bg-surface-3',
+              'transition-colors duration-150',
+            )}
+            aria-label="Profile settings"
+            title="Settings"
+          >
+            <Settings size={15} />
+          </Link>
         </div>
 
         <button
