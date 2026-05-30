@@ -34,31 +34,31 @@ export function FamilyStatsCard({
   ]
 
   return (
-    <div className="bg-[#151922] rounded-2xl border border-white/8 p-6">
-      <h3 className="text-[#f5f7fa] font-semibold text-base mb-5">Family Stats</h3>
+    <div className="bg-surface rounded-2xl border border-border p-6">
+      <h3 className="text-foreground font-semibold text-base mb-5">Family Stats</h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {stats.map(({ icon: Icon, label, value, accent, isText }) => (
           <div
             key={label}
-            className="flex flex-col gap-3 rounded-xl bg-[#1c2433] border border-white/8 px-4 py-4"
+            className="flex flex-col gap-3 rounded-xl bg-surface-2 border border-border px-4 py-4"
           >
             <div className="flex items-center gap-2">
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                  accent ? 'bg-[#a3ff3f]/10' : 'bg-white/5'
+                  accent ? 'bg-primary/10' : 'bg-white/5'
                 }`}
               >
-                <Icon size={16} className={accent ? 'text-[#a3ff3f]' : 'text-[#8b95a5]'} />
+                <Icon size={16} className={accent ? 'text-primary' : 'text-muted'} />
               </div>
-              <span className="text-[#8b95a5] text-xs font-medium">{label}</span>
+              <span className="text-muted text-xs font-medium">{label}</span>
             </div>
             <span
               className={`font-bold leading-none ${
                 isText
-                  ? 'text-[#f5f7fa] text-lg truncate'
+                  ? 'text-foreground text-lg truncate'
                   : accent
-                  ? 'text-[#a3ff3f] text-3xl'
-                  : 'text-[#f5f7fa] text-3xl'
+                  ? 'text-primary text-3xl'
+                  : 'text-foreground text-3xl'
               }`}
             >
               {value}

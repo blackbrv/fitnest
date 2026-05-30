@@ -11,8 +11,8 @@ export function Card({ variant = 'default', className, children, ...props }: Car
   return (
     <div
       className={cn(
-        'rounded-2xl border border-white/8',
-        variant === 'default' && 'bg-[#151922]',
+        'rounded-2xl border border-border',
+        variant === 'default' && 'bg-surface',
         variant === 'glass' && 'bg-white/5 backdrop-blur-md',
         className,
       )}
@@ -46,7 +46,7 @@ export function CardFooter({ className, children, ...props }: HTMLAttributes<HTM
   return (
     <div
       className={cn(
-        'flex items-center p-5 pt-0 border-t border-white/8 mt-0',
+        'flex items-center p-5 pt-0 border-t border-border mt-0',
         className,
       )}
       {...props}

@@ -1,26 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 
-@theme inline {
-  --font-sans: "Plus Jakarta Sans", sans-serif;
-
+@theme {
   --color-background: #0f1115;
   --color-surface: #151922;
   --color-surface-2: #1c2433;
+  --color-surface-3: #242e40;
   --color-border: rgba(255, 255, 255, 0.08);
-  --color-text: #f5f7fa;
-  --color-text-muted: #8b95a5;
+  --color-foreground: #f5f7fa;
+  --color-muted: #8b95a5;
   --color-primary: #a3ff3f;
   --color-primary-dark: #7acc2e;
   --color-primary-muted: rgba(163, 255, 63, 0.12);
   --color-danger: #ff4d4f;
   --color-warning: #faad14;
   --color-success: #52c41a;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
 }
 
 :root {
   --background: #0f1115;
   --foreground: #f5f7fa;
+}
+
+.light {
+  --color-background: #f0f4f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef1f7;
+  --color-surface-3: #e2e8f4;
+  --color-border: rgba(0, 0, 0, 0.09);
+  --color-foreground: #111827;
+  --color-muted: #6b7280;
+  --color-primary: #a3ff3f;
+  --color-primary-dark: #7acc2e;
+  --color-primary-muted: rgba(163, 255, 63, 0.15);
+  --background: #f0f4f8;
+  --foreground: #111827;
 }
 
 * {
@@ -63,3 +78,17 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3d4f66;
 }
+
+/* Light mode overrides for white/opacity utilities */
+.light .hover\:bg-white\/5:hover,
+.light .hover\:bg-white\/\[0\.04\]:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+.light .bg-white\/5 { background-color: rgba(0, 0, 0, 0.04) !important; }
+.light .bg-white\/8 { background-color: rgba(0, 0, 0, 0.06) !important; }
+.light .bg-white\/10 { background-color: rgba(0, 0, 0, 0.08) !important; }
+.light .border-white\/8 { border-color: rgba(0, 0, 0, 0.09) !important; }
+.light .border-white\/\[0\.06\] { border-color: rgba(0, 0, 0, 0.07) !important; }
+.light .border-white\/\[0\.07\] { border-color: rgba(0, 0, 0, 0.08) !important; }
+.light .divide-white\/\[0\.05\] > * + * { border-color: rgba(0, 0, 0, 0.06) !important; }
+.light .ring-white\/10 { --tw-ring-color: rgba(0,0,0,0.1) !important; }

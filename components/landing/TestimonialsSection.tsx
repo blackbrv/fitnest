@@ -35,7 +35,7 @@ const testimonials = [
 
 export default function TestimonialsSection() {
   return (
-    <section className="relative py-24 lg:py-32 bg-[#0F1115]">
+    <section className="relative py-24 lg:py-32 bg-background">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -44,7 +44,7 @@ export default function TestimonialsSection() {
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#A3FF3F] mb-4">
             Real Families, Real Results
           </p>
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-[#F5F7FA] tracking-tight">
+          <h2 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">
             Loved by families
           </h2>
         </div>
@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div
               key={t.family}
-              className={`relative bg-[#151922] border rounded-3xl p-7 flex flex-col ${
+              className={`relative bg-surface border rounded-3xl p-7 flex flex-col ${
                 i === 1
                   ? 'border-white/[0.12] md:-mt-4 md:-mb-4 md:shadow-[0_0_60px_rgba(0,0,0,0.4)]'
                   : 'border-white/[0.07]'
@@ -68,7 +68,7 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <blockquote className="text-[#8b95a5] text-sm leading-relaxed mb-6 flex-1">
+              <blockquote className="text-muted text-sm leading-relaxed mb-6 flex-1">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 
@@ -78,14 +78,14 @@ export default function TestimonialsSection() {
                   <p className="text-lg font-extrabold" style={{ color: t.color }}>
                     {t.workouts}
                   </p>
-                  <p className="text-[10px] text-[#8b95a5]">Workouts</p>
+                  <p className="text-[10px] text-muted">Workouts</p>
                 </div>
                 <div className="w-px bg-white/[0.06]" />
                 <div>
                   <p className="text-lg font-extrabold" style={{ color: t.color }}>
                     {t.streakDays}d
                   </p>
-                  <p className="text-[10px] text-[#8b95a5]">Streak</p>
+                  <p className="text-[10px] text-muted">Streak</p>
                 </div>
               </div>
 
@@ -101,8 +101,8 @@ export default function TestimonialsSection() {
                   {t.initials}
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[#F5F7FA]">{t.family}</p>
-                  <p className="text-[10px] text-[#8b95a5]">{t.location}</p>
+                  <p className="text-sm font-bold text-foreground">{t.family}</p>
+                  <p className="text-[10px] text-muted">{t.location}</p>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function TestimonialsSection() {
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
               <p className="text-2xl font-extrabold text-[#A3FF3F]">{value}</p>
-              <p className="text-xs text-[#8b95a5] mt-0.5">{label}</p>
+              <p className="text-xs text-muted mt-0.5">{label}</p>
             </div>
           ))}
         </div>

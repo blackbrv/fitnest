@@ -43,13 +43,13 @@ export default async function NewWorkoutPlanPage() {
       {/* Back link */}
       <Link
         href="/workout-plans"
-        className="inline-flex items-center gap-1.5 text-sm text-[#8b95a5] hover:text-[#f5f7fa] transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors mb-6"
       >
         <ChevronLeft size={16} />
         Back to Plans
       </Link>
 
-      <h1 className="text-2xl font-bold text-[#f5f7fa] mb-6">Create Workout Plan</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">Create Workout Plan</h1>
 
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <WorkoutForm mode="create" familyMembers={members as unknown as MemberWithUser[]} />

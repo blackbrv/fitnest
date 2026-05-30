@@ -20,13 +20,13 @@ export function MarkAllReadButton() {
       onClick={handleClick}
       disabled={isPending}
       className={cn(
-        'inline-flex items-center gap-2 rounded-xl border border-white/8',
-        'bg-[#1c2433] px-3 py-2 text-sm font-medium text-[#f5f7fa]',
-        'hover:bg-[#242e40] hover:border-white/14 transition-colors duration-150',
+        'inline-flex items-center gap-2 rounded-xl border border-border',
+        'bg-surface-2 px-3 py-2 text-sm font-medium text-foreground',
+        'hover:bg-surface-3 transition-colors duration-150',
         'disabled:pointer-events-none disabled:opacity-40',
       )}
     >
-      <CheckCheck size={15} className="text-[#a3ff3f]" />
+      <CheckCheck size={15} className="text-primary" />
       {isPending ? 'Marking…' : 'Mark all read'}
     </button>
   )

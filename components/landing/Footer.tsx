@@ -30,7 +30,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#151922] border-t border-white/[0.07]">
+    <footer className="bg-surface border-t border-white/[0.07]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Main footer content */}
         <div className="py-14 grid grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
@@ -41,12 +41,12 @@ export default function Footer() {
               <div className="w-7 h-7 rounded-lg bg-[#A3FF3F] flex items-center justify-center shadow-[0_0_10px_rgba(163,255,63,0.4)] group-hover:shadow-[0_0_18px_rgba(163,255,63,0.6)] transition-all">
                 <Zap className="w-4 h-4 text-[#0F1115]" fill="currentColor" strokeWidth={0} />
               </div>
-              <span className="text-[#F5F7FA] font-bold text-lg tracking-tight">
+              <span className="text-foreground font-bold text-lg tracking-tight">
                 Fit<span className="text-[#A3FF3F]">Nest</span>
               </span>
             </Link>
 
-            <p className="text-[#8b95a5] text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-muted text-sm leading-relaxed max-w-xs mb-6">
               FitNest helps families stay active through shared workout planning,
               progress tracking, and genuine accountability.
             </p>
@@ -60,7 +60,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-[#8b95a5] hover:text-[#A3FF3F] hover:border-[#A3FF3F]/25 hover:bg-[#A3FF3F]/[0.08] transition-all duration-200"
+                  className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-muted hover:text-[#A3FF3F] hover:border-[#A3FF3F]/25 hover:bg-[#A3FF3F]/[0.08] transition-all duration-200"
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </a>
@@ -71,7 +71,7 @@ export default function Footer() {
           {/* Nav columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <p className="text-xs font-bold tracking-[0.15em] uppercase text-[#F5F7FA] mb-4">
+              <p className="text-xs font-bold tracking-[0.15em] uppercase text-foreground mb-4">
                 {category}
               </p>
               <ul className="flex flex-col gap-2.5">
@@ -79,7 +79,7 @@ export default function Footer() {
                   <li key={label}>
                     <Link
                       href={href}
-                      className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors duration-200"
+                      className="text-sm text-muted hover:text-foreground transition-colors duration-200"
                     >
                       {label}
                     </Link>
@@ -92,14 +92,14 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="py-5 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-[#8b95a5]">
+          <p className="text-xs text-muted">
             &copy; {new Date().getFullYear()} FitNest Technologies, Inc. All rights reserved.
           </p>
           <a
             href="https://github.com/blackbrv/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-[#8b95a5] hover:text-[#A3FF3F] transition-colors duration-200"
+            className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-[#A3FF3F] transition-colors duration-200"
           >
             <svg
               viewBox="0 0 24 24"

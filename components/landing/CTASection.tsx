@@ -3,7 +3,7 @@ import { ArrowRight, Zap } from 'lucide-react'
 
 export default function CTASection() {
   return (
-    <section className="relative py-24 lg:py-32 bg-[#0F1115] overflow-hidden">
+    <section className="relative py-24 lg:py-32 bg-background overflow-hidden">
       {/* Lime glow background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-[700px] h-[400px] rounded-full bg-[#A3FF3F]/[0.07] blur-[120px]" />
@@ -29,7 +29,7 @@ export default function CTASection() {
         </div>
 
         {/* Headline */}
-        <h2 className="text-4xl lg:text-6xl font-extrabold text-[#F5F7FA] tracking-tight leading-tight mb-5">
+        <h2 className="text-4xl lg:text-6xl font-extrabold text-foreground tracking-tight leading-tight mb-5">
           Fitness starts{' '}
           <span
             className="text-[#A3FF3F]"
@@ -40,7 +40,7 @@ export default function CTASection() {
         </h2>
 
         {/* Subtext */}
-        <p className="text-[#8b95a5] text-lg leading-relaxed max-w-xl mx-auto mb-10">
+        <p className="text-muted text-lg leading-relaxed max-w-xl mx-auto mb-10">
           Join 2,400+ families already building stronger habits together. Start free today —
           no credit card required.
         </p>
@@ -54,7 +54,7 @@ export default function CTASection() {
           <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
 
-        <p className="mt-5 text-xs text-[#8b95a5]">
+        <p className="mt-5 text-xs text-muted">
           14-day free trial · No credit card · Cancel anytime
         </p>
       </div>

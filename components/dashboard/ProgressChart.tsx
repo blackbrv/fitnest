@@ -43,12 +43,12 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   const total = payload.find((p) => p.name === 'total')?.value ?? 0
 
   return (
-    <div className="bg-[#1c2433] border border-white/10 rounded-xl px-3 py-2.5 shadow-xl">
-      <p className="text-xs font-semibold text-[#f5f7fa] mb-1">{label}</p>
-      <p className="text-xs text-[#a3ff3f]">
+    <div className="bg-surface-2 border border-white/10 rounded-xl px-3 py-2.5 shadow-xl">
+      <p className="text-xs font-semibold text-foreground mb-1">{label}</p>
+      <p className="text-xs text-primary">
         {completed}/{total} completed
       </p>
-      <p className="text-[10px] text-[#8b95a5] mt-0.5">
+      <p className="text-[10px] text-muted mt-0.5">
         {total > 0 ? Math.round((completed / total) * 100) : 0}% rate
       </p>
     </div>
@@ -57,18 +57,18 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
 
 export function ProgressChart({ data = DEFAULT_DATA }: ProgressChartProps) {
   return (
-    <div className="rounded-2xl border border-white/8 bg-[#151922] p-5">
+    <div className="rounded-2xl border border-border bg-surface p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-base font-semibold text-[#f5f7fa]">
+          <h2 className="text-base font-semibold text-foreground">
             Weekly Progress
           </h2>
-          <p className="text-xs text-[#8b95a5] mt-0.5">
+          <p className="text-xs text-muted mt-0.5">
             Family workouts completed per day
           </p>
         </div>
-        <div className="flex items-center gap-3 text-xs text-[#8b95a5]">
+        <div className="flex items-center gap-3 text-xs text-muted">
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-sm bg-[#a3ff3f]" />
             Completed

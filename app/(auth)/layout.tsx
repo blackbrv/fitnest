@@ -12,7 +12,7 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f1115] px-4 py-12">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -34,11 +34,11 @@ export default function AuthLayout({
                 />
               </svg>
             </div>
-            <span className="text-2xl font-bold text-[#f5f7fa] tracking-tight">
+            <span className="text-2xl font-bold text-foreground tracking-tight">
               FitNest
             </span>
           </div>
-          <p className="text-sm text-[#8b95a5]">
+          <p className="text-sm text-muted">
             Your family&apos;s fitness journey starts here
           </p>
         </div>

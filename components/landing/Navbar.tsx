@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Menu, X, Zap, LayoutDashboard } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 interface NavbarProps {
   session?: { name: string; email: string } | null
@@ -23,7 +24,7 @@ export default function Navbar({ session }: NavbarProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-300 ${
         scrolled
-          ? 'backdrop-blur-xl bg-[#0F1115]/80 border-b border-white/[0.06]'
+          ? 'backdrop-blur-xl bg-background/80 border-b border-border'
           : 'bg-transparent'
       }`}
     >
@@ -34,8 +35,8 @@ export default function Navbar({ session }: NavbarProps) {
             <div className="relative w-7 h-7 rounded-lg bg-[#A3FF3F] flex items-center justify-center shadow-[0_0_12px_rgba(163,255,63,0.5)] group-hover:shadow-[0_0_20px_rgba(163,255,63,0.7)] transition-all duration-300">
               <Zap className="w-4 h-4 text-[#0F1115]" fill="currentColor" strokeWidth={0} />
             </div>
-            <span className="text-[#F5F7FA] font-bold text-lg tracking-tight">
-              Fit<span className="text-[#A3FF3F]">Nest</span>
+            <span className="text-foreground font-bold text-lg tracking-tight">
+              Fit<span className="text-primary">Nest</span>
             </span>
           </Link>
 
@@ -50,7 +51,7 @@ export default function Navbar({ session }: NavbarProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors duration-200"
+                className="text-sm text-muted hover:text-foreground transition-colors duration-200"
               >
                 {item.label}
               </Link>
@@ -59,13 +60,14 @@ export default function Navbar({ session }: NavbarProps) {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             {session ? (
               <>
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#1c2433] text-xs font-bold text-[#a3ff3f] ring-1 ring-[#a3ff3f]/20">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-xs font-bold text-primary ring-1 ring-[#a3ff3f]/20">
                     {getInitials(session.name)}
                   </span>
-                  <span className="text-sm text-[#F5F7FA] font-medium max-w-[120px] truncate">
+                  <span className="text-sm text-foreground font-medium max-w-[120px] truncate">
                     {session.name.split(' ')[0]}
                   </span>
                 </div>
@@ -81,7 +83,7 @@ export default function Navbar({ session }: NavbarProps) {
               <>
                 <Link
                   href="/login"
-                  className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors duration-200 px-4 py-2"
+                  className="text-sm text-muted hover:text-foreground transition-colors duration-200 px-4 py-2"
                 >
                   Login
                 </Link>
@@ -97,7 +99,7 @@ export default function Navbar({ session }: NavbarProps) {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden text-[#8b95a5] hover:text-[#F5F7FA] transition-colors p-1"
+            className="md:hidden text-muted hover:text-foreground transition-colors p-1"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -108,7 +110,7 @@ export default function Navbar({ session }: NavbarProps) {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-white/[0.06] bg-[#0F1115]/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
             {[
               { label: 'Features', href: '#features' },
@@ -120,21 +122,25 @@ export default function Navbar({ session }: NavbarProps) {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-[#8b95a5] hover:text-[#F5F7FA] transition-colors py-2 text-sm"
+                className="text-muted hover:text-foreground transition-colors py-2 text-sm"
               >
                 {item.label}
               </Link>
             ))}
-            <div className="flex flex-col gap-2 pt-2 border-t border-white/[0.06]">
+            <div className="flex flex-col gap-2 pt-2 border-t border-border">
+              <div className="flex items-center justify-between py-1">
+                <span className="text-sm text-muted">Theme</span>
+                <ThemeToggle />
+              </div>
               {session ? (
                 <>
                   <div className="flex items-center gap-2.5 py-2 min-w-0">
-                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#1c2433] text-xs font-bold text-[#a3ff3f] ring-1 ring-[#a3ff3f]/20">
+                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-bold text-primary ring-1 ring-[#a3ff3f]/20">
                       {getInitials(session.name)}
                     </span>
                     <div className="flex flex-col min-w-0">
-                      <span className="text-sm font-medium text-[#F5F7FA] truncate">{session.name}</span>
-                      <span className="text-xs text-[#8b95a5] truncate">{session.email}</span>
+                      <span className="text-sm font-medium text-foreground truncate">{session.name}</span>
+                      <span className="text-xs text-muted truncate">{session.email}</span>
                     </div>
                   </div>
                   <Link
@@ -150,7 +156,7 @@ export default function Navbar({ session }: NavbarProps) {
                 <>
                   <Link
                     href="/login"
-                    className="text-sm text-[#8b95a5] hover:text-[#F5F7FA] transition-colors py-2"
+                    className="text-sm text-muted hover:text-foreground transition-colors py-2"
                     onClick={() => setMenuOpen(false)}
                   >
                     Login

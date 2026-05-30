@@ -37,7 +37,7 @@ export function Select({
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
       {label && (
-        <label className="text-sm font-medium text-[#f5f7fa]" id={id}>
+        <label className="text-sm font-medium text-foreground" id={id}>
           {label}
         </label>
       )}
@@ -48,18 +48,18 @@ export function Select({
           aria-describedby={error ? errorId : undefined}
           aria-invalid={!!error}
           className={cn(
-            'flex h-10 w-full items-center justify-between rounded-xl bg-[#1c2433] px-3.5',
-            'border border-white/8 text-sm text-[#f5f7fa] outline-none',
+            'flex h-10 w-full items-center justify-between rounded-xl bg-surface-2 px-3.5',
+            'border border-border text-sm text-foreground outline-none',
             'transition-colors duration-150',
             'focus:border-[#a3ff3f]/60 focus:ring-2 focus:ring-[#a3ff3f]/20',
-            'data-[placeholder]:text-[#8b95a5]',
+            'data-[placeholder]:text-muted',
             'disabled:cursor-not-allowed disabled:opacity-40',
             error && 'border-red-500/60 focus:border-red-500 focus:ring-red-500/20',
           )}
         >
           <RadixSelect.Value placeholder={placeholder} />
           <RadixSelect.Icon asChild>
-            <ChevronDown size={16} className="text-[#8b95a5] shrink-0" />
+            <ChevronDown size={16} className="text-muted shrink-0" />
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
 
@@ -69,7 +69,7 @@ export function Select({
             sideOffset={6}
             className={cn(
               'z-50 w-[var(--radix-select-trigger-width)] overflow-hidden',
-              'rounded-xl border border-white/8 bg-[#151922] shadow-xl shadow-black/40',
+              'rounded-xl border border-border bg-surface shadow-xl shadow-black/40',
               'data-[state=open]:animate-in data-[state=closed]:animate-out',
               'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
               'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -82,14 +82,14 @@ export function Select({
                   value={opt.value}
                   className={cn(
                     'relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2 pr-8',
-                    'text-sm text-[#f5f7fa] outline-none transition-colors',
-                    'data-[highlighted]:bg-white/8 data-[highlighted]:text-[#f5f7fa]',
-                    'data-[state=checked]:text-[#a3ff3f]',
+                    'text-sm text-foreground outline-none transition-colors',
+                    'data-[highlighted]:bg-white/8 data-[highlighted]:text-foreground',
+                    'data-[state=checked]:text-primary',
                   )}
                 >
                   <RadixSelect.ItemText>{opt.label}</RadixSelect.ItemText>
                   <RadixSelect.ItemIndicator className="absolute right-2.5 flex items-center">
-                    <Check size={13} className="text-[#a3ff3f]" />
+                    <Check size={13} className="text-primary" />
                   </RadixSelect.ItemIndicator>
                 </RadixSelect.Item>
               ))}

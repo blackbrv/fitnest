@@ -17,21 +17,21 @@ export function StatCard({ label, value, icon: Icon, trend, trendUp, className }
   return (
     <div
       className={cn(
-        'flex flex-col gap-3 rounded-2xl border border-white/8 bg-[#151922] p-5',
+        'flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5',
         className,
       )}
     >
       <div className="flex items-center justify-between">
-        <span className="text-sm text-[#8b95a5]">{label}</span>
+        <span className="text-sm text-muted">{label}</span>
         {Icon && (
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#a3ff3f]/10">
-            <Icon size={18} className="text-[#a3ff3f]" strokeWidth={2} />
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
+            <Icon size={18} className="text-primary" strokeWidth={2} />
           </span>
         )}
       </div>
 
       <div className="flex items-end justify-between gap-2">
-        <span className="text-2xl font-bold tracking-tight text-[#f5f7fa]">
+        <span className="text-2xl font-bold tracking-tight text-foreground">
           {value}
         </span>
 

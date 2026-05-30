@@ -183,8 +183,8 @@ export default async function WorkoutPlansPage({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#f5f7fa]">Workout Plans</h1>
-          <p className="text-sm text-[#8b95a5] mt-0.5">
+          <h1 className="text-2xl font-bold text-foreground">Workout Plans</h1>
+          <p className="text-sm text-muted mt-0.5">
             {plans.length} {plans.length === 1 ? 'plan' : 'plans'} in your family
           </p>
         </div>

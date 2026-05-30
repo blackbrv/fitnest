@@ -63,8 +63,8 @@ export default async function NotificationsPage() {
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#f5f7fa]">Notifications</h1>
-          <p className="mt-1 text-sm text-[#8b95a5]">
+          <h1 className="text-2xl font-bold text-foreground">Notifications</h1>
+          <p className="mt-1 text-sm text-muted">
             {unreadCount > 0
               ? `${unreadCount} unread notification${unreadCount !== 1 ? 's' : ''}`
               : 'All caught up!'}
@@ -75,17 +75,17 @@ export default async function NotificationsPage() {
 
       {/* Notification list */}
       {notifications.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-white/8 bg-[#151922] py-16 text-center">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-surface py-16 text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/8 mb-4">
-            <Bell size={24} className="text-[#8b95a5]" />
+            <Bell size={24} className="text-muted" />
           </div>
-          <p className="text-base font-semibold text-[#f5f7fa]">No notifications yet</p>
-          <p className="mt-1 text-sm text-[#8b95a5]">
+          <p className="text-base font-semibold text-foreground">No notifications yet</p>
+          <p className="mt-1 text-sm text-muted">
             We'll let you know when something happens
           </p>
         </div>
       ) : (
-        <div className="rounded-2xl border border-white/8 bg-[#151922] overflow-hidden">
+        <div className="rounded-2xl border border-border bg-surface overflow-hidden">
           <div className="divide-y divide-white/5">
             {notifications.map((notification) => (
               <div key={notification.id} className="px-2 py-1 first:pt-2 last:pb-2">

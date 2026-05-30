@@ -23,18 +23,19 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 export function MobileNav() {
   const pathname = usePathname()
+  const mobileItems = NAV_ITEMS.filter((item) => !item.desktopOnly)
 
   return (
     <nav
       className={cn(
         'md:hidden fixed bottom-0 left-0 right-0 z-50',
-        'bg-[#151922] border-t border-white/8',
+        'bg-surface border-t border-border',
         'pb-2',
       )}
       aria-label="Mobile navigation"
     >
       <div className="flex items-stretch h-16">
-        {NAV_ITEMS.map((item) => {
+        {mobileItems.map((item) => {
           const Icon = ICON_MAP[item.icon]
           const isActive =
             pathname === item.href ||
@@ -47,7 +48,7 @@ export function MobileNav() {
               className={cn(
                 'relative flex-1 flex flex-col items-center justify-center gap-1 px-1',
                 'transition-colors duration-150',
-                isActive ? 'text-[#a3ff3f]' : 'text-[#8b95a5]',
+                isActive ? 'text-primary' : 'text-muted',
               )}
               aria-current={isActive ? 'page' : undefined}
             >
@@ -62,7 +63,7 @@ export function MobileNav() {
                 {item.label}
               </span>
               {isActive && (
-                <span className="absolute bottom-1 w-1 h-1 rounded-full bg-[#a3ff3f]" />
+                <span className="absolute bottom-1 w-1 h-1 rounded-full bg-primary" />
               )}
             </Link>
           )

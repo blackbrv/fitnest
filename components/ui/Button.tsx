@@ -17,9 +17,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary:
     'bg-[#a3ff3f] text-[#0f1115] font-semibold hover:bg-[#7acc2e] active:bg-[#6ab526] focus-visible:ring-[#a3ff3f]/50',
   secondary:
-    'bg-[#1c2433] text-[#f5f7fa] hover:bg-[#242e40] active:bg-[#2a3649] border border-white/8 focus-visible:ring-white/20',
+    'bg-surface-2 text-foreground hover:bg-surface-3 active:bg-surface-3 border border-border focus-visible:ring-white/20',
   ghost:
-    'bg-transparent text-[#f5f7fa] hover:bg-white/5 active:bg-white/10 focus-visible:ring-white/20',
+    'bg-transparent text-foreground hover:bg-white/5 active:bg-white/10 focus-visible:ring-white/20',
   danger:
     'bg-red-600 text-white hover:bg-red-500 active:bg-red-700 focus-visible:ring-red-500/50',
 }
@@ -53,7 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           'inline-flex items-center justify-center rounded-xl font-medium',
           'transition-colors duration-150',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1115]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
           'disabled:pointer-events-none disabled:opacity-40',
           variantClasses[variant],
           sizeClasses[size],

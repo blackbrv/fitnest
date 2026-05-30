@@ -20,15 +20,15 @@ export function EmptyState({ icon: Icon, title, description, action, className }
       )}
     >
       {Icon && (
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1c2433] ring-1 ring-white/8">
-          <Icon size={26} className="text-[#8b95a5]" strokeWidth={1.5} />
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-2 ring-1 ring-border">
+          <Icon size={26} className="text-muted" strokeWidth={1.5} />
         </span>
       )}
 
       <div className="flex flex-col gap-1.5">
-        <p className="text-sm font-semibold text-[#f5f7fa]">{title}</p>
+        <p className="text-sm font-semibold text-foreground">{title}</p>
         {description && (
-          <p className="max-w-xs text-sm text-[#8b95a5]">{description}</p>
+          <p className="max-w-xs text-sm text-muted">{description}</p>
         )}
       </div>
 

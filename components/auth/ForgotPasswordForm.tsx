@@ -40,7 +40,7 @@ export default function ForgotPasswordForm() {
 
   if (submitted) {
     return (
-      <div className="bg-[#151922] rounded-2xl border border-white/8 p-8 text-center">
+      <div className="bg-surface rounded-2xl border border-border p-8 text-center">
         <div className="w-14 h-14 rounded-full bg-[#a3ff3f]/12 flex items-center justify-center mx-auto mb-4">
           <svg
             width="28"
@@ -59,17 +59,17 @@ export default function ForgotPasswordForm() {
             />
           </svg>
         </div>
-        <h2 className="text-lg font-bold text-[#f5f7fa] mb-2">Check your email</h2>
-        <p className="text-sm text-[#8b95a5] mb-1">
+        <h2 className="text-lg font-bold text-foreground mb-2">Check your email</h2>
+        <p className="text-sm text-muted mb-1">
           If an account exists for{' '}
-          <span className="text-[#f5f7fa] font-medium">{getValues('email')}</span>,
+          <span className="text-foreground font-medium">{getValues('email')}</span>,
           you&apos;ll receive a reset link shortly.
         </p>
-        <p className="text-xs text-[#8b95a5] mt-4">
+        <p className="text-xs text-muted mt-4">
           Didn&apos;t receive it? Check your spam folder or{' '}
           <button
             onClick={() => setSubmitted(false)}
-            className="text-[#a3ff3f] hover:text-[#7acc2e] transition-colors underline underline-offset-2"
+            className="text-primary hover:text-[#7acc2e] transition-colors underline underline-offset-2"
           >
             try again
           </button>
@@ -77,7 +77,7 @@ export default function ForgotPasswordForm() {
         </p>
         <Link
           href="/login"
-          className="inline-block mt-6 text-sm text-[#8b95a5] hover:text-[#f5f7fa] transition-colors"
+          className="inline-block mt-6 text-sm text-muted hover:text-foreground transition-colors"
         >
           ← Back to sign in
         </Link>
@@ -86,10 +86,10 @@ export default function ForgotPasswordForm() {
   }
 
   return (
-    <div className="bg-[#151922] rounded-2xl border border-white/8 p-8">
+    <div className="bg-surface rounded-2xl border border-border p-8">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-[#f5f7fa]">Reset your password</h1>
-        <p className="text-sm text-[#8b95a5] mt-1">
+        <h1 className="text-xl font-bold text-foreground">Reset your password</h1>
+        <p className="text-sm text-muted mt-1">
           Enter your email and we&apos;ll send you a reset link
         </p>
       </div>
@@ -104,7 +104,7 @@ export default function ForgotPasswordForm() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-[#f5f7fa] mb-1.5"
+            className="block text-sm font-medium text-foreground mb-1.5"
           >
             Email
           </label>
@@ -114,7 +114,7 @@ export default function ForgotPasswordForm() {
             type="email"
             autoComplete="email"
             placeholder="you@example.com"
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
           />
           {errors.email && (
             <p className="mt-1.5 text-xs text-red-400">{errors.email.message}</p>
@@ -157,11 +157,11 @@ export default function ForgotPasswordForm() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#8b95a5]">
+      <p className="mt-6 text-center text-sm text-muted">
         Remember your password?{' '}
         <Link
           href="/login"
-          className="text-[#a3ff3f] hover:text-[#7acc2e] font-medium transition-colors"
+          className="text-primary hover:text-[#7acc2e] font-medium transition-colors"
         >
           Sign in
         </Link>

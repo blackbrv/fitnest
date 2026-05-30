@@ -277,7 +277,7 @@ export default async function DashboardPage() {
               {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-white/8 bg-[#151922] p-4 h-[100px] animate-pulse"
+                  className="rounded-2xl border border-border bg-surface p-4 h-[100px] animate-pulse"
                 />
               ))}
             </div>
@@ -307,7 +307,7 @@ export default async function DashboardPage() {
 
             {/* Member cards */}
             <div>
-              <h2 className="text-sm font-semibold text-[#8b95a5] uppercase tracking-wider mb-3">
+              <h2 className="text-sm font-semibold text-muted uppercase tracking-wider mb-3">
                 Family Members
               </h2>
               <StaggerContainer className="space-y-3">

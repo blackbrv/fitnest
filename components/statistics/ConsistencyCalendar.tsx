@@ -79,7 +79,7 @@ export function ConsistencyCalendar({ logs }: ConsistencyCalendarProps) {
             return (
               <div key={colIndex} className="flex-1 min-w-[14px] max-w-[16px] mr-[2px]">
                 {mp ? (
-                  <span className="text-[10px] text-[#8b95a5] whitespace-nowrap">{mp.label}</span>
+                  <span className="text-[10px] text-muted whitespace-nowrap">{mp.label}</span>
                 ) : null}
               </div>
             )
@@ -92,7 +92,7 @@ export function ConsistencyCalendar({ logs }: ConsistencyCalendarProps) {
             {DAY_LABELS.map((d, i) => (
               <div key={d} className="h-[14px] flex items-center">
                 {i % 2 === 1 ? (
-                  <span className="text-[10px] text-[#8b95a5] w-6">{d}</span>
+                  <span className="text-[10px] text-muted w-6">{d}</span>
                 ) : (
                   <span className="w-6" />
                 )}
@@ -135,7 +135,7 @@ export function ConsistencyCalendar({ logs }: ConsistencyCalendarProps) {
 
         {/* Legend */}
         <div className="mt-3 flex items-center gap-3 justify-end">
-          <span className="text-[11px] text-[#8b95a5]">Less</span>
+          <span className="text-[11px] text-muted">Less</span>
           {[0.15, 0.35, 0.6, 0.85, 1].map((opacity) => (
             <div
               key={opacity}
@@ -147,7 +147,7 @@ export function ConsistencyCalendar({ logs }: ConsistencyCalendarProps) {
               }}
             />
           ))}
-          <span className="text-[11px] text-[#8b95a5]">More</span>
+          <span className="text-[11px] text-muted">More</span>
         </div>
       </div>
     </div>

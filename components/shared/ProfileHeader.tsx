@@ -33,7 +33,7 @@ export function ProfileHeader({
       label: 'Workouts',
       value: stats.workoutsCompleted,
       icon: Activity,
-      color: 'text-[#a3ff3f]',
+      color: 'text-primary',
     },
     {
       label: 'Streak',
@@ -51,7 +51,7 @@ export function ProfileHeader({
   ]
 
   return (
-    <div className="rounded-2xl border border-white/8 bg-[#151922] overflow-hidden">
+    <div className="rounded-2xl border border-border bg-surface overflow-hidden">
       {/* Banner */}
       <div className="h-24 bg-gradient-to-r from-[#a3ff3f]/20 via-[#6366f1]/20 to-[#a3ff3f]/10" />
 
@@ -61,11 +61,11 @@ export function ProfileHeader({
           <div className="relative">
             <span
               className={cn(
-                'flex h-20 w-20 items-center justify-center rounded-2xl ring-4 ring-[#151922]',
+                'flex h-20 w-20 items-center justify-center rounded-2xl ring-4 ring-surface',
                 'text-xl font-bold overflow-hidden',
                 user.avatar && !avatarError
                   ? ''
-                  : 'bg-[#1c2433] text-[#a3ff3f]',
+                  : 'bg-surface-2 text-primary',
               )}
             >
               {user.avatar && !avatarError ? (
@@ -85,21 +85,21 @@ export function ProfileHeader({
           <Link
             href="/settings"
             className={cn(
-              'flex items-center gap-2 rounded-xl border border-white/8',
-              'bg-[#1c2433] px-3 py-2 text-sm font-medium text-[#f5f7fa]',
-              'hover:bg-[#242e40] hover:border-white/14 transition-colors duration-150',
+              'flex items-center gap-2 rounded-xl border border-border',
+              'bg-surface-2 px-3 py-2 text-sm font-medium text-foreground',
+              'hover:bg-surface-3 transition-colors duration-150',
             )}
           >
-            <Edit2 size={14} className="text-[#8b95a5]" />
+            <Edit2 size={14} className="text-muted" />
             Edit Profile
           </Link>
         </div>
 
         {/* User info */}
         <div className="space-y-0.5 mb-4">
-          <h2 className="text-xl font-bold text-[#f5f7fa]">{user.name}</h2>
-          <p className="text-sm text-[#8b95a5]">{user.email}</p>
-          <p className="text-xs text-[#8b95a5]/70">
+          <h2 className="text-xl font-bold text-foreground">{user.name}</h2>
+          <p className="text-sm text-muted">{user.email}</p>
+          <p className="text-xs text-muted/70">
             Member since {formatDate(user.createdAt)}
           </p>
         </div>
@@ -111,19 +111,19 @@ export function ProfileHeader({
             return (
               <div
                 key={stat.label}
-                className="flex flex-col items-center gap-1.5 rounded-xl border border-white/8 bg-[#1c2433]/50 p-3 text-center"
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-surface-2/50 p-3 text-center"
               >
                 <Icon size={16} className={stat.color} />
                 <p
                   className={cn(
-                    'text-sm font-bold text-[#f5f7fa]',
+                    'text-sm font-bold text-foreground',
                     stat.truncate && 'truncate max-w-full',
                   )}
                   title={String(stat.value)}
                 >
                   {stat.value}
                 </p>
-                <p className="text-xs text-[#8b95a5]">{stat.label}</p>
+                <p className="text-xs text-muted">{stat.label}</p>
               </div>
             )
           })}

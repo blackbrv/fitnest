@@ -59,7 +59,7 @@ export function MemberList({ members, currentUserId, isOwner, familyId }: Member
         return (
           <div
             key={member.id}
-            className="flex items-center gap-3 rounded-xl bg-[#1c2433] border border-white/8 px-4 py-3 transition-colors hover:border-white/12"
+            className="flex items-center gap-3 rounded-xl bg-surface-2 border border-border px-4 py-3 transition-colors hover:border-white/12"
           >
             {/* Avatar */}
             <Avatar
@@ -71,14 +71,14 @@ export function MemberList({ members, currentUserId, isOwner, familyId }: Member
             {/* Name + join date */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[#f5f7fa] font-medium text-sm truncate">
+                <span className="text-foreground font-medium text-sm truncate">
                   {member.user?.name ?? 'Unknown Member'}
                 </span>
                 {isSelf && (
-                  <span className="text-[#8b95a5] text-xs">(you)</span>
+                  <span className="text-muted text-xs">(you)</span>
                 )}
               </div>
-              <span className="text-[#8b95a5] text-xs">
+              <span className="text-muted text-xs">
                 Joined {formatDate(member.joinedAt)}
               </span>
             </div>
@@ -87,8 +87,8 @@ export function MemberList({ members, currentUserId, isOwner, familyId }: Member
             <span
               className={
                 isOwnerRow
-                  ? 'bg-[#a3ff3f]/15 text-[#a3ff3f] text-xs font-semibold px-2.5 py-1 rounded-full shrink-0'
-                  : 'bg-white/8 text-[#8b95a5] text-xs font-semibold px-2.5 py-1 rounded-full shrink-0'
+                  ? 'bg-primary/15 text-primary text-xs font-semibold px-2.5 py-1 rounded-full shrink-0'
+                  : 'bg-white/8 text-muted text-xs font-semibold px-2.5 py-1 rounded-full shrink-0'
               }
             >
               {isOwnerRow ? 'OWNER' : 'MEMBER'}
@@ -100,7 +100,7 @@ export function MemberList({ members, currentUserId, isOwner, familyId }: Member
                 onClick={() => handleRemoveMember(member.id)}
                 disabled={isPending}
                 aria-label={`Remove ${member.user?.name ?? 'member'}`}
-                className="ml-1 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-[#8b95a5] hover:bg-red-500/10 hover:text-red-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                className="ml-1 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:bg-red-500/10 hover:text-red-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
               >
                 {isProcessing ? (
                   <Loader2 size={13} className="animate-spin" />
@@ -116,7 +116,7 @@ export function MemberList({ members, currentUserId, isOwner, familyId }: Member
                 onClick={handleLeaveFamily}
                 disabled={isPending}
                 aria-label="Leave family"
-                className="ml-1 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-[#8b95a5] hover:bg-red-500/10 hover:text-red-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                className="ml-1 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:bg-red-500/10 hover:text-red-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
               >
                 {isPending ? (
                   <Loader2 size={13} className="animate-spin" />
@@ -131,7 +131,7 @@ export function MemberList({ members, currentUserId, isOwner, familyId }: Member
       })}
 
       {members.length === 0 && (
-        <p className="text-center text-[#8b95a5] text-sm py-6">No members found.</p>
+        <p className="text-center text-muted text-sm py-6">No members found.</p>
       )}
     </div>
   )

@@ -37,7 +37,7 @@ export function Modal({
         <Dialog.Content
           className={cn(
             'fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2',
-            'rounded-2xl border border-white/8 bg-[#151922] shadow-2xl shadow-black/50',
+            'rounded-2xl border border-border bg-surface shadow-2xl shadow-black/50',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -49,23 +49,23 @@ export function Modal({
         >
           {/* Header */}
           {(title || description) && (
-            <div className="flex items-start justify-between gap-4 border-b border-white/8 p-5">
+            <div className="flex items-start justify-between gap-4 border-b border-border p-5">
               <div className="flex flex-col gap-1">
                 {title && (
-                  <Dialog.Title className="text-base font-semibold text-[#f5f7fa]">
+                  <Dialog.Title className="text-base font-semibold text-foreground">
                     {title}
                   </Dialog.Title>
                 )}
                 {description && (
-                  <Dialog.Description className="text-sm text-[#8b95a5]">
+                  <Dialog.Description className="text-sm text-muted">
                     {description}
                   </Dialog.Description>
                 )}
               </div>
               <Dialog.Close
                 className={cn(
-                  'rounded-lg p-1 text-[#8b95a5] transition-colors',
-                  'hover:bg-white/8 hover:text-[#f5f7fa]',
+                  'rounded-lg p-1 text-muted transition-colors',
+                  'hover:bg-white/8 hover:text-foreground',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a3ff3f]/50',
                 )}
                 aria-label="Close"
@@ -80,7 +80,7 @@ export function Modal({
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-3 border-t border-white/8 p-5">
+            <div className="flex items-center justify-end gap-3 border-t border-border p-5">
               {footer}
             </div>
           )}

@@ -41,7 +41,7 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <section id="features" className="relative py-24 lg:py-32 bg-[#0F1115]">
+    <section id="features" className="relative py-24 lg:py-32 bg-background">
       {/* Subtle top separator glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-[#A3FF3F]/20 to-transparent" />
 
@@ -51,10 +51,10 @@ export default function FeaturesSection() {
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#A3FF3F] mb-4">
             Platform Features
           </p>
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-[#F5F7FA] tracking-tight leading-tight">
+          <h2 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
             Everything your family needs
           </h2>
-          <p className="mt-4 text-[#8b95a5] text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="mt-4 text-muted text-lg max-w-xl mx-auto leading-relaxed">
             Designed to keep every household member motivated and accountable — from beginners to athletes.
           </p>
         </FadeInView>
@@ -85,7 +85,7 @@ export default function FeaturesSection() {
                     transition: { duration: 0.5, ease },
                   },
                 }}
-                className={`group relative bg-[#151922] border border-white/[0.07] rounded-3xl p-7 hover:border-[#A3FF3F]/20 transition-all duration-300 hover:bg-[#171e28] ${
+                className={`group relative bg-surface border border-white/[0.07] rounded-3xl p-7 hover:border-[#A3FF3F]/20 transition-all duration-300 hover:bg-surface-3 ${
                   isLast && features.length % 3 !== 0
                     ? 'sm:col-span-2 lg:col-span-1'
                     : ''
@@ -97,8 +97,8 @@ export default function FeaturesSection() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-lg font-bold text-[#F5F7FA] mb-2">{feature.title}</h3>
-                <p className="text-[#8b95a5] text-sm leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">{feature.title}</h3>
+                <p className="text-muted text-sm leading-relaxed">{feature.description}</p>
 
                 {/* Hover glow corner */}
                 <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -120,9 +120,9 @@ export default function FeaturesSection() {
             { value: '99.9%', label: 'Uptime SLA' },
             { value: '< 2s', label: 'Avg load time' },
           ].map(({ value, label }) => (
-            <div key={label} className="bg-[#151922] px-8 py-6 text-center">
+            <div key={label} className="bg-surface px-8 py-6 text-center">
               <p className="text-2xl font-extrabold text-[#A3FF3F]">{value}</p>
-              <p className="text-xs text-[#8b95a5] mt-1">{label}</p>
+              <p className="text-xs text-muted mt-1">{label}</p>
             </div>
           ))}
         </FadeInView>

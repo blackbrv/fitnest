@@ -69,7 +69,7 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Profile section */}
       <div className="space-y-4">
-        <h3 className="text-sm font-semibold text-[#f5f7fa] uppercase tracking-wide">
+        <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">
           Profile
         </h3>
         <div className="space-y-3">
@@ -80,26 +80,26 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
             placeholder="Your full name"
           />
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-[#f5f7fa]">Email</label>
+            <label className="text-sm font-medium text-foreground">Email</label>
             <input
               type="email"
               value={defaultValues.email}
               disabled
               readOnly
               className={cn(
-                'h-10 w-full rounded-xl bg-[#1c2433]/60 px-3.5 text-sm',
-                'border border-white/8 outline-none text-[#8b95a5]',
+                'h-10 w-full rounded-xl bg-surface-2/60 px-3.5 text-sm',
+                'border border-border outline-none text-muted',
                 'cursor-not-allowed opacity-60',
               )}
             />
-            <p className="text-xs text-[#8b95a5]">Email cannot be changed</p>
+            <p className="text-xs text-muted">Email cannot be changed</p>
           </div>
         </div>
       </div>
 
       {/* Notification preferences */}
       <div className="space-y-4">
-        <h3 className="text-sm font-semibold text-[#f5f7fa] uppercase tracking-wide">
+        <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">
           Notifications
         </h3>
         <div className="space-y-2">
@@ -108,7 +108,7 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
               key={pref.name}
               className={cn(
                 'flex cursor-pointer items-start gap-3 rounded-xl border p-4',
-                'border-white/8 bg-[#1c2433]/40 hover:bg-[#1c2433]/80',
+                'border-border bg-surface-2/40 hover:bg-surface-2/80',
                 'transition-colors duration-150',
               )}
             >
@@ -140,8 +140,8 @@ export function SettingsForm({ defaultValues }: SettingsFormProps) {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-medium text-[#f5f7fa]">{pref.label}</p>
-                <p className="text-xs text-[#8b95a5] mt-0.5">{pref.description}</p>
+                <p className="text-sm font-medium text-foreground">{pref.label}</p>
+                <p className="text-xs text-muted mt-0.5">{pref.description}</p>
               </div>
             </label>
           ))}

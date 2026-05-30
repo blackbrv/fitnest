@@ -51,7 +51,7 @@ export function FamilyDashboard({ family, isOwner, familyId }: FamilyDashboardPr
           <button
             onClick={handleLeave}
             disabled={isPending}
-            className="flex items-center gap-2 bg-[#1c2433] border border-white/8 text-[#8b95a5] hover:text-red-400 hover:border-red-500/30 font-medium px-4 py-2.5 rounded-xl transition-colors text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 bg-surface-2 border border-border text-muted hover:text-red-400 hover:border-red-500/30 font-medium px-4 py-2.5 rounded-xl transition-colors text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {isPending ? <Loader2 size={16} className="animate-spin" /> : <LogOut size={16} />}
             Leave Family

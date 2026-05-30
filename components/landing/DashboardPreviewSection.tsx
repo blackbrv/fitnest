@@ -51,7 +51,7 @@ const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 export default function DashboardPreviewSection() {
   return (
-    <section id="dashboard" className="relative py-24 lg:py-32 bg-[#0F1115] overflow-hidden">
+    <section id="dashboard" className="relative py-24 lg:py-32 bg-background overflow-hidden">
       {/* Background accent */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[#A3FF3F]/[0.025] blur-[120px] pointer-events-none" />
 
@@ -62,34 +62,34 @@ export default function DashboardPreviewSection() {
             Live Preview
           </p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-[#F5F7FA] tracking-tight leading-tight max-w-md">
+            <h2 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight max-w-md">
               One dashboard for the{' '}
               <span className="text-[#A3FF3F] drop-shadow-[0_0_20px_rgba(163,255,63,0.4)]">
                 whole family
               </span>
             </h2>
-            <p className="text-[#8b95a5] max-w-xs text-sm leading-relaxed">
+            <p className="text-muted max-w-xs text-sm leading-relaxed">
               Everything in one place. No juggling between apps, no missed milestones.
             </p>
           </div>
         </div>
 
         {/* Dashboard UI mockup */}
-        <div className="bg-[#151922] border border-white/[0.07] rounded-3xl overflow-hidden shadow-2xl">
+        <div className="bg-surface border border-white/[0.07] rounded-3xl overflow-hidden shadow-2xl">
           {/* Top bar / header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-[#151922]">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-surface">
             <div className="flex items-center gap-3">
               <div className="w-7 h-7 rounded-lg bg-[#A3FF3F] flex items-center justify-center shadow-[0_0_10px_rgba(163,255,63,0.4)]">
                 <Zap className="w-3.5 h-3.5 text-[#0F1115]" fill="currentColor" strokeWidth={0} />
               </div>
-              <span className="text-sm font-bold text-[#F5F7FA]">FitNest</span>
+              <span className="text-sm font-bold text-foreground">FitNest</span>
             </div>
             <div className="hidden sm:flex items-center gap-6">
               {['Dashboard', 'Workouts', 'Stats', 'Family'].map((tab, i) => (
                 <span
                   key={tab}
                   className={`text-xs font-medium ${
-                    i === 0 ? 'text-[#A3FF3F]' : 'text-[#8b95a5]'
+                    i === 0 ? 'text-[#A3FF3F]' : 'text-muted'
                   }`}
                 >
                   {tab}
@@ -97,7 +97,7 @@ export default function DashboardPreviewSection() {
               ))}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-[#8b95a5] hidden sm:inline">Week of May 26</span>
+              <span className="text-xs text-muted hidden sm:inline">Week of May 26</span>
               <div className="w-7 h-7 rounded-full bg-[#A3FF3F]/15 border border-[#A3FF3F]/25 flex items-center justify-center text-[9px] font-bold text-[#A3FF3F]">
                 MJ
               </div>
@@ -114,13 +114,13 @@ export default function DashboardPreviewSection() {
                 { label: 'Avg Completion', value: '68%', sub: '+5% vs last week', Icon: TrendingUp, color: '#7dd3fc' },
                 { label: 'Active Members', value: '4/4', sub: 'all on track', Icon: CheckCircle2, color: '#4ade80' },
               ].map(({ label, value, sub, Icon, color }) => (
-                <div key={label} className="bg-[#1c2433] rounded-2xl p-4 border border-white/[0.05]">
+                <div key={label} className="bg-surface-2 rounded-2xl p-4 border border-white/[0.05]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-[#8b95a5]">{label}</span>
+                    <span className="text-xs text-muted">{label}</span>
                     <Icon className="w-3.5 h-3.5" style={{ color }} />
                   </div>
                   <p className="text-xl font-extrabold" style={{ color }}>{value}</p>
-                  <p className="text-[10px] text-[#8b95a5] mt-0.5">{sub}</p>
+                  <p className="text-[10px] text-muted mt-0.5">{sub}</p>
                 </div>
               ))}
             </div>
@@ -130,7 +130,7 @@ export default function DashboardPreviewSection() {
               {members.map((member) => (
                 <div
                   key={member.name}
-                  className="bg-[#1c2433] rounded-2xl p-4 border border-white/[0.05] hover:border-white/[0.1] transition-colors"
+                  className="bg-surface-2 rounded-2xl p-4 border border-white/[0.05] hover:border-white/[0.1] transition-colors"
                 >
                   {/* Member header */}
                   <div className="flex items-center gap-3 mb-4">
@@ -141,8 +141,8 @@ export default function DashboardPreviewSection() {
                       {member.avatar}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-[#F5F7FA] truncate">{member.name}</p>
-                      <p className="text-[10px] text-[#8b95a5]">{member.role}</p>
+                      <p className="text-sm font-semibold text-foreground truncate">{member.name}</p>
+                      <p className="text-[10px] text-muted">{member.role}</p>
                     </div>
                   </div>
 
@@ -152,11 +152,11 @@ export default function DashboardPreviewSection() {
                       <p className="text-2xl font-extrabold" style={{ color: member.color }}>
                         {member.completion}%
                       </p>
-                      <p className="text-[10px] text-[#8b95a5]">weekly goal</p>
+                      <p className="text-[10px] text-muted">weekly goal</p>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-[#0F1115]/60 rounded-full px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 bg-background/60 rounded-full px-2.5 py-1">
                       <Flame className="w-3 h-3 text-orange-400" />
-                      <span className="text-[10px] font-bold text-[#F5F7FA]">{member.streak}d</span>
+                      <span className="text-[10px] font-bold text-foreground">{member.streak}d</span>
                     </div>
                   </div>
 
@@ -188,7 +188,7 @@ export default function DashboardPreviewSection() {
                               />
                             )}
                           </div>
-                          <span className="text-[8px] text-[#8b95a5]">{day[0]}</span>
+                          <span className="text-[8px] text-muted">{day[0]}</span>
                         </div>
                       )
                     })}
@@ -206,7 +206,7 @@ export default function DashboardPreviewSection() {
                     >
                       {member.badge}
                     </span>
-                    <span className="text-[10px] text-[#8b95a5]">{member.workouts} workouts</span>
+                    <span className="text-[10px] text-muted">{member.workouts} workouts</span>
                   </div>
                 </div>
               ))}

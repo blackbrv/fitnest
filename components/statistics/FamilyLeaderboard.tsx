@@ -23,9 +23,9 @@ export function FamilyLeaderboard({ members }: FamilyLeaderboardProps) {
   if (sorted.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <Trophy size={32} className="text-[#8b95a5] mb-3" />
-        <p className="text-sm text-[#8b95a5]">No family members yet</p>
-        <p className="text-xs text-[#8b95a5]/60 mt-1">
+        <Trophy size={32} className="text-muted mb-3" />
+        <p className="text-sm text-muted">No family members yet</p>
+        <p className="text-xs text-muted/60 mt-1">
           Invite your family to start competing
         </p>
       </div>
@@ -37,7 +37,7 @@ export function FamilyLeaderboard({ members }: FamilyLeaderboardProps) {
       {sorted.map((member, index) => {
         const isTopPerformer = index === 0
         const rank = index + 1
-        const colorClass = rankColors[index] ?? 'text-[#8b95a5]'
+        const colorClass = rankColors[index] ?? 'text-muted'
         const bgClass = rankBg[index] ?? 'bg-white/5'
         const initials = getInitials(member.name)
 
@@ -48,7 +48,7 @@ export function FamilyLeaderboard({ members }: FamilyLeaderboardProps) {
               'flex items-center gap-3 rounded-xl p-3 transition-colors',
               isTopPerformer
                 ? 'bg-[#a3ff3f]/5 border border-[#a3ff3f]/20'
-                : 'bg-[#1c2433]/50 border border-white/5',
+                : 'bg-surface-2/50 border border-white/5',
             )}
           >
             {/* Rank */}
@@ -72,8 +72,8 @@ export function FamilyLeaderboard({ members }: FamilyLeaderboardProps) {
                 'flex h-9 w-9 shrink-0 items-center justify-center rounded-full',
                 'text-sm font-semibold ring-1',
                 isTopPerformer
-                  ? 'bg-[#a3ff3f]/20 text-[#a3ff3f] ring-[#a3ff3f]/30'
-                  : 'bg-[#1c2433] text-[#a3ff3f] ring-white/10',
+                  ? 'bg-[#a3ff3f]/20 text-primary ring-[#a3ff3f]/30'
+                  : 'bg-surface-2 text-primary ring-white/10',
               )}
             >
               {member.avatar ? (
@@ -94,18 +94,18 @@ export function FamilyLeaderboard({ members }: FamilyLeaderboardProps) {
                 <span
                   className={cn(
                     'text-sm font-semibold truncate',
-                    isTopPerformer ? 'text-[#f5f7fa]' : 'text-[#f5f7fa]',
+                    isTopPerformer ? 'text-foreground' : 'text-foreground',
                   )}
                 >
                   {member.name}
                 </span>
                 {isTopPerformer && (
-                  <span className="shrink-0 rounded-full bg-[#a3ff3f]/15 px-2 py-0.5 text-xs font-semibold text-[#a3ff3f]">
+                  <span className="shrink-0 rounded-full bg-[#a3ff3f]/15 px-2 py-0.5 text-xs font-semibold text-primary">
                     Top
                   </span>
                 )}
               </div>
-              <div className="mt-1 flex items-center gap-1 text-xs text-[#8b95a5]">
+              <div className="mt-1 flex items-center gap-1 text-xs text-muted">
                 <Flame size={11} className="text-orange-400" />
                 <span>{member.streak} day streak</span>
               </div>
@@ -116,7 +116,7 @@ export function FamilyLeaderboard({ members }: FamilyLeaderboardProps) {
               <span
                 className={cn(
                   'text-sm font-bold',
-                  isTopPerformer ? 'text-[#a3ff3f]' : 'text-[#f5f7fa]',
+                  isTopPerformer ? 'text-primary' : 'text-foreground',
                 )}
               >
                 {member.completionRate}%

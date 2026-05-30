@@ -214,8 +214,8 @@ export default async function StatisticsPage() {
     <div className="p-5 lg:p-7 max-w-6xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#f5f7fa]">Statistics</h1>
-        <p className="mt-1 text-sm text-[#8b95a5]">
+        <h1 className="text-2xl font-bold text-foreground">Statistics</h1>
+        <p className="mt-1 text-sm text-muted">
           Your personal performance and family activity overview
         </p>
       </div>
@@ -227,7 +227,7 @@ export default async function StatisticsPage() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="h-28 rounded-2xl border border-white/8 bg-[#151922] animate-pulse"
+                className="h-28 rounded-2xl border border-border bg-surface animate-pulse"
               />
             ))}
           </div>
@@ -244,41 +244,41 @@ export default async function StatisticsPage() {
       {/* Charts row */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Weekly bar chart */}
-        <div className="rounded-2xl border border-white/8 bg-[#151922] p-5">
+        <div className="rounded-2xl border border-border bg-surface p-5">
           <div className="mb-4">
-            <h2 className="text-base font-semibold text-[#f5f7fa]">Weekly Activity</h2>
-            <p className="text-xs text-[#8b95a5] mt-0.5">Workouts completed per day this week</p>
+            <h2 className="text-base font-semibold text-foreground">Weekly Activity</h2>
+            <p className="text-xs text-muted mt-0.5">Workouts completed per day this week</p>
           </div>
           <WeeklyChart data={weeklyData} />
         </div>
 
         {/* Monthly area chart */}
-        <div className="rounded-2xl border border-white/8 bg-[#151922] p-5">
+        <div className="rounded-2xl border border-border bg-surface p-5">
           <div className="mb-4">
-            <h2 className="text-base font-semibold text-[#f5f7fa]">30-Day Trend</h2>
-            <p className="text-xs text-[#8b95a5] mt-0.5">Daily workout completion over the last month</p>
+            <h2 className="text-base font-semibold text-foreground">30-Day Trend</h2>
+            <p className="text-xs text-muted mt-0.5">Daily workout completion over the last month</p>
           </div>
           <MonthlyChart data={monthlyData} />
         </div>
       </div>
 
       {/* Consistency calendar */}
-      <div className="rounded-2xl border border-white/8 bg-[#151922] p-5">
+      <div className="rounded-2xl border border-border bg-surface p-5">
         <div className="mb-4">
-          <h2 className="text-base font-semibold text-[#f5f7fa]">Consistency Calendar</h2>
-          <p className="text-xs text-[#8b95a5] mt-0.5">Your workout activity over the last 3 months</p>
+          <h2 className="text-base font-semibold text-foreground">Consistency Calendar</h2>
+          <p className="text-xs text-muted mt-0.5">Your workout activity over the last 3 months</p>
         </div>
         <ConsistencyCalendar logs={calendarLogs} />
       </div>
 
       {/* Family leaderboard */}
-      <div className="rounded-2xl border border-white/8 bg-[#151922] p-5">
+      <div className="rounded-2xl border border-border bg-surface p-5">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-base font-semibold text-[#f5f7fa]">Family Leaderboard</h2>
-            <p className="text-xs text-[#8b95a5] mt-0.5">Ranked by 30-day consistency rate</p>
+            <h2 className="text-base font-semibold text-foreground">Family Leaderboard</h2>
+            <p className="text-xs text-muted mt-0.5">Ranked by 30-day consistency rate</p>
           </div>
-          <span className="rounded-full bg-[#a3ff3f]/10 px-3 py-1 text-xs font-semibold text-[#a3ff3f]">
+          <span className="rounded-full bg-[#a3ff3f]/10 px-3 py-1 text-xs font-semibold text-primary">
             {familyMembers.length} {familyMembers.length === 1 ? 'member' : 'members'}
           </span>
         </div>

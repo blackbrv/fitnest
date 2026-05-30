@@ -32,7 +32,7 @@ export function StatsOverview({
       label: 'Workouts Completed',
       value: workoutsCompleted,
       icon: Activity,
-      iconColor: 'text-[#a3ff3f]',
+      iconColor: 'text-primary',
       iconBg: 'bg-[#a3ff3f]/10',
       trend: 12,
       trendUp: true,
@@ -41,7 +41,7 @@ export function StatsOverview({
       label: 'Total Active Days',
       value: totalActiveDays,
       icon: Calendar,
-      iconColor: 'text-[#a3ff3f]',
+      iconColor: 'text-primary',
       iconBg: 'bg-[#a3ff3f]/10',
       trend: 8,
       trendUp: true,
@@ -58,7 +58,7 @@ export function StatsOverview({
       label: 'Consistency Rate',
       value: `${consistencyRate}%`,
       icon: Target,
-      iconColor: 'text-[#a3ff3f]',
+      iconColor: 'text-primary',
       iconBg: 'bg-[#a3ff3f]/10',
       trend: 5,
       trendUp: consistencyRate >= 70,
@@ -72,10 +72,10 @@ export function StatsOverview({
         return (
           <div
             key={stat.label}
-            className="flex flex-col gap-3 rounded-2xl border border-white/8 bg-[#151922] p-4 lg:p-5"
+            className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4 lg:p-5"
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#8b95a5] lg:text-sm">
+              <span className="text-xs font-medium text-muted lg:text-sm">
                 {stat.label}
               </span>
               <span
@@ -90,11 +90,11 @@ export function StatsOverview({
 
             <div className="flex items-end justify-between gap-1">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold tracking-tight text-[#f5f7fa] lg:text-3xl">
+                <span className="text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
                   {stat.value}
                 </span>
                 {stat.suffix && (
-                  <span className="text-xs text-[#8b95a5] mb-0.5">{stat.suffix}</span>
+                  <span className="text-xs text-muted mb-0.5">{stat.suffix}</span>
                 )}
               </div>
 

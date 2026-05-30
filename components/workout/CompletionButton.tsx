@@ -89,7 +89,7 @@ export function CompletionButton({
             <div className="text-center">
               <p className="text-base font-bold text-emerald-400">Workout Completed!</p>
               {doneAt && (
-                <p className="text-xs text-[#8b95a5] mt-1">
+                <p className="text-xs text-muted mt-1">
                   {formatDate(doneAt)} at{' '}
                   {doneAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
@@ -144,7 +144,7 @@ export function CompletionButton({
         )}
 
         {!isCompleted && (
-          <p className="text-xs text-[#8b95a5] text-center">
+          <p className="text-xs text-muted text-center">
             Mark this workout as done for today
           </p>
         )}

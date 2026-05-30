@@ -27,8 +27,8 @@ export function Progress({
     <div className={cn('w-full', className)} {...props}>
       {showLabel && (
         <div className="mb-1.5 flex items-center justify-between">
-          <span className="text-xs text-[#8b95a5]">Progress</span>
-          <span className="text-xs font-semibold text-[#a3ff3f]">{clamped}%</span>
+          <span className="text-xs text-muted">Progress</span>
+          <span className="text-xs font-semibold text-primary">{clamped}%</span>
         </div>
       )}
       <div

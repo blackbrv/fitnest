@@ -47,8 +47,8 @@ const STATUS_CONFIG: Record<
   SKIPPED: {
     icon: XCircle,
     label: 'Skipped',
-    badgeClass: 'bg-white/6 text-[#8b95a5] ring-1 ring-white/10',
-    iconClass: 'text-[#8b95a5]',
+    badgeClass: 'bg-white/6 text-muted ring-1 ring-white/10',
+    iconClass: 'text-muted',
   },
   IN_PROGRESS: {
     icon: Clock,
@@ -189,12 +189,12 @@ function StatusBadge({ status }: { status: WorkoutStatus }) {
 }
 
 function CategoryBadge({ category }: { category: string | null }) {
-  if (!category) return <span className="text-xs text-[#8b95a5]">—</span>
+  if (!category) return <span className="text-xs text-muted">—</span>
   return (
     <span
       className={cn(
         'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium',
-        CATEGORY_COLORS[category] ?? 'bg-white/6 text-[#8b95a5]',
+        CATEGORY_COLORS[category] ?? 'bg-white/6 text-muted',
       )}
     >
       {CATEGORY_LABELS[category] ?? category}
@@ -213,7 +213,7 @@ function MemberAvatar({ name, status }: { name: string; status: WorkoutStatus })
     <span
       className={cn(
         'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
-        'bg-[#1c2433] text-[10px] font-bold text-[#f5f7fa] ring-1',
+        'bg-surface-2 text-[10px] font-bold text-foreground ring-1',
         ringClass,
       )}
       aria-label={name}
@@ -252,7 +252,7 @@ export default async function ActivityPage({
       {/* Back */}
       <Link
         href="/dashboard"
-        className="inline-flex items-center gap-1.5 text-sm text-[#8b95a5] hover:text-[#f5f7fa] transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors mb-6"
       >
         <ChevronLeft size={16} />
         Back to Dashboard
@@ -261,14 +261,14 @@ export default async function ActivityPage({
       {/* Header row */}
       <div className="flex items-start justify-between gap-4 mb-5 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold text-[#f5f7fa]">All Activity</h1>
-          <p className="text-sm text-[#8b95a5] mt-1">
+          <h1 className="text-2xl font-bold text-foreground">All Activity</h1>
+          <p className="text-sm text-muted mt-1">
             Family workout history · last 30 days
           </p>
         </div>
         {totalCount > 0 && (
-          <span className="inline-flex items-center gap-1.5 rounded-xl bg-[#1c2433] border border-white/8 px-3 py-1.5 text-xs font-semibold text-[#f5f7fa] self-center">
-            <ListFilter size={12} className="text-[#8b95a5]" />
+          <span className="inline-flex items-center gap-1.5 rounded-xl bg-surface-2 border border-border px-3 py-1.5 text-xs font-semibold text-foreground self-center">
+            <ListFilter size={12} className="text-muted" />
             {totalCount} {totalCount === 1 ? 'entry' : 'entries'}
           </span>
         )}
@@ -284,10 +284,10 @@ export default async function ActivityPage({
               key={f.label}
               href={href}
               className={cn(
-                'h-8 px-3.5 rounded-xl text-xs font-medium transition-colors duration-150',
+                'inline-flex items-center justify-center h-8 px-3.5 rounded-xl text-xs font-medium transition-colors duration-150',
                 isActive
-                  ? 'bg-[#a3ff3f]/15 text-[#a3ff3f] ring-1 ring-[#a3ff3f]/25'
-                  : 'bg-[#1c2433] text-[#8b95a5] hover:text-[#f5f7fa] hover:bg-[#242e40]',
+                  ? 'bg-[#a3ff3f]/15 text-primary ring-1 ring-[#a3ff3f]/25'
+                  : 'bg-surface-2 text-muted hover:text-foreground hover:bg-surface-3',
               )}
             >
               {f.label}
@@ -298,12 +298,12 @@ export default async function ActivityPage({
 
       {/* ── Empty state ─────────────────────────────────────────────────────── */}
       {rows.length === 0 && (
-        <div className="rounded-2xl border border-white/8 bg-[#151922] p-12 flex flex-col items-center gap-3 text-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1c2433]">
-            <Dumbbell size={22} className="text-[#8b95a5]" />
+        <div className="rounded-2xl border border-border bg-surface p-12 flex flex-col items-center gap-3 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-2">
+            <Dumbbell size={22} className="text-muted" />
           </span>
-          <p className="text-sm font-semibold text-[#f5f7fa]">No activity found</p>
-          <p className="text-xs text-[#8b95a5] max-w-xs">
+          <p className="text-sm font-semibold text-foreground">No activity found</p>
+          <p className="text-xs text-muted max-w-xs">
             {activeFilter
               ? `No ${activeFilter} workouts in the last 30 days.`
               : 'Complete your first workout to see activity here.'}
@@ -311,7 +311,7 @@ export default async function ActivityPage({
           {activeFilter && (
             <Link
               href="/activity"
-              className="mt-1 text-xs text-[#a3ff3f] hover:underline"
+              className="mt-1 text-xs text-primary hover:underline"
             >
               Clear filter
             </Link>
@@ -322,23 +322,23 @@ export default async function ActivityPage({
       {rows.length > 0 && (
         <>
           {/* ── Desktop / tablet table (md+) ───────────────────────────────── */}
-          <div className="hidden md:block rounded-2xl border border-white/8 bg-[#151922] overflow-hidden">
+          <div className="hidden md:block rounded-2xl border border-border bg-surface overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/8 bg-[#1c2433]/50">
-                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-[#8b95a5] uppercase tracking-widest w-[180px]">
+                <tr className="border-b border-border bg-surface-2/50">
+                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-muted uppercase tracking-widest w-[180px]">
                     Date & Time
                   </th>
-                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-[#8b95a5] uppercase tracking-widest">
+                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-muted uppercase tracking-widest">
                     Member
                   </th>
-                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-[#8b95a5] uppercase tracking-widest">
+                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-muted uppercase tracking-widest">
                     Workout
                   </th>
-                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-[#8b95a5] uppercase tracking-widest w-[120px]">
+                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-muted uppercase tracking-widest w-[120px]">
                     Category
                   </th>
-                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-[#8b95a5] uppercase tracking-widest w-[130px]">
+                  <th className="px-5 py-3.5 text-left text-[10px] font-semibold text-muted uppercase tracking-widest w-[130px]">
                     Status
                   </th>
                 </tr>
@@ -347,19 +347,19 @@ export default async function ActivityPage({
                 {rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="hover:bg-[#1c2433]/40 transition-colors duration-100"
+                    className="hover:bg-surface-2/40 transition-colors duration-100"
                   >
                     {/* Date */}
                     <td className="px-5 py-3.5 whitespace-nowrap">
-                      <p className="text-xs font-medium text-[#f5f7fa]">{row.dateLabel}</p>
-                      <p className="text-[11px] text-[#8b95a5] mt-0.5">{row.timeLabel}</p>
+                      <p className="text-xs font-medium text-foreground">{row.dateLabel}</p>
+                      <p className="text-[11px] text-muted mt-0.5">{row.timeLabel}</p>
                     </td>
 
                     {/* Member */}
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-2.5">
                         <MemberAvatar name={row.memberName} status={row.status} />
-                        <span className="text-sm font-medium text-[#f5f7fa] truncate max-w-[120px]">
+                        <span className="text-sm font-medium text-foreground truncate max-w-[120px]">
                           {row.memberName}
                         </span>
                       </div>
@@ -367,7 +367,7 @@ export default async function ActivityPage({
 
                     {/* Workout */}
                     <td className="px-5 py-3.5">
-                      <p className="text-sm font-medium text-[#f5f7fa] truncate max-w-[220px]">
+                      <p className="text-sm font-medium text-foreground truncate max-w-[220px]">
                         {row.workoutTitle}
                       </p>
                     </td>
@@ -387,8 +387,8 @@ export default async function ActivityPage({
             </table>
 
             {/* Table footer */}
-            <div className="border-t border-white/8 px-5 py-3 bg-[#1c2433]/20">
-              <p className="text-[11px] text-[#8b95a5]">
+            <div className="border-t border-border px-5 py-3 bg-surface-2/20">
+              <p className="text-[11px] text-muted">
                 Showing {rows.length} {rows.length === 1 ? 'entry' : 'entries'} · last 30 days
               </p>
             </div>
@@ -402,13 +402,13 @@ export default async function ActivityPage({
               return (
                 <div
                   key={row.id}
-                  className="rounded-2xl border border-white/8 bg-[#151922] px-4 py-3.5"
+                  className="rounded-2xl border border-border bg-surface px-4 py-3.5"
                 >
                   {/* Top row: avatar + name + status */}
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2.5 min-w-0">
                       <MemberAvatar name={row.memberName} status={row.status} />
-                      <span className="text-sm font-semibold text-[#f5f7fa] truncate">
+                      <span className="text-sm font-semibold text-foreground truncate">
                         {row.memberName}
                       </span>
                     </div>
@@ -424,14 +424,14 @@ export default async function ActivityPage({
                   </div>
 
                   {/* Workout name */}
-                  <p className="text-sm font-medium text-[#f5f7fa] truncate mb-2">
+                  <p className="text-sm font-medium text-foreground truncate mb-2">
                     {row.workoutTitle}
                   </p>
 
                   {/* Footer: category + date */}
                   <div className="flex items-center justify-between gap-2">
                     <CategoryBadge category={row.category} />
-                    <span className="text-[11px] text-[#8b95a5] whitespace-nowrap">
+                    <span className="text-[11px] text-muted whitespace-nowrap">
                       {row.dateLabel} · {row.timeLabel}
                     </span>
                   </div>
@@ -439,7 +439,7 @@ export default async function ActivityPage({
               )
             })}
 
-            <p className="text-center text-[11px] text-[#8b95a5] pt-2">
+            <p className="text-center text-[11px] text-muted pt-2">
               {rows.length} {rows.length === 1 ? 'entry' : 'entries'} · last 30 days
             </p>
           </div>

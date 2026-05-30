@@ -158,7 +158,7 @@ export default async function WorkoutPlanDetailPage({
       <div className="flex items-center justify-between mb-6">
         <Link
           href="/workout-plans"
-          className="inline-flex items-center gap-1.5 text-sm text-[#8b95a5] hover:text-[#f5f7fa] transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors"
         >
           <ChevronLeft size={16} />
           Back to Plans
@@ -167,7 +167,7 @@ export default async function WorkoutPlanDetailPage({
         {'isOwner' in plan && plan.isOwner && (
           <Link
             href={`/workout-plans/${plan.id}/edit`}
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-xl bg-[#1c2433] text-[#f5f7fa] text-sm border border-white/8 hover:bg-[#242e40] transition-colors"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-xl bg-surface-2 text-foreground text-sm border border-border hover:bg-surface-3 transition-colors"
           >
             <Edit2 size={13} />
             Edit
@@ -176,10 +176,10 @@ export default async function WorkoutPlanDetailPage({
       </div>
 
       {/* Plan header */}
-      <div className="rounded-2xl bg-[#151922] border border-white/8 p-6 mb-5">
+      <div className="rounded-2xl bg-surface border border-border p-6 mb-5">
         <div className="flex items-start gap-4 mb-4">
           <div>
-            <h1 className="text-xl font-bold text-[#f5f7fa] mb-2">{plan.title}</h1>
+            <h1 className="text-xl font-bold text-foreground mb-2">{plan.title}</h1>
             <div className="flex items-center flex-wrap gap-2">
               <CategoryBadge category={plan.category} showDot />
               <span
@@ -195,17 +195,17 @@ export default async function WorkoutPlanDetailPage({
         </div>
 
         {plan.description && (
-          <p className="text-sm text-[#8b95a5] mb-4">{plan.description}</p>
+          <p className="text-sm text-muted mb-4">{plan.description}</p>
         )}
 
         {/* Scheduled days */}
         <div className="flex items-start gap-3 mb-4">
-          <Calendar size={15} className="text-[#8b95a5] mt-0.5 shrink-0" />
+          <Calendar size={15} className="text-muted mt-0.5 shrink-0" />
           <div className="flex flex-wrap gap-1.5">
             {parseScheduledDays(plan.scheduledDays as unknown as string).map((day: string) => (
               <span
                 key={day}
-                className="bg-[#a3ff3f]/15 text-[#a3ff3f] text-xs px-2 py-0.5 rounded-md font-medium"
+                className="bg-[#a3ff3f]/15 text-primary text-xs px-2 py-0.5 rounded-md font-medium"
               >
                 {DAY_LABELS[day] ?? day}
               </span>
@@ -216,15 +216,15 @@ export default async function WorkoutPlanDetailPage({
         {/* Assigned member */}
         {'assignedMemberName' in plan && plan.assignedMemberName && (
           <div className="flex items-center gap-2 pt-4 border-t border-white/6">
-            <span className="text-xs text-[#8b95a5]">Assigned to</span>
+            <span className="text-xs text-muted">Assigned to</span>
             <Avatar
               src={('assignedMemberAvatar' in plan ? plan.assignedMemberAvatar : null) as string | null}
               name={plan.assignedMemberName as string}
               size="sm"
             />
-            <span className="text-sm font-medium text-[#f5f7fa]">{plan.assignedMemberName as string}</span>
+            <span className="text-sm font-medium text-foreground">{plan.assignedMemberName as string}</span>
             {isAssignedToMe && (
-              <span className="text-xs text-[#a3ff3f] bg-[#a3ff3f]/10 px-2 py-0.5 rounded-full">
+              <span className="text-xs text-primary bg-[#a3ff3f]/10 px-2 py-0.5 rounded-full">
                 You
               </span>
             )}
@@ -234,17 +234,17 @@ export default async function WorkoutPlanDetailPage({
         {/* Notes */}
         {plan.notes && (
           <div className="mt-4 pt-4 border-t border-white/6">
-            <p className="text-xs text-[#8b95a5] font-medium mb-1">Notes</p>
-            <p className="text-sm text-[#f5f7fa]">{plan.notes}</p>
+            <p className="text-xs text-muted font-medium mb-1">Notes</p>
+            <p className="text-sm text-foreground">{plan.notes}</p>
           </div>
         )}
       </div>
 
       {/* Exercises */}
-      <div className="rounded-2xl bg-[#151922] border border-white/8 p-5 mb-5">
-        <h2 className="text-sm font-semibold text-[#f5f7fa] mb-4">
+      <div className="rounded-2xl bg-surface border border-border p-5 mb-5">
+        <h2 className="text-sm font-semibold text-foreground mb-4">
           Exercises{' '}
-          <span className="text-[#8b95a5] font-normal">
+          <span className="text-muted font-normal">
             ({plan.exercises?.length ?? 0})
           </span>
         </h2>
@@ -253,8 +253,8 @@ export default async function WorkoutPlanDetailPage({
 
       {/* Completion button (only show for assigned user or family-wide plans) */}
       {canComplete && (
-        <div className="rounded-2xl bg-[#151922] border border-white/8 p-5">
-          <h2 className="text-sm font-semibold text-[#f5f7fa] mb-4">Today&apos;s Status</h2>
+        <div className="rounded-2xl bg-surface border border-border p-5">
+          <h2 className="text-sm font-semibold text-foreground mb-4">Today&apos;s Status</h2>
           <CompletionButton
             workoutPlanId={plan.id}
             initialStatus={('todayStatus' in plan ? plan.todayStatus : null) as WorkoutStatus | null}

@@ -27,8 +27,8 @@ const TYPE_CONFIG = {
   workout:     { icon: CheckCircle2, iconColor: 'text-emerald-400', dotBg: 'bg-emerald-400/20', avatarRing: 'ring-emerald-400/20' },
   streak:      { icon: Flame,        iconColor: 'text-orange-400',  dotBg: 'bg-orange-400/20',  avatarRing: 'ring-orange-400/20' },
   achievement: { icon: Trophy,       iconColor: 'text-amber-400',   dotBg: 'bg-amber-400/20',   avatarRing: 'ring-amber-400/20' },
-  joined:      { icon: UserPlus,     iconColor: 'text-[#a3ff3f]',   dotBg: 'bg-[#a3ff3f]/20',  avatarRing: 'ring-[#a3ff3f]/20' },
-  plan:        { icon: Dumbbell,     iconColor: 'text-[#8b95a5]',   dotBg: 'bg-white/8',        avatarRing: 'ring-white/10' },
+  joined:      { icon: UserPlus,     iconColor: 'text-primary',     dotBg: 'bg-primary/20',     avatarRing: 'ring-primary/20' },
+  plan:        { icon: Dumbbell,     iconColor: 'text-muted',       dotBg: 'bg-white/8',        avatarRing: 'ring-white/10' },
 }
 
 interface ActivityFeedProps {
@@ -37,11 +37,11 @@ interface ActivityFeedProps {
 
 export function ActivityFeed({ activities = MOCK_ACTIVITIES }: ActivityFeedProps) {
   return (
-    <div className="rounded-2xl border border-white/8 bg-[#151922] flex flex-col">
+    <div className="rounded-2xl border border-border bg-surface flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/8">
-        <h2 className="text-sm font-semibold text-[#f5f7fa]">Recent Activity</h2>
-        <span className="text-[10px] font-medium text-[#8b95a5] bg-white/5 px-2 py-0.5 rounded-full tracking-wide uppercase">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <h2 className="text-sm font-semibold text-foreground">Recent Activity</h2>
+        <span className="text-[10px] font-medium text-muted bg-white/5 px-2 py-0.5 rounded-full tracking-wide uppercase">
           Today
         </span>
       </div>
@@ -64,7 +64,7 @@ export function ActivityFeed({ activities = MOCK_ACTIVITIES }: ActivityFeedProps
                 <span
                   className={cn(
                     'flex w-8 h-8 rounded-full items-center justify-center',
-                    'bg-[#1c2433] text-[10px] font-bold text-[#f5f7fa]',
+                    'bg-surface-2 text-[10px] font-bold text-foreground',
                     'ring-1',
                     avatarRing,
                   )}
@@ -75,7 +75,7 @@ export function ActivityFeed({ activities = MOCK_ACTIVITIES }: ActivityFeedProps
                   className={cn(
                     'absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full',
                     'flex items-center justify-center',
-                    'ring-[1.5px] ring-[#151922]',
+                    'ring-[1.5px] ring-surface',
                     dotBg,
                   )}
                 >
@@ -85,14 +85,14 @@ export function ActivityFeed({ activities = MOCK_ACTIVITIES }: ActivityFeedProps
 
               {/* Text */}
               <div className="flex-1 min-w-0 pt-0.5">
-                <p className="text-xs text-[#f5f7fa] leading-snug">
+                <p className="text-xs text-foreground leading-snug">
                   <span className="font-semibold">{item.memberName.split(' ')[0]}</span>
                   {' '}
-                  <span className="text-[#8b95a5]">{item.action}</span>
+                  <span className="text-muted">{item.action}</span>
                   {' '}
-                  <span className="font-medium text-[#c8d0dc]">{item.detail}</span>
+                  <span className="font-medium text-foreground/70">{item.detail}</span>
                 </p>
-                <p className="text-[10px] text-[#8b95a5]/70 mt-0.5">{item.timeAgo}</p>
+                <p className="text-[10px] text-muted/70 mt-0.5">{item.timeAgo}</p>
               </div>
             </div>
           )
@@ -100,10 +100,10 @@ export function ActivityFeed({ activities = MOCK_ACTIVITIES }: ActivityFeedProps
       </div>
 
       {/* Footer */}
-      <div className="px-4 py-2.5 border-t border-white/8">
+      <div className="px-4 py-2.5 border-t border-border">
         <Link
           href="/activity"
-          className="block w-full text-[11px] font-medium text-[#8b95a5] hover:text-[#a3ff3f] transition-colors text-center"
+          className="block w-full text-[11px] font-medium text-muted hover:text-primary transition-colors text-center"
         >
           View all activity
         </Link>

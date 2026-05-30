@@ -209,8 +209,8 @@ export default async function FamilyManagementPage() {
       <div className="px-4 py-8 md:px-8 max-w-2xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[#f5f7fa] text-2xl font-bold tracking-tight">Family Management</h1>
-          <p className="text-[#8b95a5] text-sm mt-1">
+          <h1 className="text-foreground text-2xl font-bold tracking-tight">Family Management</h1>
+          <p className="text-muted text-sm mt-1">
             Create a new family or join an existing one with an invite code.
           </p>
         </div>
@@ -219,7 +219,7 @@ export default async function FamilyManagementPage() {
           <CreateFamilyForm />
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-white/8" />
-            <span className="text-[#8b95a5] text-xs font-medium">or</span>
+            <span className="text-muted text-xs font-medium">or</span>
             <div className="flex-1 h-px bg-white/8" />
           </div>
           <JoinFamilyForm />
@@ -242,8 +242,8 @@ export default async function FamilyManagementPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-[#f5f7fa] text-2xl font-bold tracking-tight">{family.familyName}</h1>
-          <p className="text-[#8b95a5] text-sm mt-1">
+          <h1 className="text-foreground text-2xl font-bold tracking-tight">{family.familyName}</h1>
+          <p className="text-muted text-sm mt-1">
             {members.length} / {MAX_FAMILY_MEMBERS} members
           </p>
         </div>
@@ -266,8 +266,8 @@ export default async function FamilyManagementPage() {
       </div>
 
       {/* Members */}
-      <div className="bg-[#151922] rounded-2xl border border-white/8 p-6">
-        <h2 className="text-[#f5f7fa] font-semibold text-base mb-5">Members</h2>
+      <div className="bg-surface rounded-2xl border border-border p-6">
+        <h2 className="text-foreground font-semibold text-base mb-5">Members</h2>
         <MemberList
           members={members}
           currentUserId={session.userId}

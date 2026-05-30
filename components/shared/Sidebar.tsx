@@ -8,6 +8,7 @@ import {
   Dumbbell,
   BarChart3,
   Bell,
+  Activity,
   LogOut,
   type LucideIcon,
 } from 'lucide-react'
@@ -23,6 +24,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   Dumbbell,
   BarChart3,
   Bell,
+  Activity,
 }
 
 interface SidebarProps {
@@ -46,14 +48,14 @@ export function Sidebar({ session }: SidebarProps) {
       className={cn(
         'hidden md:flex flex-col',
         'fixed inset-y-0 left-0 z-40',
-        'w-[240px] bg-[#151922]',
-        'border-r border-white/8',
+        'w-[240px] bg-surface',
+        'border-r border-border',
       )}
     >
       {/* Logo */}
       <Link
         href="/"
-        className="flex items-center gap-3 px-5 py-5 border-b border-white/8 group hover:opacity-90 transition-opacity"
+        className="flex items-center gap-3 px-5 py-5 border-b border-border group hover:opacity-90 transition-opacity"
       >
         <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-[#a3ff3f] flex items-center justify-center shadow-[0_0_12px_rgba(163,255,63,0.35)] group-hover:shadow-[0_0_18px_rgba(163,255,63,0.55)] transition-shadow">
           <svg
@@ -66,8 +68,8 @@ export function Sidebar({ session }: SidebarProps) {
             <polygon points="18,4 9,17 16,17 14,28 23,15 16,15" fill="#0f1115" />
           </svg>
         </div>
-        <span className="text-lg font-bold text-[#f5f7fa] tracking-tight">
-          Fit<span className="text-[#a3ff3f]">Nest</span>
+        <span className="text-lg font-bold text-foreground tracking-tight">
+          Fit<span className="text-primary">Nest</span>
         </span>
       </Link>
 
@@ -87,8 +89,8 @@ export function Sidebar({ session }: SidebarProps) {
                 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium',
                 'transition-all duration-150',
                 isActive
-                  ? 'text-[#a3ff3f] bg-[#a3ff3f]/10'
-                  : 'text-[#8b95a5] hover:text-[#f5f7fa] hover:bg-white/5',
+                  ? 'text-primary bg-primary/10'
+                  : 'text-muted hover:text-foreground hover:bg-white/5',
               )}
             >
               {Icon && (
@@ -96,13 +98,13 @@ export function Sidebar({ session }: SidebarProps) {
                   size={18}
                   className={cn(
                     'flex-shrink-0 transition-colors duration-150',
-                    isActive ? 'text-[#a3ff3f]' : 'text-current',
+                    isActive ? 'text-primary' : 'text-current',
                   )}
                 />
               )}
               {item.label}
               {isActive && (
-                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#a3ff3f]" />
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />
               )}
             </Link>
           )
@@ -110,13 +112,13 @@ export function Sidebar({ session }: SidebarProps) {
       </nav>
 
       {/* User profile */}
-      <div className="border-t border-white/8 p-3">
+      <div className="border-t border-border p-3">
         <div className="flex items-center gap-3 px-2 py-2 rounded-xl">
           <span
             className={cn(
               'flex-shrink-0 w-9 h-9 rounded-full',
               'flex items-center justify-center',
-              'bg-[#1c2433] text-[#a3ff3f] text-sm font-semibold',
+              'bg-surface-2 text-primary text-sm font-semibold',
               'ring-1 ring-white/10',
             )}
             aria-label={session.name}
@@ -124,10 +126,10 @@ export function Sidebar({ session }: SidebarProps) {
             {initials}
           </span>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-[#f5f7fa] truncate">
+            <p className="text-sm font-semibold text-foreground truncate">
               {session.name}
             </p>
-            <p className="text-xs text-[#8b95a5] truncate">{session.email}</p>
+            <p className="text-xs text-muted truncate">{session.email}</p>
           </div>
         </div>
 
@@ -135,7 +137,7 @@ export function Sidebar({ session }: SidebarProps) {
           onClick={handleLogout}
           className={cn(
             'mt-1 w-full flex items-center gap-3 px-3 py-2.5 rounded-xl',
-            'text-sm font-medium text-[#8b95a5]',
+            'text-sm font-medium text-muted',
             'hover:text-red-400 hover:bg-red-500/10',
             'transition-all duration-150',
           )}

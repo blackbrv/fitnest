@@ -17,7 +17,7 @@ const stats = [
 
 export default function FamilyBenefitsSection() {
   return (
-    <section className="relative py-24 lg:py-32 bg-[#0F1115] overflow-hidden">
+    <section className="relative py-24 lg:py-32 bg-background overflow-hidden">
       {/* Diagonal accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#A3FF3F]/15 to-transparent" />
 
@@ -31,13 +31,13 @@ export default function FamilyBenefitsSection() {
             <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#A3FF3F] mb-4">
               Why Families Love FitNest
             </p>
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-[#F5F7FA] tracking-tight leading-tight mb-6">
+            <h2 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight mb-6">
               Fitness starts{' '}
               <span className="text-[#A3FF3F] drop-shadow-[0_0_20px_rgba(163,255,63,0.35)]">
                 at home
               </span>
             </h2>
-            <p className="text-[#8b95a5] text-base leading-relaxed mb-10">
+            <p className="text-muted text-base leading-relaxed mb-10">
               Solo fitness apps leave family members isolated. FitNest ties everyone together with
               shared momentum, making healthy habits contagious rather than optional.
             </p>
@@ -50,7 +50,7 @@ export default function FamilyBenefitsSection() {
                     className="w-4.5 h-4.5 text-[#A3FF3F] shrink-0 mt-0.5"
                     strokeWidth={2}
                   />
-                  <span className="text-[#8b95a5] text-sm leading-relaxed">{benefit}</span>
+                  <span className="text-muted text-sm leading-relaxed">{benefit}</span>
                 </li>
               ))}
             </ul>
@@ -61,7 +61,7 @@ export default function FamilyBenefitsSection() {
             {stats.map((stat, i) => (
               <div
                 key={stat.label}
-                className={`relative bg-[#151922] border rounded-3xl p-7 overflow-hidden transition-all duration-300 ${
+                className={`relative bg-surface border rounded-3xl p-7 overflow-hidden transition-all duration-300 ${
                   i === 1
                     ? 'border-[#A3FF3F]/25 shadow-[0_0_40px_rgba(163,255,63,0.06)]'
                     : 'border-white/[0.07]'
@@ -84,16 +84,15 @@ export default function FamilyBenefitsSection() {
                   <p
                     className="text-5xl lg:text-6xl font-extrabold mb-1 tracking-tight"
                     style={{
-                      color:
-                        i === 0 ? '#A3FF3F' : i === 1 ? '#A3FF3F' : '#A3FF3F',
+                      color: '#A3FF3F',
                       textShadow:
                         i === 1 ? '0 0 30px rgba(163,255,63,0.4)' : 'none',
                     }}
                   >
                     {stat.value}
                   </p>
-                  <p className="text-base font-bold text-[#F5F7FA] mb-1">{stat.label}</p>
-                  <p className="text-xs text-[#8b95a5]">{stat.sub}</p>
+                  <p className="text-base font-bold text-foreground mb-1">{stat.label}</p>
+                  <p className="text-xs text-muted">{stat.sub}</p>
                 </div>
 
                 {/* Subtle progress line at bottom */}

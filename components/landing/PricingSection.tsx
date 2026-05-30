@@ -63,7 +63,7 @@ const plans = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="relative py-24 lg:py-32 bg-[#0F1115]">
+    <section id="pricing" className="relative py-24 lg:py-32 bg-background">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#A3FF3F]/10 to-transparent" />
 
       {/* Subtle center glow */}
@@ -75,10 +75,10 @@ export default function PricingSection() {
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#A3FF3F] mb-4">
             Transparent Pricing
           </p>
-          <h2 className="text-4xl lg:text-5xl font-extrabold text-[#F5F7FA] tracking-tight mb-4">
+          <h2 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight mb-4">
             Simple, family-first pricing
           </h2>
-          <p className="text-[#8b95a5] text-base max-w-md mx-auto leading-relaxed">
+          <p className="text-muted text-base max-w-md mx-auto leading-relaxed">
             No hidden fees, no per-member charges. One price for your whole household.
           </p>
         </div>
@@ -90,8 +90,8 @@ export default function PricingSection() {
               key={plan.name}
               className={`relative flex flex-col rounded-3xl p-7 ${
                 plan.highlight
-                  ? 'bg-[#151922] border-2 border-[#A3FF3F] shadow-[0_0_60px_rgba(163,255,63,0.12)] md:-mt-4 md:-mb-4'
-                  : 'bg-[#151922] border border-white/[0.07]'
+                  ? 'bg-surface border-2 border-[#A3FF3F] shadow-[0_0_60px_rgba(163,255,63,0.12)] md:-mt-4 md:-mb-4'
+                  : 'bg-surface border border-white/[0.07]'
               }`}
             >
               {/* Badge */}
@@ -106,20 +106,20 @@ export default function PricingSection() {
 
               {/* Plan name & price */}
               <div className="mb-6">
-                <h3 className="text-sm font-bold text-[#8b95a5] tracking-wide uppercase mb-3">
+                <h3 className="text-sm font-bold text-muted tracking-wide uppercase mb-3">
                   {plan.name}
                 </h3>
                 <div className="flex items-baseline gap-1 mb-2">
                   <span
                     className={`text-5xl font-extrabold ${
-                      plan.highlight ? 'text-[#A3FF3F]' : 'text-[#F5F7FA]'
+                      plan.highlight ? 'text-[#A3FF3F]' : 'text-foreground'
                     }`}
                   >
                     {plan.price}
                   </span>
-                  <span className="text-sm text-[#8b95a5]">{plan.period}</span>
+                  <span className="text-sm text-muted">{plan.period}</span>
                 </div>
-                <p className="text-xs text-[#8b95a5] leading-relaxed">{plan.description}</p>
+                <p className="text-xs text-muted leading-relaxed">{plan.description}</p>
               </div>
 
               {/* CTA */}
@@ -128,7 +128,7 @@ export default function PricingSection() {
                 className={`w-full py-3 rounded-2xl text-sm font-bold text-center mb-7 transition-all duration-200 ${
                   plan.highlight
                     ? 'bg-[#A3FF3F] text-[#0F1115] hover:bg-[#b8ff5e] shadow-[0_0_20px_rgba(163,255,63,0.3)] hover:shadow-[0_0_30px_rgba(163,255,63,0.5)]'
-                    : 'bg-white/[0.06] text-[#F5F7FA] hover:bg-white/[0.10] border border-white/[0.08]'
+                    : 'bg-white/[0.06] text-foreground hover:bg-white/[0.10] border border-white/[0.08]'
                 }`}
               >
                 {plan.cta}
@@ -143,11 +143,11 @@ export default function PricingSection() {
                   <li key={feature} className="flex items-start gap-2.5">
                     <CheckCircle2
                       className={`w-4 h-4 shrink-0 mt-0.5 ${
-                        plan.highlight ? 'text-[#A3FF3F]' : 'text-[#8b95a5]'
+                        plan.highlight ? 'text-[#A3FF3F]' : 'text-muted'
                       }`}
                       strokeWidth={2}
                     />
-                    <span className="text-sm text-[#8b95a5]">{feature}</span>
+                    <span className="text-sm text-muted">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -156,7 +156,7 @@ export default function PricingSection() {
         </div>
 
         {/* Bottom note */}
-        <p className="text-center text-xs text-[#8b95a5] mt-10">
+        <p className="text-center text-xs text-muted mt-10">
           All plans include a 14-day free trial. No credit card required.
           Cancel anytime.
         </p>

@@ -33,7 +33,7 @@ const statusConfig: Record<
   },
   PENDING: {
     label: 'Pending',
-    icon: <Clock size={13} className="text-[#8b95a5]" />,
+    icon: <Clock size={13} className="text-muted" />,
     badgeVariant: 'neutral',
   },
   SKIPPED: {
@@ -59,9 +59,9 @@ export function MemberCard({
     <motion.div
       whileHover={{ y: -2, transition: { duration: 0.15 } }}
       className={cn(
-        'rounded-2xl border bg-[#151922] p-4',
+        'rounded-2xl border bg-surface p-4',
         'transition-colors duration-200',
-        isCompleted ? 'border-[#a3ff3f]/20' : 'border-white/8',
+        isCompleted ? 'border-primary/20' : 'border-border',
       )}
     >
       {/* Top row: avatar + name + role + status */}
@@ -73,8 +73,8 @@ export function MemberCard({
               'text-sm font-semibold',
               'ring-2',
               isCompleted
-                ? 'bg-[#a3ff3f]/15 text-[#a3ff3f] ring-[#a3ff3f]/30'
-                : 'bg-[#1c2433] text-[#8b95a5] ring-white/10',
+                ? 'bg-primary/15 text-primary ring-primary/30'
+                : 'bg-surface-2 text-muted ring-white/10',
             )}
             aria-label={name}
           >
@@ -88,7 +88,7 @@ export function MemberCard({
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-[#f5f7fa] truncate">
+          <p className="text-sm font-semibold text-foreground truncate">
             {name}
           </p>
           <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
@@ -111,11 +111,11 @@ export function MemberCard({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-1.5">
           <Flame size={14} className="text-orange-400" />
-          <span className="text-xs font-semibold text-[#f5f7fa]">
+          <span className="text-xs font-semibold text-foreground">
             {streak} day streak
           </span>
         </div>
-        <span className="text-xs text-[#8b95a5]">
+        <span className="text-xs text-muted">
           {completionRate}% this week
         </span>
       </div>
@@ -125,17 +125,17 @@ export function MemberCard({
 
       {/* Assigned workout */}
       {workoutName && (
-        <div className="rounded-xl bg-[#1c2433] px-3 py-2">
-          <p className="text-[10px] text-[#8b95a5] mb-0.5">Assigned workout</p>
-          <p className="text-xs font-medium text-[#f5f7fa] truncate">
+        <div className="rounded-xl bg-surface-2 px-3 py-2">
+          <p className="text-[10px] text-muted mb-0.5">Assigned workout</p>
+          <p className="text-xs font-medium text-foreground truncate">
             {workoutName}
           </p>
         </div>
       )}
 
       {!workoutName && (
-        <div className="rounded-xl bg-[#1c2433]/60 border border-dashed border-white/10 px-3 py-2">
-          <p className="text-xs text-[#8b95a5] text-center">No workout assigned</p>
+        <div className="rounded-xl bg-surface-2/60 border border-dashed border-white/10 px-3 py-2">
+          <p className="text-xs text-muted text-center">No workout assigned</p>
         </div>
       )}
     </motion.div>

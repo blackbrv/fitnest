@@ -33,20 +33,20 @@ export function JoinFamilyForm() {
   })
 
   return (
-    <div className="bg-[#151922] rounded-2xl border border-white/8 p-6">
+    <div className="bg-surface rounded-2xl border border-border p-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-          <LogIn size={20} className="text-[#8b95a5]" />
+          <LogIn size={20} className="text-muted" />
         </div>
         <div>
-          <h2 className="text-[#f5f7fa] font-semibold text-base">Join a Family</h2>
-          <p className="text-[#8b95a5] text-sm">Enter an invite code to join</p>
+          <h2 className="text-foreground font-semibold text-base">Join a Family</h2>
+          <p className="text-muted text-sm">Enter an invite code to join</p>
         </div>
       </div>
 
       <form action={formAction} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="inviteCode" className="text-sm font-medium text-[#f5f7fa]">
+          <label htmlFor="inviteCode" className="text-sm font-medium text-foreground">
             Invite Code
           </label>
           <input
@@ -57,7 +57,7 @@ export function JoinFamilyForm() {
             placeholder="e.g. AB12CD34"
             autoComplete="off"
             maxLength={8}
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all tracking-widest uppercase font-mono"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-muted focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all tracking-widest uppercase font-mono"
           />
           {errors.inviteCode && (
             <p className="text-red-400 text-xs mt-0.5">{errors.inviteCode.message}</p>
@@ -85,9 +85,9 @@ export function JoinFamilyForm() {
           )}
         </button>
 
-        <p className="text-center text-sm text-[#8b95a5]">
+        <p className="text-center text-sm text-muted">
           Don&apos;t have a code?{' '}
-          <span className="text-[#f5f7fa]">Ask your family owner.</span>
+          <span className="text-foreground">Ask your family owner.</span>
         </p>
       </form>
     </div>

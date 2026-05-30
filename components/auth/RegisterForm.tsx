@@ -43,10 +43,10 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="bg-[#151922] rounded-2xl border border-white/8 p-8">
+    <div className="bg-surface rounded-2xl border border-border p-8">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-[#f5f7fa]">Create your account</h1>
-        <p className="text-sm text-[#8b95a5] mt-1">
+        <h1 className="text-xl font-bold text-foreground">Create your account</h1>
+        <p className="text-sm text-muted mt-1">
           Start your family&apos;s fitness journey today
         </p>
       </div>
@@ -61,7 +61,7 @@ export default function RegisterForm() {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-[#f5f7fa] mb-1.5"
+            className="block text-sm font-medium text-foreground mb-1.5"
           >
             Full Name
           </label>
@@ -71,7 +71,7 @@ export default function RegisterForm() {
             type="text"
             autoComplete="name"
             placeholder="Alex Johnson"
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
           />
           {errors.name && (
             <p className="mt-1.5 text-xs text-red-400">{errors.name.message}</p>
@@ -81,7 +81,7 @@ export default function RegisterForm() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-[#f5f7fa] mb-1.5"
+            className="block text-sm font-medium text-foreground mb-1.5"
           >
             Email
           </label>
@@ -91,7 +91,7 @@ export default function RegisterForm() {
             type="email"
             autoComplete="email"
             placeholder="you@example.com"
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
           />
           {errors.email && (
             <p className="mt-1.5 text-xs text-red-400">{errors.email.message}</p>
@@ -101,7 +101,7 @@ export default function RegisterForm() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-[#f5f7fa] mb-1.5"
+            className="block text-sm font-medium text-foreground mb-1.5"
           >
             Password
           </label>
@@ -111,7 +111,7 @@ export default function RegisterForm() {
             type="password"
             autoComplete="new-password"
             placeholder="Min. 8 characters"
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
           />
           {errors.password && (
             <p className="mt-1.5 text-xs text-red-400">{errors.password.message}</p>
@@ -121,7 +121,7 @@ export default function RegisterForm() {
         <div>
           <label
             htmlFor="confirmPassword"
-            className="block text-sm font-medium text-[#f5f7fa] mb-1.5"
+            className="block text-sm font-medium text-foreground mb-1.5"
           >
             Confirm Password
           </label>
@@ -131,7 +131,7 @@ export default function RegisterForm() {
             type="password"
             autoComplete="new-password"
             placeholder="Repeat your password"
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
           />
           {errors.confirmPassword && (
             <p className="mt-1.5 text-xs text-red-400">
@@ -176,11 +176,11 @@ export default function RegisterForm() {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#8b95a5]">
+      <p className="mt-6 text-center text-sm text-muted">
         Already have an account?{' '}
         <Link
           href="/login"
-          className="text-[#a3ff3f] hover:text-[#7acc2e] font-medium transition-colors"
+          className="text-primary hover:text-[#7acc2e] font-medium transition-colors"
         >
           Sign in
         </Link>

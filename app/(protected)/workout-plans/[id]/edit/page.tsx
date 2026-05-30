@@ -67,13 +67,13 @@ export default async function EditWorkoutPlanPage({
     <div className="px-4 py-6 sm:px-6 lg:px-8 max-w-2xl mx-auto">
       <Link
         href={`/workout-plans/${id}`}
-        className="inline-flex items-center gap-1.5 text-sm text-[#8b95a5] hover:text-[#f5f7fa] transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors mb-6"
       >
         <ChevronLeft size={16} />
         Back to Plan
       </Link>
 
-      <h1 className="text-2xl font-bold text-[#f5f7fa] mb-6">Edit Workout Plan</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">Edit Workout Plan</h1>
 
       <WorkoutForm
         mode="edit"

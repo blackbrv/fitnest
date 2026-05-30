@@ -28,25 +28,25 @@ export function WeeklyStats({
 }: WeeklyStatsProps) {
   const stats: StatCard[] = [
     {
-      icon: <Dumbbell size={20} className="text-[#a3ff3f]" />,
+      icon: <Dumbbell size={20} className="text-primary" />,
       value: totalWorkouts,
       label: 'Total Workouts',
       trend: 'This week',
     },
     {
-      icon: <Flame size={20} className="text-[#a3ff3f]" />,
+      icon: <Flame size={20} className="text-primary" />,
       value: `${activeStreak}d`,
       label: 'Active Streak',
       trend: 'Current',
     },
     {
-      icon: <TrendingUp size={20} className="text-[#a3ff3f]" />,
+      icon: <TrendingUp size={20} className="text-primary" />,
       value: `${completionRate}%`,
       label: 'Completion Rate',
       trend: 'This week',
     },
     {
-      icon: <Users size={20} className="text-[#a3ff3f]" />,
+      icon: <Users size={20} className="text-primary" />,
       value: familyMembers,
       label: 'Family Members',
       trend: 'Active',
@@ -76,25 +76,25 @@ export function WeeklyStats({
             },
           }}
           className={cn(
-            'rounded-2xl border border-white/8 bg-[#151922]',
+            'rounded-2xl border border-border bg-surface',
             'p-4 flex flex-col gap-3',
           )}
         >
           <div className="flex items-center justify-between">
-            <div className="w-9 h-9 rounded-xl bg-[#a3ff3f]/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
               {stat.icon}
             </div>
             {stat.trend && (
-              <span className="text-[10px] text-[#8b95a5] font-medium">
+              <span className="text-[10px] text-muted font-medium">
                 {stat.trend}
               </span>
             )}
           </div>
           <div>
-            <p className="text-2xl font-bold text-[#f5f7fa] leading-none mb-1">
+            <p className="text-2xl font-bold text-foreground leading-none mb-1">
               {stat.value}
             </p>
-            <p className="text-xs text-[#8b95a5] font-medium">{stat.label}</p>
+            <p className="text-xs text-muted font-medium">{stat.label}</p>
           </div>
         </motion.div>
       ))}

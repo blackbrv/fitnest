@@ -41,7 +41,7 @@ export function Avatar({ src, name, size = 'md', className, alt, ...props }: Ava
         />
       ) : (
         <span
-          className="flex h-full w-full items-center justify-center bg-[#1c2433] font-semibold text-[#a3ff3f]"
+          className="flex h-full w-full items-center justify-center bg-surface-2 font-semibold text-primary"
           aria-hidden="true"
         >
           {initials}

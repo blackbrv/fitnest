@@ -163,8 +163,8 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
       )}
 
       {/* ── Basic info ─────────────────────────────────────────────────────── */}
-      <section className="rounded-2xl bg-[#151922] border border-white/8 p-5 flex flex-col gap-4">
-        <h2 className="text-sm font-semibold text-[#f5f7fa]">Plan Details</h2>
+      <section className="rounded-2xl bg-surface border border-border p-5 flex flex-col gap-4">
+        <h2 className="text-sm font-semibold text-foreground">Plan Details</h2>
 
         <Input
           label="Title"
@@ -229,8 +229,8 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
       </section>
 
       {/* ── Scheduled days ─────────────────────────────────────────────────── */}
-      <section className="rounded-2xl bg-[#151922] border border-white/8 p-5 flex flex-col gap-4">
-        <h2 className="text-sm font-semibold text-[#f5f7fa]">Scheduled Days</h2>
+      <section className="rounded-2xl bg-surface border border-border p-5 flex flex-col gap-4">
+        <h2 className="text-sm font-semibold text-foreground">Scheduled Days</h2>
         <div className="flex flex-wrap gap-2">
           {DAYS_OF_WEEK.map((day) => {
             const active = (scheduledDays ?? []).includes(day.value)
@@ -243,8 +243,8 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
                   'px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a3ff3f]/50',
                   active
-                    ? 'bg-[#a3ff3f]/15 text-[#a3ff3f] ring-1 ring-[#a3ff3f]/30'
-                    : 'bg-[#1c2433] text-[#8b95a5] hover:text-[#f5f7fa] hover:bg-[#242e40]',
+                    ? 'bg-primary/15 text-primary ring-1 ring-primary/30'
+                    : 'bg-surface-2 text-muted hover:text-foreground hover:bg-surface-3',
                 )}
               >
                 {day.label}
@@ -260,11 +260,11 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
       </section>
 
       {/* ── Exercises ──────────────────────────────────────────────────────── */}
-      <section className="rounded-2xl bg-[#151922] border border-white/8 p-5 flex flex-col gap-4">
+      <section className="rounded-2xl bg-surface border border-border p-5 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-[#f5f7fa]">
+          <h2 className="text-sm font-semibold text-foreground">
             Exercises{' '}
-            <span className="text-[#8b95a5] font-normal">({fields.length})</span>
+            <span className="text-muted font-normal">({fields.length})</span>
           </h2>
           <Button type="button" variant="secondary" size="sm" onClick={addExercise}>
             <Plus size={14} />
@@ -287,13 +287,13 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
           {fields.map((field, index) => (
             <div
               key={field.id}
-              className="bg-[#1c2433] rounded-xl p-4 border border-white/5 flex flex-col gap-3"
+              className="bg-surface-2 rounded-xl p-4 border border-white/5 flex flex-col gap-3"
             >
               {/* Exercise header */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <GripVertical size={14} className="text-[#8b95a5]" />
-                  <span className="text-xs font-bold text-[#a3ff3f]">#{index + 1}</span>
+                  <GripVertical size={14} className="text-muted" />
+                  <span className="text-xs font-bold text-primary">#{index + 1}</span>
                 </div>
                 <button
                   type="button"
@@ -302,7 +302,7 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
                   aria-label="Remove exercise"
                   className={cn(
                     'h-7 w-7 rounded-lg flex items-center justify-center transition-colors',
-                    'text-[#8b95a5] hover:text-red-400 hover:bg-red-500/10',
+                    'text-muted hover:text-red-400 hover:bg-red-500/10',
                     'disabled:opacity-30 disabled:cursor-not-allowed',
                   )}
                 >
@@ -358,8 +358,8 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
       </section>
 
       {/* ── Notes ──────────────────────────────────────────────────────────── */}
-      <section className="rounded-2xl bg-[#151922] border border-white/8 p-5 flex flex-col gap-4">
-        <h2 className="text-sm font-semibold text-[#f5f7fa]">Notes</h2>
+      <section className="rounded-2xl bg-surface border border-border p-5 flex flex-col gap-4">
+        <h2 className="text-sm font-semibold text-foreground">Notes</h2>
         <Textarea
           placeholder="Any additional notes or instructions…"
           rows={3}

@@ -43,8 +43,8 @@ export default async function SettingsPage() {
     <div className="p-5 lg:p-7 max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#f5f7fa]">Settings</h1>
-        <p className="mt-1 text-sm text-[#8b95a5]">
+        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+        <p className="mt-1 text-sm text-muted">
           Manage your profile, family, and preferences
         </p>
       </div>

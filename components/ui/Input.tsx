@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={id}
-            className="text-sm font-medium text-[#f5f7fa]"
+            className="text-sm font-medium text-foreground"
           >
             {label}
           </label>
@@ -37,8 +37,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               .join(' ') || undefined
           }
           className={cn(
-            'h-10 w-full rounded-xl bg-[#1c2433] px-3.5 text-sm text-[#f5f7fa]',
-            'border border-white/8 outline-none placeholder:text-[#8b95a5]',
+            'h-10 w-full rounded-xl bg-surface-2 px-3.5 text-sm text-foreground',
+            'border border-border outline-none placeholder:text-muted',
             'transition-colors duration-150',
             'focus:border-[#a3ff3f]/60 focus:ring-2 focus:ring-[#a3ff3f]/20',
             'disabled:cursor-not-allowed disabled:opacity-40',
@@ -49,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         />
 
         {hint && !error && (
-          <p id={hintId} className="text-xs text-[#8b95a5]">
+          <p id={hintId} className="text-xs text-muted">
             {hint}
           </p>
         )}

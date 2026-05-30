@@ -27,8 +27,8 @@ const variantConfig: Record<
 > = {
   default: {
     icon: Info,
-    iconClass: 'text-[#8b95a5]',
-    borderClass: 'border-white/8',
+    iconClass: 'text-muted',
+    borderClass: 'border-border',
   },
   success: {
     icon: CheckCircle2,
@@ -77,7 +77,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               onOpenChange={(open) => { if (!open) dismiss(t.id) }}
               className={cn(
                 'group relative flex w-80 items-start gap-3 rounded-2xl border p-4',
-                'bg-[#151922] shadow-xl shadow-black/40',
+                'bg-surface shadow-xl shadow-black/40',
                 'data-[state=open]:animate-in data-[state=closed]:animate-out',
                 'data-[state=closed]:fade-out-80 data-[state=open]:fade-in-0',
                 'data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)]',
@@ -94,11 +94,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               />
 
               <div className="flex flex-1 flex-col gap-0.5">
-                <RadixToast.Title className="text-sm font-semibold text-[#f5f7fa]">
+                <RadixToast.Title className="text-sm font-semibold text-foreground">
                   {t.title}
                 </RadixToast.Title>
                 {t.description && (
-                  <RadixToast.Description className="text-xs text-[#8b95a5]">
+                  <RadixToast.Description className="text-xs text-muted">
                     {t.description}
                   </RadixToast.Description>
                 )}
@@ -107,8 +107,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               <RadixToast.Close
                 aria-label="Dismiss"
                 className={cn(
-                  'rounded-md p-0.5 text-[#8b95a5] transition-colors',
-                  'hover:bg-white/8 hover:text-[#f5f7fa]',
+                  'rounded-md p-0.5 text-muted transition-colors',
+                  'hover:bg-white/8 hover:text-foreground',
                   'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#a3ff3f]/50',
                 )}
               >

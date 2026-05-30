@@ -16,11 +16,10 @@ model User {
   emailVerified Boolean        @default(false) @map("email_verified")
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
-
-  ownedFamilies  Family[]       @relation("FamilyOwner")
-  familyMembers  FamilyMember[]
-  workoutLogs    WorkoutLog[]
-  notifications  Notification[]
+  ownedFamilies Family[]       @relation("FamilyOwner")
+  familyMembers FamilyMember[]
+  notifications Notification[]
+  workoutLogs   WorkoutLog[]
 
   @@map("users")
 }
@@ -32,11 +31,11 @@ model Family {
   ownerId      String         @map("owner_id")
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @updatedAt @map("updated_at")
-
   owner        User           @relation("FamilyOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   members      FamilyMember[]
   workoutPlans WorkoutPlan[]
 
+  @@index([ownerId], map: "families_owner_id_fkey")
   @@map("families")
 }
 
@@ -46,11 +45,11 @@ model FamilyMember {
   userId   String     @map("user_id")
   role     MemberRole @default(MEMBER)
   joinedAt DateTime   @default(now()) @map("joined_at")
-
   family   Family     @relation(fields: [familyId], references: [id], onDelete: Cascade)
   user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([familyId, userId])
+  @@index([userId], map: "family_members_user_id_fkey")
   @@map("family_members")
 }
 
@@ -67,11 +66,11 @@ model WorkoutPlan {
   isActive      Boolean           @default(true) @map("is_active")
   createdAt     DateTime          @default(now()) @map("created_at")
   updatedAt     DateTime          @updatedAt @map("updated_at")
-
-  family        Family            @relation(fields: [familyId], references: [id], onDelete: Cascade)
   exercises     WorkoutExercise[]
   workoutLogs   WorkoutLog[]
+  family        Family            @relation(fields: [familyId], references: [id], onDelete: Cascade)
 
+  @@index([familyId], map: "workout_plans_family_id_fkey")
   @@map("workout_plans")
 }
 
@@ -84,9 +83,9 @@ model WorkoutExercise {
   duration      Int?
   restSeconds   Int?        @map("rest_seconds")
   order         Int         @default(0)
-
   workoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
+  @@index([workoutPlanId], map: "workout_exercises_workout_plan_id_fkey")
   @@map("workout_exercises")
 }
 
@@ -98,10 +97,11 @@ model WorkoutLog {
   completedAt   DateTime?     @map("completed_at")
   notes         String?       @db.Text
   createdAt     DateTime      @default(now()) @map("created_at")
-
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   workoutPlan   WorkoutPlan   @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
+  @@index([userId], map: "workout_logs_user_id_fkey")
+  @@index([workoutPlanId], map: "workout_logs_workout_plan_id_fkey")
   @@map("workout_logs")
 }
 
@@ -113,9 +113,9 @@ model Notification {
   message   String           @db.Text
   isRead    Boolean          @default(false) @map("is_read")
   createdAt DateTime         @default(now()) @map("created_at")
-
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId], map: "notifications_user_id_fkey")
   @@map("notifications")
 }
 

@@ -18,7 +18,7 @@ const DIFFICULTY_STYLES = {
 function StatusIndicator({ status }: { status?: WorkoutStatus | null }) {
   if (!status || status === 'PENDING') {
     return (
-      <span className="inline-flex items-center gap-1 text-xs text-[#8b95a5]">
+      <span className="inline-flex items-center gap-1 text-xs text-muted">
         <Clock3 size={12} />
         Pending
       </span>
@@ -42,7 +42,7 @@ function StatusIndicator({ status }: { status?: WorkoutStatus | null }) {
   }
   if (status === 'SKIPPED') {
     return (
-      <span className="inline-flex items-center gap-1 text-xs text-[#8b95a5]">
+      <span className="inline-flex items-center gap-1 text-xs text-muted">
         <SkipForward size={12} />
         Skipped
       </span>
@@ -80,27 +80,27 @@ export function WorkoutPlanCard({ plan, currentUserId }: WorkoutPlanCardProps) {
     <Link href={`/workout-plans/${plan.id}`} className="block group">
       <div
         className={cn(
-          'relative rounded-2xl border bg-[#151922] p-5 transition-all duration-200',
-          'hover:border-white/15 hover:bg-[#1a2030]',
+          'relative rounded-2xl border bg-surface p-5 transition-all duration-200',
+          'hover:border-white/15 hover:bg-surface-3',
           isAssignedToMe
-            ? 'border-[#a3ff3f]/25 ring-1 ring-[#a3ff3f]/10'
-            : 'border-white/8',
+            ? 'border-primary/25 ring-1 ring-primary/10'
+            : 'border-border',
         )}
       >
         {/* Assigned-to-me indicator */}
         {isAssignedToMe && (
-          <span className="absolute top-4 right-4 h-2 w-2 rounded-full bg-[#a3ff3f] ring-2 ring-[#a3ff3f]/25" />
+          <span className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary ring-2 ring-primary/25" />
         )}
 
         {/* Header row */}
         <div className="flex items-start gap-3 mb-3">
           {/* Icon */}
-          <div className="shrink-0 h-10 w-10 rounded-xl bg-[#1c2433] flex items-center justify-center border border-white/5">
-            <Dumbbell size={18} className="text-[#a3ff3f]" strokeWidth={1.75} />
+          <div className="shrink-0 h-10 w-10 rounded-xl bg-surface-2 flex items-center justify-center border border-white/5">
+            <Dumbbell size={18} className="text-primary" strokeWidth={1.75} />
           </div>
 
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-semibold text-[#f5f7fa] truncate group-hover:text-white transition-colors">
+            <h3 className="text-sm font-semibold text-foreground truncate group-hover:text-foreground transition-colors">
               {plan.title}
             </h3>
             <div className="flex items-center gap-2 mt-1 flex-wrap">
@@ -119,7 +119,7 @@ export function WorkoutPlanCard({ plan, currentUserId }: WorkoutPlanCardProps) {
 
         {/* Description */}
         {plan.description && (
-          <p className="text-xs text-[#8b95a5] mb-3 line-clamp-2">{plan.description}</p>
+          <p className="text-xs text-muted mb-3 line-clamp-2">{plan.description}</p>
         )}
 
         {/* Scheduled days */}
@@ -128,7 +128,7 @@ export function WorkoutPlanCard({ plan, currentUserId }: WorkoutPlanCardProps) {
             {parseScheduledDays(plan.scheduledDays as unknown as string).map((day) => (
               <span
                 key={day}
-                className="bg-[#a3ff3f]/15 text-[#a3ff3f] text-xs px-2 py-0.5 rounded-md font-medium"
+                className="bg-primary/15 text-primary text-xs px-2 py-0.5 rounded-md font-medium"
               >
                 {DAY_LABELS[day] ?? day}
               </span>
@@ -146,17 +146,17 @@ export function WorkoutPlanCard({ plan, currentUserId }: WorkoutPlanCardProps) {
                   name={plan.assignedMemberName}
                   size="sm"
                 />
-                <span className="text-xs text-[#8b95a5] truncate max-w-[100px]">
+                <span className="text-xs text-muted truncate max-w-[100px]">
                   {plan.assignedMemberName}
                 </span>
               </>
             ) : (
-              <span className="text-xs text-[#8b95a5]">Unassigned</span>
+              <span className="text-xs text-muted">Unassigned</span>
             )}
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-xs text-[#8b95a5]">
+            <span className="text-xs text-muted">
               {exerciseCount} {exerciseCount === 1 ? 'exercise' : 'exercises'}
             </span>
             <StatusIndicator status={plan.todayStatus} />

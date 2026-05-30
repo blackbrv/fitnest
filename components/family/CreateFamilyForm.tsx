@@ -33,20 +33,20 @@ export function CreateFamilyForm() {
   })
 
   return (
-    <div className="bg-[#151922] rounded-2xl border border-white/8 p-6">
+    <div className="bg-surface rounded-2xl border border-border p-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-[#a3ff3f]/10 flex items-center justify-center shrink-0">
-          <Users size={20} className="text-[#a3ff3f]" />
+        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <Users size={20} className="text-primary" />
         </div>
         <div>
-          <h2 className="text-[#f5f7fa] font-semibold text-base">Create a Family</h2>
-          <p className="text-[#8b95a5] text-sm">Start your family fitness journey</p>
+          <h2 className="text-foreground font-semibold text-base">Create a Family</h2>
+          <p className="text-muted text-sm">Start your family fitness journey</p>
         </div>
       </div>
 
       <form action={formAction} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="familyName" className="text-sm font-medium text-[#f5f7fa]">
+          <label htmlFor="familyName" className="text-sm font-medium text-foreground">
             Family Name
           </label>
           <input
@@ -56,7 +56,7 @@ export function CreateFamilyForm() {
             type="text"
             placeholder="e.g. The Johnsons"
             autoComplete="off"
-            className="w-full bg-[#1c2433] border border-white/8 rounded-xl px-4 py-3 text-[#f5f7fa] placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-muted focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
           />
           {errors.familyName && (
             <p className="text-red-400 text-xs mt-0.5">{errors.familyName.message}</p>

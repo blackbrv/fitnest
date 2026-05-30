@@ -23,7 +23,7 @@ const wordAnim = {
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0F1115]">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
       {/* Background grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -56,7 +56,7 @@ export default function HeroSection() {
 
             {/* Headline */}
             <motion.h1
-              className="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#F5F7FA] leading-[1.05] tracking-tight"
+              className="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-foreground leading-[1.05] tracking-tight"
               variants={headlineWords}
               initial="hidden"
               animate="visible"
@@ -82,7 +82,7 @@ export default function HeroSection() {
 
             {/* Subheadline */}
             <motion.p
-              className="text-[#8b95a5] text-lg lg:text-xl leading-relaxed max-w-xl"
+              className="text-muted text-lg lg:text-xl leading-relaxed max-w-xl"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4, ease }}
@@ -107,10 +107,10 @@ export default function HeroSection() {
               </Link>
               <a
                 href="#features"
-                className="group flex items-center gap-3 text-[#F5F7FA] border border-white/[0.12] hover:border-white/25 rounded-full px-6 py-3.5 text-base transition-all duration-200 hover:bg-white/[0.04]"
+                className="group flex items-center gap-3 text-foreground border border-white/[0.12] hover:border-white/25 rounded-full px-6 py-3.5 text-base transition-all duration-200 hover:bg-white/[0.04]"
               >
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/10 group-hover:bg-white/15 transition-colors">
-                  <Play className="w-3 h-3 fill-[#F5F7FA]" />
+                  <Play className="w-3 h-3 fill-foreground" />
                 </span>
                 See Features
               </a>
@@ -127,14 +127,14 @@ export default function HeroSection() {
                 {['TJ', 'SM', 'MG', 'RL'].map((initials, i) => (
                   <div
                     key={i}
-                    className="w-8 h-8 rounded-full border-2 border-[#0F1115] bg-gradient-to-br from-[#1c2433] to-[#2a3347] flex items-center justify-center text-[9px] font-bold text-[#A3FF3F]"
+                    className="w-8 h-8 rounded-full border-2 border-background bg-gradient-to-br from-[#1c2433] to-[#2a3347] flex items-center justify-center text-[9px] font-bold text-[#A3FF3F]"
                   >
                     {initials}
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-[#8b95a5]">
-                <span className="text-[#F5F7FA] font-semibold">2,400+</span> families already active
+              <p className="text-sm text-muted">
+                <span className="text-foreground font-semibold">2,400+</span> families already active
               </p>
             </motion.div>
           </div>
@@ -147,12 +147,12 @@ export default function HeroSection() {
             transition={{ duration: 0.7, delay: 0.2, ease }}
           >
             {/* Main card */}
-            <div className="relative bg-[#151922] border border-white/[0.08] rounded-3xl p-5 shadow-2xl">
+            <div className="relative bg-surface border border-white/[0.08] rounded-3xl p-5 shadow-2xl">
               {/* Top bar */}
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <p className="text-xs text-[#8b95a5]">Family Dashboard</p>
-                  <p className="text-sm font-semibold text-[#F5F7FA]">Week of May 26</p>
+                  <p className="text-xs text-muted">Family Dashboard</p>
+                  <p className="text-sm font-semibold text-foreground">Week of May 26</p>
                 </div>
                 <div className="flex items-center gap-1.5 bg-[#A3FF3F]/10 border border-[#A3FF3F]/20 rounded-full px-3 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#A3FF3F]" />
@@ -176,7 +176,7 @@ export default function HeroSection() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-[#F5F7FA]">{member.name}</span>
+                      <span className="text-sm font-medium text-foreground">{member.name}</span>
                       <span className="text-xs font-bold" style={{ color: member.color }}>
                         {member.pct}%
                       </span>
@@ -190,7 +190,7 @@ export default function HeroSection() {
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
                     <Flame className="w-3 h-3 text-orange-400" />
-                    <span className="text-xs text-[#8b95a5]">{member.streak}d</span>
+                    <span className="text-xs text-muted">{member.streak}d</span>
                   </div>
                 </div>
               ))}
@@ -202,8 +202,8 @@ export default function HeroSection() {
                   { label: 'Avg. Score', value: '68%', icon: null },
                   { label: 'Members', value: '4', icon: Users },
                 ].map(({ label, value, icon: Icon }) => (
-                  <div key={label} className="bg-[#1c2433] rounded-2xl p-3">
-                    <p className="text-xs text-[#8b95a5] mb-0.5">{label}</p>
+                  <div key={label} className="bg-surface-2 rounded-2xl p-3">
+                    <p className="text-xs text-muted mb-0.5">{label}</p>
                     <p className="text-base font-bold text-[#A3FF3F]">{value}</p>
                   </div>
                 ))}
@@ -212,7 +212,7 @@ export default function HeroSection() {
 
             {/* Floating badge - streak */}
             <motion.div
-              className="absolute -top-4 -right-4 bg-[#1c2433] border border-white/[0.1] rounded-2xl px-4 py-2.5 shadow-xl"
+              className="absolute -top-4 -right-4 bg-surface-2 border border-white/[0.1] rounded-2xl px-4 py-2.5 shadow-xl"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.7, ease }}
@@ -220,8 +220,8 @@ export default function HeroSection() {
               <div className="flex items-center gap-2">
                 <Flame className="w-4 h-4 text-orange-400" />
                 <div>
-                  <p className="text-xs text-[#8b95a5]">Family Streak</p>
-                  <p className="text-sm font-bold text-[#F5F7FA]">12 Days</p>
+                  <p className="text-xs text-muted">Family Streak</p>
+                  <p className="text-sm font-bold text-foreground">12 Days</p>
                 </div>
               </div>
             </motion.div>

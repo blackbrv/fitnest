@@ -17,7 +17,7 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#0f1115]">
+    <div className="flex min-h-screen bg-background">
       {/* Desktop sidebar */}
       <Sidebar session={session} />
 

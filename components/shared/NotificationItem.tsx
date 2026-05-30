@@ -23,8 +23,8 @@ const typeConfig: Record<
 > = {
   WORKOUT_REMINDER: {
     icon: Dumbbell,
-    iconColor: 'text-[#a3ff3f]',
-    iconBg: 'bg-[#a3ff3f]/10',
+    iconColor: 'text-primary',
+    iconBg: 'bg-primary/10',
   },
   STREAK_REMINDER: {
     icon: Flame,
@@ -43,7 +43,7 @@ const typeConfig: Record<
   },
   GENERAL: {
     icon: Bell,
-    iconColor: 'text-[#8b95a5]',
+    iconColor: 'text-muted',
     iconBg: 'bg-white/8',
   },
 }
@@ -72,7 +72,7 @@ export function NotificationItem({ notification }: NotificationItemProps) {
         'transition-colors duration-150',
         isRead
           ? 'border-white/5 bg-transparent hover:bg-white/3'
-          : 'border-white/10 bg-[#1c2433]/60 hover:bg-[#1c2433]',
+          : 'border-white/10 bg-surface-2/60 hover:bg-surface-2',
         isPending && 'opacity-60 pointer-events-none',
       )}
     >
@@ -92,21 +92,21 @@ export function NotificationItem({ notification }: NotificationItemProps) {
           <p
             className={cn(
               'text-sm font-semibold leading-tight',
-              isRead ? 'text-[#8b95a5]' : 'text-[#f5f7fa]',
+              isRead ? 'text-muted' : 'text-foreground',
             )}
           >
             {notification.title}
           </p>
           <div className="flex shrink-0 items-center gap-2">
-            <span className="text-xs text-[#8b95a5]">
+            <span className="text-xs text-muted">
               {formatRelativeTime(notification.createdAt)}
             </span>
             {!isRead && (
-              <span className="h-2 w-2 shrink-0 rounded-full bg-[#a3ff3f]" />
+              <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
             )}
           </div>
         </div>
-        <p className="mt-1 text-xs text-[#8b95a5] leading-relaxed line-clamp-2">
+        <p className="mt-1 text-xs text-muted leading-relaxed line-clamp-2">
           {notification.message}
         </p>
       </div>

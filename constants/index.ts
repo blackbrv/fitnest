@@ -55,9 +55,10 @@ export const ROUTES = {
 } as const
 
 export const NAV_ITEMS = [
-  { label: "Dashboard", href: ROUTES.DASHBOARD, icon: "LayoutDashboard" },
-  { label: "Family", href: ROUTES.FAMILY, icon: "Users" },
-  { label: "Workouts", href: ROUTES.WORKOUTS, icon: "Dumbbell" },
-  { label: "Statistics", href: ROUTES.STATISTICS, icon: "BarChart3" },
-  { label: "Notifications", href: ROUTES.NOTIFICATIONS, icon: "Bell" },
+  { label: "Dashboard",     href: ROUTES.DASHBOARD,      icon: "LayoutDashboard", desktopOnly: false },
+  { label: "Family",        href: ROUTES.FAMILY,         icon: "Users",           desktopOnly: false },
+  { label: "Workouts",      href: ROUTES.WORKOUTS,       icon: "Dumbbell",        desktopOnly: false },
+  { label: "Statistics",    href: ROUTES.STATISTICS,     icon: "BarChart3",       desktopOnly: false },
+  { label: "Activity",      href: "/activity",           icon: "Activity",        desktopOnly: true  },
+  { label: "Notifications", href: ROUTES.NOTIFICATIONS,  icon: "Bell",            desktopOnly: false },
 ] as const
