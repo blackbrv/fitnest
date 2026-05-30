@@ -29,9 +29,10 @@ const ICON_MAP: Record<string, LucideIcon> = {
 
 interface SidebarProps {
   session: SessionPayload
+  avatar?: string | null
 }
 
-export function Sidebar({ session }: SidebarProps) {
+export function Sidebar({ session, avatar }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -114,17 +115,26 @@ export function Sidebar({ session }: SidebarProps) {
       {/* User profile */}
       <div className="border-t border-border p-3">
         <div className="flex items-center gap-3 px-2 py-2 rounded-xl">
-          <span
-            className={cn(
-              'flex-shrink-0 w-9 h-9 rounded-full',
-              'flex items-center justify-center',
-              'bg-surface-2 text-primary text-sm font-semibold',
-              'ring-1 ring-white/10',
-            )}
-            aria-label={session.name}
-          >
-            {initials}
-          </span>
+          {avatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={avatar}
+              alt={session.name}
+              className="flex-shrink-0 w-9 h-9 rounded-full object-cover ring-1 ring-border"
+            />
+          ) : (
+            <span
+              className={cn(
+                'flex-shrink-0 w-9 h-9 rounded-full',
+                'flex items-center justify-center',
+                'bg-surface-2 text-primary text-sm font-semibold',
+                'ring-1 ring-border',
+              )}
+              aria-label={session.name}
+            >
+              {initials}
+            </span>
+          )}
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-foreground truncate">
               {session.name}

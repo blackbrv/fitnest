@@ -18,12 +18,14 @@ interface ProfileHeaderProps {
     currentStreak: number
   }
   familyName: string | null
+  bio?: string | null
 }
 
 export function ProfileHeader({
   user,
   stats,
   familyName,
+  bio,
 }: ProfileHeaderProps) {
   const [avatarError, setAvatarError] = useState(false)
   const initials = getInitials(user.name)
@@ -102,6 +104,9 @@ export function ProfileHeader({
           <p className="text-xs text-muted/70">
             Member since {formatDate(user.createdAt)}
           </p>
+          {bio && (
+            <p className="text-sm text-muted mt-2 leading-relaxed">{bio}</p>
+          )}
         </div>
 
         {/* Quick stats */}

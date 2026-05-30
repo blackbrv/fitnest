@@ -11,16 +11,20 @@ export default async function SettingsPage() {
 
   let userName = session.name
   let userEmail = session.email
+  let userBio: string | null = null
+  let userAvatar: string | null = null
   let familyName: string | null = null
 
   try {
     const user = await db.user.findUnique({
       where: { id: session.userId },
-      select: { name: true, email: true },
+      select: { name: true, email: true, bio: true, avatar: true },
     })
     if (user) {
       userName = user.name
       userEmail = user.email
+      userBio = user.bio
+      userAvatar = user.avatar
     }
 
     const familyMember = await db.familyMember.findFirst({
@@ -51,7 +55,7 @@ export default async function SettingsPage() {
 
       <SettingsTabs
         tabs={tabs}
-        defaultValues={{ name: userName, email: userEmail }}
+        defaultValues={{ name: userName, email: userEmail, bio: userBio ?? '', avatar: userAvatar ?? '' }}
         familyName={familyName}
       />
     </div>

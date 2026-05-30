@@ -17,6 +17,7 @@ export default async function ProfilePage() {
     name: session.name,
     email: session.email,
     avatar: null as string | null,
+    bio: null as string | null,
     createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
   }
 
@@ -34,6 +35,7 @@ export default async function ProfilePage() {
         name: true,
         email: true,
         avatar: true,
+        bio: true,
         createdAt: true,
       },
     })
@@ -81,6 +83,7 @@ export default async function ProfilePage() {
         user={user}
         stats={{ workoutsCompleted, currentStreak }}
         familyName={familyName}
+        bio={user.bio}
       />
 
       <ProfileActivity recentActivity={recentActivity} />

@@ -20,7 +20,7 @@ interface Tab {
 
 interface SettingsTabsProps {
   tabs: Tab[]
-  defaultValues: { name: string; email: string }
+  defaultValues: { name: string; email: string; bio: string; avatar: string }
   familyName: string | null
 }
 
@@ -62,6 +62,7 @@ export function SettingsTabs({ tabs, defaultValues, familyName }: SettingsTabsPr
             <SettingsForm defaultValues={defaultValues} />
           </div>
         )}
+
 
         {activeTab === 'family' && (
           <div className="rounded-2xl border border-border bg-surface p-5 space-y-4">
