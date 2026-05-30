@@ -31,9 +31,9 @@
   --color-border: rgba(0, 0, 0, 0.09);
   --color-foreground: #111827;
   --color-muted: #6b7280;
-  --color-primary: #a3ff3f;
-  --color-primary-dark: #7acc2e;
-  --color-primary-muted: rgba(163, 255, 63, 0.15);
+  --color-primary: #8ee235;
+  --color-primary-dark: #6db820;
+  --color-primary-muted: rgba(142, 226, 53, 0.15);
   --background: #f0f4f8;
   --foreground: #111827;
 }
