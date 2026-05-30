@@ -106,8 +106,7 @@ export function WorkoutForm({ mode = 'create', plan, familyMembers = [] }: Worko
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function onSubmit(values: any) {
+  function onSubmit(values: FormValues) {
     setServerError(null)
 
     // Manual client-side validation

@@ -146,8 +146,7 @@ async function getActivityData(
       return { rows: [], totalCount: 0, members: [], workoutPlans: [] };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const allMembers: { userId: string; name: string }[] = membership.family.members.map((m: any) => ({
+    const allMembers: { userId: string; name: string }[] = membership.family.members.map((m) => ({
       userId: m.userId as string,
       name: m.user.name as string,
     }));
@@ -234,8 +233,7 @@ async function getActivityData(
     });
 
     // ── Build rows ───────────────────────────────────────────────────────────
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rows: ActivityRow[] = (logs as any[]).map((log) => {
+    const rows: ActivityRow[] = logs.map((log) => {
       const ts = new Date(log.completedAt ?? log.createdAt);
       return {
         id: log.id,

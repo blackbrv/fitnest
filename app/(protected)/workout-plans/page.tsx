@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { WorkoutPlan, WorkoutStatus } from '@/types'
+import { parseScheduledDays } from '@/lib/utils'
 import { WorkoutPlanCard } from '@/components/workout/WorkoutPlanCard'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { Button } from '@/components/ui/Button'
@@ -133,15 +134,14 @@ async function getWorkoutPlans(userId: string) {
 
     type MemberUser = { id: string; name: string; avatar: string | null }
     const memberMap = new Map<string, MemberUser>(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      membership.family.members.map((m: any) => [m.user.id as string, m.user as MemberUser]),
+      membership.family.members.map((m) => [m.user.id, m.user as MemberUser]),
     )
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const plans = rawPlans.map((plan: any) => {
+    const plans = rawPlans.map((plan) => {
       const assignedUser = plan.assignedTo ? memberMap.get(plan.assignedTo) : null
       return {
         ...plan,
+        scheduledDays: parseScheduledDays(plan.scheduledDays as unknown as string),
         assignedMemberName: assignedUser?.name ?? null,
         assignedMemberAvatar: assignedUser?.avatar ?? null,
         todayStatus: (plan.workoutLogs[0]?.status ?? null) as WorkoutStatus | null,
@@ -171,8 +171,7 @@ export default async function WorkoutPlansPage({
 
   const { plans, isOwner, userId } = await getWorkoutPlans(session.userId)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filteredPlans = plans.filter((plan: any) => {
+  const filteredPlans = plans.filter((plan) => {
     if (activeFilter === 'mine') return plan.assignedTo === userId
     if (activeFilter === 'assigned') return plan.assignedTo !== null
     return true
@@ -228,8 +227,7 @@ export default async function WorkoutPlansPage({
         />
       ) : (
         <StaggerContainer className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {filteredPlans.map((plan: any) => (
+          {filteredPlans.map((plan) => (
             <StaggerItem key={plan.id}>
               <WorkoutPlanCard plan={plan} currentUserId={userId} />
             </StaggerItem>

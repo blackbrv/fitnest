@@ -98,13 +98,11 @@ async function getWorkoutPlan(planId: string, userId: string) {
 
     type MemberUser = { id: string; name: string; avatar: string | null }
     const memberMap = new Map<string, MemberUser>(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      membership.family.members.map((m: any) => [m.user.id as string, m.user as MemberUser]),
+      membership.family.members.map((m) => [m.user.id, m.user as MemberUser]),
     )
 
     const assignedUser = plan.assignedTo ? memberMap.get(plan.assignedTo) : null
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const todayLog = (plan as any).workoutLogs?.[0]
+    const todayLog = plan.workoutLogs[0]
 
     return {
       ...plan,

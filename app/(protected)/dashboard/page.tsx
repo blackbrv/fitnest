@@ -226,8 +226,7 @@ async function getDashboardData(userId: string): Promise<DashboardData> {
       id: log.id,
       memberName: memberNameMap.get(log.userId) ?? 'Someone',
       action: 'completed',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      detail: (log as any).workoutPlan?.title ?? 'a workout',
+      detail: log.workoutPlan?.title ?? 'a workout',
       timeAgo: formatRelativeTime(log.completedAt ?? log.createdAt),
       type: 'workout' as const,
     }))
