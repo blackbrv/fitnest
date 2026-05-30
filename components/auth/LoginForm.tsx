@@ -3,9 +3,10 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useTransition } from 'react'
+import { useTransition, useState } from 'react'
 import Link from 'next/link'
 import { loginUser } from '@/server/actions/auth'
+import { PasswordInput } from '@/components/ui/PasswordInput'
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -16,6 +17,7 @@ type LoginFormData = z.infer<typeof loginSchema>
 
 export default function LoginForm() {
   const [isPending, startTransition] = useTransition()
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null)
 
   const {
     register,
@@ -30,6 +32,11 @@ export default function LoginForm() {
     startTransition(async () => {
       const result = await loginUser(data)
       if (result && !result.success && result.error) {
+        if (result.error.startsWith('UNVERIFIED:')) {
+          const email = result.error.split('UNVERIFIED:')[1]
+          setUnverifiedEmail(email)
+          return
+        }
         setError('root', { message: result.error })
       }
     })
@@ -48,6 +55,21 @@ export default function LoginForm() {
         {errors.root && (
           <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3">
             <p className="text-sm text-red-400">{errors.root.message}</p>
+          </div>
+        )}
+
+        {unverifiedEmail && (
+          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-4">
+            <p className="text-sm text-amber-400 font-medium mb-1">Email not verified</p>
+            <p className="text-xs text-amber-400/80 mb-3">
+              Please verify your email address before logging in.
+            </p>
+            <Link
+              href={`/verify-email/pending?email=${encodeURIComponent(unverifiedEmail)}`}
+              className="text-xs font-medium text-amber-400 hover:text-amber-300 underline"
+            >
+              Resend verification email →
+            </Link>
           </div>
         )}
 
@@ -71,8 +93,8 @@ export default function LoginForm() {
           )}
         </div>
 
-        <div>
-          <div className="flex items-center justify-between mb-1.5">
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center justify-between">
             <label
               htmlFor="password"
               className="text-sm font-medium text-foreground"
@@ -86,17 +108,13 @@ export default function LoginForm() {
               Forgot password?
             </Link>
           </div>
-          <input
+          <PasswordInput
             {...register('password')}
             id="password"
-            type="password"
             autoComplete="current-password"
             placeholder="••••••••"
-            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
+            error={errors.password?.message}
           />
-          {errors.password && (
-            <p className="mt-1.5 text-xs text-red-400">{errors.password.message}</p>
-          )}
         </div>
 
         <button

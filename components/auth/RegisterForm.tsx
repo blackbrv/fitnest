@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { useTransition } from 'react'
 import Link from 'next/link'
 import { registerUser } from '@/server/actions/auth'
+import { PasswordInput } from '@/components/ui/PasswordInput'
 
 const registerSchema = z
   .object({
@@ -98,47 +99,23 @@ export default function RegisterForm() {
           )}
         </div>
 
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-foreground mb-1.5"
-          >
-            Password
-          </label>
-          <input
-            {...register('password')}
-            id="password"
-            type="password"
-            autoComplete="new-password"
-            placeholder="Min. 8 characters"
-            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
-          />
-          {errors.password && (
-            <p className="mt-1.5 text-xs text-red-400">{errors.password.message}</p>
-          )}
-        </div>
+        <PasswordInput
+          {...register('password')}
+          id="password"
+          label="Password"
+          autoComplete="new-password"
+          placeholder="Min. 8 characters"
+          error={errors.password?.message}
+        />
 
-        <div>
-          <label
-            htmlFor="confirmPassword"
-            className="block text-sm font-medium text-foreground mb-1.5"
-          >
-            Confirm Password
-          </label>
-          <input
-            {...register('confirmPassword')}
-            id="confirmPassword"
-            type="password"
-            autoComplete="new-password"
-            placeholder="Repeat your password"
-            className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-foreground placeholder-[#8b95a5] focus:outline-none focus:border-[#a3ff3f]/50 focus:ring-1 focus:ring-[#a3ff3f]/25 transition-all"
-          />
-          {errors.confirmPassword && (
-            <p className="mt-1.5 text-xs text-red-400">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
+        <PasswordInput
+          {...register('confirmPassword')}
+          id="confirmPassword"
+          label="Confirm Password"
+          autoComplete="new-password"
+          placeholder="Repeat your password"
+          error={errors.confirmPassword?.message}
+        />
 
         <button
           type="submit"

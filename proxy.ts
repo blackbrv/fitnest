@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { jwtVerify } from "jose"
 
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password"]
-const PROTECTED_PREFIX = ["/dashboard", "/family-management", "/workout-plans", "/statistics", "/notifications", "/settings", "/profile"]
+const PUBLIC_ROUTES = ["/verify-email", "/reset-password"] // accessible without login, no dashboard redirect
+const PROTECTED_PREFIX = ["/dashboard", "/family-management", "/workout-plans", "/statistics", "/notifications", "/settings", "/profile", "/activity"]
 
 function getSecret(): Uint8Array {
   const secret = process.env.JWT_SECRET ?? "fallback-secret-key-for-dev-only"
@@ -15,6 +16,7 @@ export async function proxy(request: NextRequest) {
 
   const isProtected = PROTECTED_PREFIX.some((prefix) => pathname.startsWith(prefix))
   const isAuthRoute = AUTH_ROUTES.some((route) => pathname === route)
+  const isPublicRoute = PUBLIC_ROUTES.some((route) => pathname.startsWith(route))
 
   let isAuthenticated = false
   if (token) {
@@ -24,6 +26,11 @@ export async function proxy(request: NextRequest) {
     } catch {
       isAuthenticated = false
     }
+  }
+
+  // Verify-email and reset-password are always accessible (skip all other checks)
+  if (isPublicRoute) {
+    return NextResponse.next()
   }
 
   if (isProtected && !isAuthenticated) {

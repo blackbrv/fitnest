@@ -14,7 +14,11 @@ model User {
   password      String
   avatar        String?        @db.MediumText
   bio           String?        @db.Text
-  emailVerified Boolean        @default(false) @map("email_verified")
+  emailVerified       Boolean   @default(false) @map("email_verified")
+  verificationToken   String?   @db.Text @map("verification_token")
+  verificationExpiry  DateTime? @map("verification_expiry")
+  resetToken          String?   @db.Text @map("reset_token")
+  resetExpiry         DateTime? @map("reset_expiry")
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   ownedFamilies Family[]       @relation("FamilyOwner")
