@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { ScaleIn } from '@/components/ui/Motion'
 
 export const metadata: Metadata = {
-  title: 'FitNest — Get Started',
+  title: 'Get Started',
   description: 'Sign in or create your FitNest account to start your family fitness journey.',
+  robots: { index: false, follow: false },
 }
 
 export default function AuthLayout({

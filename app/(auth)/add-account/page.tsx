@@ -4,7 +4,7 @@ import { ChevronLeft } from 'lucide-react'
 import LoginForm from '@/components/auth/LoginForm'
 
 export const metadata: Metadata = {
-  title: 'Add Account — FitNest',
+  title: 'Add Account',
 }
 
 export default function AddAccountPage() {

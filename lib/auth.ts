@@ -2,7 +2,7 @@
 
 import '@/lib/env'
 import { SignJWT, jwtVerify } from "jose"
-import { cookies } from "next/headers"
+import { cookies, headers } from "next/headers"
 import { SessionPayload } from "@/types"
 import { db } from "@/lib/db"
 
@@ -23,24 +23,31 @@ function getSecret(): Uint8Array {
   return encoded
 }
 
-export async function createSession(
+/** Generates a signed JWT without touching cookies — used by API auth routes for mobile clients. */
+export async function createToken(
   payload: Omit<SessionPayload, "sessionVersion">,
 ): Promise<string> {
-  // Fetch current sessionVersion so forged tokens with a stale version are rejected
   const user = await db.user.findUnique({
     where: { id: payload.userId },
     select: { sessionVersion: true },
   })
   const sessionVersion = user?.sessionVersion ?? 0
-
   const fullPayload: SessionPayload = { ...payload, sessionVersion }
   const expiresAt = new Date(Date.now() + SESSION_DURATION)
 
-  const token = await new SignJWT(fullPayload as unknown as Record<string, unknown>)
+  return new SignJWT(fullPayload as unknown as Record<string, unknown>)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(expiresAt)
     .sign(getSecret())
+}
+
+/** Creates a session JWT and sets the httpOnly cookie — used by the web app (Server Actions). */
+export async function createSession(
+  payload: Omit<SessionPayload, "sessionVersion">,
+): Promise<string> {
+  const token = await createToken(payload)
+  const expiresAt = new Date(Date.now() + SESSION_DURATION)
 
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE, token, {
@@ -70,17 +77,39 @@ export async function setSessionToken(token: string): Promise<void> {
   })
 }
 
+/**
+ * Resolves the current session from either:
+ *  1. `Authorization: Bearer <token>` header  — mobile / API clients
+ *  2. `fitnest_session` httpOnly cookie        — web clients
+ * Both sources are validated with sessionVersion to honour logout/password-reset.
+ */
 export async function getSession(): Promise<SessionPayload | null> {
   try {
-    const cookieStore = await cookies()
-    const token = cookieStore.get(SESSION_COOKIE)?.value
+    let token: string | null = null
+
+    // 1. Check Authorization header (mobile / Postman)
+    try {
+      const headerStore = await headers()
+      const authHeader = headerStore.get("authorization")
+      if (authHeader?.startsWith("Bearer ")) {
+        token = authHeader.slice(7).trim()
+      }
+    } catch {
+      // headers() is unavailable in some non-request contexts (e.g. cron) — safe to ignore
+    }
+
+    // 2. Fall back to session cookie (web)
+    if (!token) {
+      const cookieStore = await cookies()
+      token = cookieStore.get(SESSION_COOKIE)?.value ?? null
+    }
+
     if (!token) return null
 
     const { payload } = await jwtVerify(token, getSecret())
     const session = payload as unknown as SessionPayload
 
-    // Verify sessionVersion against DB — this is what makes logout and password
-    // reset actually invalidate existing tokens.
+    // Verify sessionVersion against DB — invalidates tokens after logout / password reset
     const user = await db.user.findUnique({
       where: { id: session.userId },
       select: { sessionVersion: true },

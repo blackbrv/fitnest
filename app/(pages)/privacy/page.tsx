@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — FitNest',
+  title: 'Privacy Policy',
+  description:
+    'FitNest\'s privacy policy — how we collect, use, and protect your family\'s personal data.',
+  openGraph: {
+    title: 'Privacy Policy — FitNest',
+    description: 'How FitNest collects, uses, and protects your family\'s personal data.',
+    url: '/privacy',
+    type: 'website',
+  },
+  alternates: { canonical: '/privacy' },
 }
 
 const sections = [

@@ -3,7 +3,22 @@ import Link from 'next/link'
 import { db } from '@/lib/db'
 
 export const metadata: Metadata = {
-  title: 'Blog — FitNest',
+  title: 'Blog',
+  description:
+    'Fitness tips, family health guides, and workout inspiration from the FitNest team. Helping families move more, together.',
+  openGraph: {
+    title: 'FitNest Blog — Family Fitness Tips & Health Guides',
+    description:
+      'Fitness tips, family health guides, and workout inspiration from the FitNest team. Helping families move more, together.',
+    url: '/blog',
+    type: 'website',
+  },
+  twitter: {
+    title: 'FitNest Blog — Family Fitness Tips & Health Guides',
+    description:
+      'Fitness tips, family health guides, and workout inspiration from the FitNest team.',
+  },
+  alternates: { canonical: '/blog' },
 }
 
 async function getPosts() {

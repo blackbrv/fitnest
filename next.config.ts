@@ -38,6 +38,16 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      // CORS for API routes — allows mobile apps to call the API with Bearer tokens
+      {
+        source: "/api/(.*)",
+        headers: [
+          { key: "Access-Control-Allow-Origin",  value: "*" },
+          { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, PATCH, DELETE, OPTIONS" },
+          { key: "Access-Control-Allow-Headers", value: "Authorization, Content-Type, X-Requested-With" },
+          { key: "Access-Control-Max-Age",        value: "86400" },
+        ],
+      },
     ]
   },
 }

@@ -3,7 +3,22 @@ import Link from 'next/link'
 import { Users, TrendingUp, BarChart3 } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'About — FitNest',
+  title: 'About',
+  description:
+    'Learn about FitNest — the family fitness platform built to help households track workouts, celebrate progress, and build healthy habits together.',
+  openGraph: {
+    title: 'About FitNest',
+    description:
+      'Learn about FitNest — the family fitness platform built to help households track workouts, celebrate progress, and build healthy habits together.',
+    url: '/about',
+    type: 'website',
+  },
+  twitter: {
+    title: 'About FitNest',
+    description:
+      'Learn about FitNest — the family fitness platform built to help households track workouts, celebrate progress, and build healthy habits together.',
+  },
+  alternates: { canonical: '/about' },
 }
 
 const values = [

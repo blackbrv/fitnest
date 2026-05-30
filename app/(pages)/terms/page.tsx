@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service — FitNest',
+  title: 'Terms of Service',
+  description:
+    'FitNest\'s terms of service — the rules and guidelines that govern your use of the platform.',
+  openGraph: {
+    title: 'Terms of Service — FitNest',
+    description: 'The rules and guidelines that govern your use of the FitNest platform.',
+    url: '/terms',
+    type: 'website',
+  },
+  alternates: { canonical: '/terms' },
 }
 
 const sections = [

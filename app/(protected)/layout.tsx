@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth'
 import { db } from '@/lib/db'
@@ -7,6 +8,10 @@ import { MobileNav } from '@/components/shared/MobileNav'
 import { Header } from '@/components/shared/Header'
 import { getAccountStore, isTokenValid, removeStoredAccount } from '@/lib/multi-auth'
 import type { AccountSwitcherItem } from '@/components/shared/AccountSwitcher'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default async function ProtectedLayout({
   children,

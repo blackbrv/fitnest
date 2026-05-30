@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { db } from '@/lib/db'
 import { ChevronLeft, Calendar, User, Tag } from 'lucide-react'
+import { SITE_URL, SITE_NAME } from '@/lib/seo'
 
 // ─── Data fetching ───────────────────────────────────────────────────────────
 
@@ -44,8 +45,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const post = await getPost(slug)
-  if (!post) return { title: 'Post Not Found — FitNest' }
-  return { title: `${post.title} — FitNest` }
+  if (!post) return { title: 'Post Not Found', robots: { index: false } }
+
+  const description = post.excerpt || `Read "${post.title}" on the FitNest blog.`
+  const url = `/blog/${post.slug}`
+  const publishedTime = post.publishedAt?.toISOString()
+
+  return {
+    title: post.title,
+    description,
+    openGraph: {
+      title: post.title,
+      description,
+      url,
+      type: 'article',
+      publishedTime,
+      authors: [post.authorName],
+      siteName: SITE_NAME,
+    },
+    twitter: {
+      title: post.title,
+      description,
+    },
+    alternates: { canonical: url },
+  }
 }
 
 // ─── Content renderer ────────────────────────────────────────────────────────
@@ -122,6 +145,19 @@ export default async function BlogPostPage({
       })
     : null
 
+  const blogPostingSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    author: { '@type': 'Person', name: post.authorName },
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    datePublished: post.publishedAt?.toISOString(),
+    dateModified: post.updatedAt?.toISOString(),
+    url: `${SITE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
       {/* Back link */}
@@ -187,6 +223,10 @@ export default async function BlogPostPage({
           Back to Blog
         </Link>
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
     </div>
   )
 }

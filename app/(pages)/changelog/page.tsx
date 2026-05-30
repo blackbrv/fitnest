@@ -2,7 +2,21 @@ import type { Metadata } from 'next'
 import { execSync } from 'child_process'
 
 export const metadata: Metadata = {
-  title: 'Changelog — FitNest',
+  title: 'Changelog',
+  description:
+    'See what\'s new in FitNest — a running log of product updates, improvements, and new features.',
+  openGraph: {
+    title: 'FitNest Changelog',
+    description:
+      'See what\'s new in FitNest — a running log of product updates, improvements, and new features.',
+    url: '/changelog',
+    type: 'website',
+  },
+  twitter: {
+    title: 'FitNest Changelog',
+    description: 'See what\'s new in FitNest — product updates, improvements, and new features.',
+  },
+  alternates: { canonical: '/changelog' },
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────

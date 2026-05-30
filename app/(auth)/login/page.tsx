@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import LoginForm from '@/components/auth/LoginForm'
 
 export const metadata: Metadata = {
-  title: 'Sign In — FitNest',
+  title: 'Sign In',
 }
 
 export default function LoginPage() {

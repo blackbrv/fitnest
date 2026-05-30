@@ -3,7 +3,21 @@ import { Mail, Clock, Code2 } from 'lucide-react'
 import ContactForm from './ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Contact — FitNest',
+  title: 'Contact',
+  description:
+    'Get in touch with the FitNest team. We\'re here to help with questions, feedback, or anything else you need.',
+  openGraph: {
+    title: 'Contact FitNest',
+    description:
+      'Get in touch with the FitNest team. We\'re here to help with questions, feedback, or anything else you need.',
+    url: '/contact',
+    type: 'website',
+  },
+  twitter: {
+    title: 'Contact FitNest',
+    description: 'Get in touch with the FitNest team. We\'re here to help.',
+  },
+  alternates: { canonical: '/contact' },
 }
 
 const contactItems = [
